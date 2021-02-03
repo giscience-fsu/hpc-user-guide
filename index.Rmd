@@ -47,7 +47,7 @@ Afterwards you should be able to login via `ssh <username>@141.35.158.107` witho
 
 https://edi.geogr.uni-jena.de
 
-IP: 141.35.158.107
+IP: 10.232.16.28
 
 ## Hardware
 
