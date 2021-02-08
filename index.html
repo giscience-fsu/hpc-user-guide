@@ -196,6 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 class="title">HPC User Guide</h1>
 <p class="author"><em>Patrick Schratz, Jannes Muenchow</em></p>
 <p class="date"><em>2020-02-13</em></p>
+<p class="date"><em>2021-02-08 - last changes</em></p>
 </div>
 <div id="intro" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
@@ -218,13 +219,13 @@ If you still get stuck, Google might help you.</p></li>
 <li><p>Please add a SSH key pair to your account to be able to log in to the server without having to type your password.
 This is especially useful since your password will consist of many letters and numbers (&gt; 10) which you do not want to memorize.
 See <a href="https://help.github.com/articles/connecting-to-github-with-ssh/">this</a> guide if you have never worked with SSH keys before.
-If you already use a SSH key pair on your machine, you can use <code>ssh-copy-id &lt;username&gt;@141.35.158.107</code> to copy your key to the server.
-Afterwards you should be able to login via <code>ssh &lt;username&gt;@141.35.158.107</code> without being prompted for your password.</p></li>
+If you already use a SSH key pair on your machine, you can use <code>ssh-copy-id &lt;username&gt;@edi.geogr.uni-jena.de</code> to copy your key to the server.
+Afterwards you should be able to login via <code>ssh &lt;username&gt;@edi.geogr.uni-jena.de</code> without being prompted for your password.</p></li>
 </ul>
 <div id="web-address" class="section level2">
 <h2><span class="header-section-number">1.1</span> Web Address</h2>
 <p><a href="https://edi.geogr.uni-jena.de" class="uri">https://edi.geogr.uni-jena.de</a></p>
-<p>IP: 141.35.158.107</p>
+<p>IP: 10.232.16.28</p>
 </div>
 <div id="hardware" class="section level2">
 <h2><span class="header-section-number">1.2</span> Hardware</h2>
@@ -233,18 +234,15 @@ Afterwards you should be able to login via <code>ssh &lt;username&gt;@141.35.158
 <ul>
 <li>CPU: AMD Threadripper 2950X, 16-core, Hyperthreading support, 3.5 GHz - 4.4 GHz</li>
 <li>RAM: 126 GB DDR4</li>
-<li>Number of nodes: 4 c[0-2] (+ frontend)</li>
-<li>The “frontend” is only operating on 12 cores with 100 GB RAM</li>
+<li>Number of nodes: 3 c[0-2] (+ frontend)</li>
+<li>The "frontend" is no longer used for processing</li>
 </ul>
 <p>Group “<strong>opteron</strong>”:</p>
 <ul>
 <li>CPU: AMD Opteron 6172, 48 cores, no Hyperthreading, 2.1 GHz</li>
 <li>RAM: 252 GB DDR3 (c5 only comes with 130 GB RAM)</li>
-<li>Number of nodes:
-<ul>
-<li>2 (c[3-4])</li>
-<li>1 (c5)</li>
-</ul></li>
+<li>Number of nodes: 3 (c[3-5])</li>
+</ul>
 </ul>
 <p>The groups are reflected in the scheduler via the “partition” setting.</p>
 <p>Group “threadripper” is about 3.5x faster than group “opteron”.</p>
@@ -297,7 +295,7 @@ Auto-mount during boot via <code>fstab</code> is not recommended since sometimes
 </div>
 <div id="local-web-server" class="section level3">
 <h3><span class="header-section-number">1.6.2</span> Local web server</h3>
-<p>The <em>Jupiter</em> server (141.35.159.87) is set up as a web-server.
+<p>The <em>Jupiter</em> server (jupiter.geogr.uni-jena.de) is set up as a web-server.
 This means it is able to render HTML contents and list files in a directory listing.</p>
 <p><em>Jupiter</em> is mounted to the cluster at <code>/mnt/nfs/jupiter</code>.
 To use the functionality, you simply need to copy your desired files to <code>/home/www/&lt;folder&gt;</code> on Jupiter.
@@ -376,7 +374,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://venus.geogr.uni-jena.de/giscience/hpc-user-guide/edit/master/index.Rmd",
+"link": "https://github.com/giscience-fsu/hpc-user-guide/tree/gh-pages",
 "text": "Edit"
 },
 "history": {
