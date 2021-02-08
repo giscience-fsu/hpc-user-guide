@@ -204,9 +204,9 @@ Available modules can be queried using <code>modules avail</code>.</p>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="bu">.</span> <span class="va">$SPACK_ROOT</span><span class="ex">/share/spack/setup-env.sh</span></a></code></pre></div>
 <p>Here is a snapshot:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ex">-------------------------</span> /opt/spack/share/spack/modules/linux-centos7-x86_64 --------------------------</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">   <span class="ex">byobu-5.127-gcc-9.2.0-by2qc2g</span>          (L)    <span class="ex">python-3.7.4-gcc-9.2.0-nbjbfzi</span>     (L)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">   <span class="ex">ccache-3.3.4-gcc-9.2.0-v3xzqqh</span>         (L)    <span class="ex">r-3.5.2-gcc-9.2.0-oxo76vo</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">   <span class="ex">curl-7.63.0-gcc-9.2.0-cq4w37y</span>          (L)    <span class="ex">r-3.6.1-gcc-9.2.0-j25wr6z</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">   <span class="ex">byobu-5.127-gcc-9.2.0-by2qc2g</span>          (L)    <span class="ex">python-3.7.4-gcc-9.2.0-q4dxxjt</span>     (L)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">   <span class="ex">ccache-3.3.4-gcc-9.2.0-v3xzqqh</span>         (L)    <span class="ex">r-3.5.2-gcc-9.2.0-5tfbhbe</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">   <span class="ex">curl-7.63.0-gcc-9.2.0-cq4w37y</span>          (L)    <span class="ex">r-3.6.1-gcc-9.2.0-ceeyhsq</span></a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">   <span class="ex">fish-3.0.0-gcc-9.2.0-gdyab6r</span>      </a></code></pre></div>
 </div>
 <div id="loading-modules" class="section level2">
@@ -215,9 +215,9 @@ Available modules can be queried using <code>modules avail</code>.</p>
 <p>First, you need to load a C compiler as most programs depend on it.
 This module is the only one that you should which uses <code>gcc-4.8.5</code>.
 Make sure to also put this one into your <code>~/.bashrc</code> file!</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ex">module</span> load gcc-9.2.0-gcc-4.8.5-wqdecm4</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ex">module</span> load gcc-9.2.0-gcc-4.8.5-5kwstwt</a></code></pre></div>
 <p>Now you can (for example) load GDAL:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="ex">module</span> load gdal-2.4.2-gcc-9.2.0-henhg26</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="ex">module</span> load gdal-2.4.2-gcc-9.2.0-pndaukk</a></code></pre></div>
 <p>You can check that it worked via</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ex">gdalinfo</span> --version</a></code></pre></div>
 </div>
@@ -231,8 +231,8 @@ Make sure to also put this one into your <code>~/.bashrc</code> file!</p>
 Simply add them to <code>~/.bashrc</code>.</p>
 <p>When running R for spatial analysis, the following are required:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ex">module</span> load \</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">  gcc-9.2.0-gcc-4.8.5-wqdecm4 \</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">  gdal-2.4.2-gcc-9.2.0-henhg26 \</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">  gcc-9.2.0-gcc-4.8.5-5kwstwt \</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">  gdal-2.4.2-gcc-9.2.0-pndaukk \</a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">  geos-3.7.2-gcc-9.2.0-jxq7o2n \</a>
 <a class="sourceLine" id="cb9-5" data-line-number="5">  git-2.21.0-gcc-9.2.0-o45v5mj \</a>
 <a class="sourceLine" id="cb9-6" data-line-number="6">  proj-5.2.0-gcc-9.2.0-5t4r5t4 \</a>
@@ -240,9 +240,9 @@ Simply add them to <code>~/.bashrc</code>.</p>
 <a class="sourceLine" id="cb9-8" data-line-number="8">  zlib-1.2.11-gcc-9.2.0-j3zdmzq</a></code></pre></div>
 <p>Furthermore, I recommend the following ones (don’t forget to append your version and compiler):</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="ex">byobu-5.127-gcc-9.2.0-x5e5mnz</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="ex">git-2.21.0-gcc-9.2.0-hhkbkhg</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="ex">ccache-3.3.4-gcc-9.2.0-7klqklq</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="ex">python-3.7.4-gcc-9.2.0-nbjbfzi</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="ex">git-2.21.0-gcc-9.2.0-o45v5mj</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="ex">ccache-3.3.4-gcc-9.2.0-v3xzqqh</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="ex">python-3.7.4-gcc-9.2.0-q4dxxjt</span></a>
 <a class="sourceLine" id="cb10-5" data-line-number="5"><span class="ex">curl-7.63.0-gcc-9.2.0-cq4w37y</span></a></code></pre></div>
 <p>You might wonder why you shouldn’t add a R version to this list?
 The answer is that it will conflict with RStudio-Server.
@@ -257,16 +257,17 @@ So yes, you always need to specifically load R when logging into a new session.<
 <p>All versions from v3.4.4 upwards are installed.</p>
 <p>To load a specific R version, load the specific environment module</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># loads R v3.5.2</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="ex">module</span> load r-3.5.2-gcc-9.2.0-oxo76vo</a></code></pre></div>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="ex">module</span> load r-3.5.2-gcc-9.2.0-5tfbhbe</a></code></pre></div>
 <p>and then execute <code>R</code>.</p>
 <p>You might find the following aliases helpful which you can put into <code>~/.bashrc</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="bu">alias</span> r344=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.4.4-hobcfrryiwu34etqvf4khv427wwkxdf5/rlib/R &amp;&amp; radian&quot;</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="bu">alias</span> r350=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.0-jx2cc3ecnk4zkfz3kqwomwsm5rpfouiv/rlib/R &amp;&amp; radian&quot;</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="bu">alias</span> r351=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.1-h4fvapuqf65avikja735xn5lzyildzzi/rlib/R &amp;&amp; radian&quot;</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="bu">alias</span> r352=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.2-oxo76vo5ceamc2qp6nfr6zvcqstvzksb/rlib/R &amp;&amp; radian&quot;</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="bu">alias</span> r353=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.3-a75bebsahiaaz6lrcdallnjprx3iybjv/rlib/R &amp;&amp; radian&quot;</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="bu">alias</span> r360=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.0-2sbeu7xbnocpahdm7afuonsumblmgi5j/rlib/R &amp;&amp; radian&quot;</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="bu">alias</span> r361=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.1-j25wr6zcofibs2zfjwg37357rjj26lqb/rlib/R &amp;&amp; radian&quot;</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="bu">alias</span> r350=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.0-3s5twomq2h2z6qandutbqfnkm5kh6byh/rlib/R &amp;&amp; radian&quot;</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="bu">alias</span> r351=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.1-occkza33dt5xp546v3d2aawgsvvnhfl2/rlib/R &amp;&amp; radian&quot;</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="bu">alias</span> r352=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.2-5tfbhbeeoxtt2nqhlmengocsm2xvrt2z/rlib/R &amp;&amp; radian&quot;</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="bu">alias</span> r353=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.3-ooqdvqkspdthm7cg2sxo7rpmlemsxcdl/rlib/R &amp;&amp; radian&quot;</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="bu">alias</span> r360=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.0-zrrd6bwtrigkg7leuqxbrj25jkiomiag/rlib/R &amp;&amp; radian&quot;</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="bu">alias</span> r361=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.1-ceeyhsqk5gjl44a6u74sxy6yditpx4sx/rlib/R &amp;&amp; radian&quot;</span></a>
+</code></pre></div>
 <p>This enables you to launch the specific R version using the set command, e.g. <code>r360</code> will launch R v3.6.0.</p>
 <p><strong>BLAS/LAPACK</strong></p>
 <p>Unfortunately we cannot use an external BLAS/LAPACK like <code>openblas</code> due to the different architectures on the nodes.
