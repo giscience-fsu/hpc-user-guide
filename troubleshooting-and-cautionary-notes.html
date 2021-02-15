@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Troubleshooting and Cautionary Notes | HPC User Guide</title>
   <meta name="description" content="Chapter 5 Troubleshooting and Cautionary Notes | HPC User Guide" />
-  <meta name="generator" content="bookdown 0.17.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21.6 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Troubleshooting and Cautionary Notes | HPC User Guide" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Patrick Schratz, Jannes Muenchow" />
 
 
-<meta name="date" content="2020-02-13" />
+<meta name="date" content="2021-02-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,12 +50,15 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -64,16 +67,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -82,9 +85,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -116,6 +119,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -207,20 +211,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <p><strong>Question</strong>: I cannot install <code>udunits2</code>. What shall I do?<br />
 <strong>Answer</strong>: Install it via <code>install.packages('udunits2', type = 'source',  configure.args='--with-udunits2-lib=&lt;path-to-installation&gt;'</code>.
-For example <code>&quot;--with-udunits2-include=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/udunits2-2.2.24-hupsw3nzjxtem7wlwyugyga2uh4xgieo/include/&quot;</code>.</p>
+For example <code>"--with-udunits2-include=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/udunits2-2.2.24-hupsw3nzjxtem7wlwyugyga2uh4xgieo/include/"</code>.</p>
 <p>You can set this option permanently in <code>~/.Rprofile</code> in <code>options(configure.args = list(udunits = c(&lt;&gt;)))</code>.</p>
 <hr />
 <p><strong>Question</strong>: I cannot install <code>rgdal</code> | <code>sf</code>. What shall I do?<br />
 <strong>Answer</strong>: All the spatial packages are a bit troublesome since they expect certain libraries in predefined directories. If this is not the case, the locations need to be given explicitly during installation. You need to install it with custom options set for <code>configure.args</code>, similar to <code>udunits</code> above.</p>
 <p>The following works:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">options</span>(</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">  <span class="dt">configure.args=</span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb26-3" data-line-number="3">    <span class="dt">rgdal =</span> <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb26-4" data-line-number="4">      <span class="st">&quot;--with-proj-lib=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/proj-5.2.0-az6mkj55zpnh6fmg2ae5wyrmhfiynxfx/lib&quot;</span>),</a>
-<a class="sourceLine" id="cb26-5" data-line-number="5">    <span class="dt">sf =</span> <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb26-6" data-line-number="6">      <span class="st">&quot;--with-proj-lib=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/proj-5.2.0-az6mkj55zpnh6fmg2ae5wyrmhfiynxfx/lib&quot;</span>)</a>
-<a class="sourceLine" id="cb26-7" data-line-number="7">  )</a>
-<a class="sourceLine" id="cb26-8" data-line-number="8">)</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="troubleshooting-and-cautionary-notes.html#cb26-1"></a><span class="kw">options</span>(</span>
+<span id="cb26-2"><a href="troubleshooting-and-cautionary-notes.html#cb26-2"></a>  <span class="dt">configure.args=</span><span class="kw">list</span>(</span>
+<span id="cb26-3"><a href="troubleshooting-and-cautionary-notes.html#cb26-3"></a>    <span class="dt">rgdal =</span> <span class="kw">c</span>(</span>
+<span id="cb26-4"><a href="troubleshooting-and-cautionary-notes.html#cb26-4"></a>      <span class="st">&quot;--with-proj-lib=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/proj-5.2.0-az6mkj55zpnh6fmg2ae5wyrmhfiynxfx/lib&quot;</span>),</span>
+<span id="cb26-5"><a href="troubleshooting-and-cautionary-notes.html#cb26-5"></a>    <span class="dt">sf =</span> <span class="kw">c</span>(</span>
+<span id="cb26-6"><a href="troubleshooting-and-cautionary-notes.html#cb26-6"></a>      <span class="st">&quot;--with-proj-lib=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/proj-5.2.0-az6mkj55zpnh6fmg2ae5wyrmhfiynxfx/lib&quot;</span>)</span>
+<span id="cb26-7"><a href="troubleshooting-and-cautionary-notes.html#cb26-7"></a>  )</span>
+<span id="cb26-8"><a href="troubleshooting-and-cautionary-notes.html#cb26-8"></a>)</span></code></pre></div>
 <hr />
 
 <div id="refs" class="references">

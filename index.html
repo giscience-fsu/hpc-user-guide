@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>HPC User Guide</title>
   <meta name="description" content="HPC User Guide" />
-  <meta name="generator" content="bookdown 0.17.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21.6 and GitBook 2.6.7" />
 
   <meta property="og:title" content="HPC User Guide" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Patrick Schratz, Jannes Muenchow" />
 
 
-<meta name="date" content="2020-02-13" />
+<meta name="date" content="2021-02-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,12 +50,15 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -64,16 +67,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -82,9 +85,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -116,6 +119,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -195,8 +199,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">HPC User Guide</h1>
 <p class="author"><em>Patrick Schratz, Jannes Muenchow</em></p>
-<p class="date"><em>2020-02-13</em></p>
-<p class="date"><em>2021-02-08 - last changes</em></p>
+<p class="date"><em>2021-02-15</em></p>
 </div>
 <div id="intro" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
@@ -214,13 +217,13 @@ Administration is further simplified by using the <a href="https://spack.io">Spa
 <ul>
 <li><p>Working on a Linux server naturally requires a certain amount of familiarity with UNIX command-line shells and text editors.
 There are dozens of Linux online tutorials which should help to get you started.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
-Of course, there are also great books on how to use Linux such as <span class="citation">Shotts (<a href="#ref-shotts_linux_2012">2012</a>)</span>, <span class="citation">Sobell (<a href="#ref-sobell_practical_2010">2010</a>)</span> and <span class="citation">Ward (<a href="#ref-ward_how_2015">2015</a>)</span> all of which are freely available.
+Of course, there are also great books on how to use Linux such as <span class="citation">Shotts (<a href="#ref-shotts_linux_2012" role="doc-biblioref">2012</a>)</span>, <span class="citation">Sobell (<a href="#ref-sobell_practical_2010" role="doc-biblioref">2010</a>)</span> and <span class="citation">Ward (<a href="#ref-ward_how_2015" role="doc-biblioref">2015</a>)</span> all of which are freely available.
 If you still get stuck, Google might help you.</p></li>
 <li><p>Please add a SSH key pair to your account to be able to log in to the server without having to type your password.
 This is especially useful since your password will consist of many letters and numbers (&gt; 10) which you do not want to memorize.
 See <a href="https://help.github.com/articles/connecting-to-github-with-ssh/">this</a> guide if you have never worked with SSH keys before.
-If you already use a SSH key pair on your machine, you can use <code>ssh-copy-id &lt;username&gt;@edi.geogr.uni-jena.de</code> to copy your key to the server.
-Afterwards you should be able to login via <code>ssh &lt;username&gt;@edi.geogr.uni-jena.de</code> without being prompted for your password.</p></li>
+If you already use a SSH key pair on your machine, you can use <code>ssh-copy-id &lt;username&gt;@141.35.158.107</code> to copy your key to the server.
+Afterwards you should be able to login via <code>ssh &lt;username&gt;@141.35.158.107</code> without being prompted for your password.</p></li>
 </ul>
 <div id="web-address" class="section level2">
 <h2><span class="header-section-number">1.1</span> Web Address</h2>
@@ -234,15 +237,18 @@ Afterwards you should be able to login via <code>ssh &lt;username&gt;@edi.geogr.
 <ul>
 <li>CPU: AMD Threadripper 2950X, 16-core, Hyperthreading support, 3.5 GHz - 4.4 GHz</li>
 <li>RAM: 126 GB DDR4</li>
-<li>Number of nodes: 3 c[0-2] (+ frontend)</li>
-<li>The "frontend" is no longer used for processing</li>
+<li>Number of nodes: 4 c[0-2] (+ frontend)</li>
+<li>The “frontend” is only operating on 12 cores with 100 GB RAM</li>
 </ul>
 <p>Group “<strong>opteron</strong>”:</p>
 <ul>
 <li>CPU: AMD Opteron 6172, 48 cores, no Hyperthreading, 2.1 GHz</li>
 <li>RAM: 252 GB DDR3 (c5 only comes with 130 GB RAM)</li>
-<li>Number of nodes: 3 (c[3-5])</li>
-</ul>
+<li>Number of nodes:
+<ul>
+<li>2 (c[3-4])</li>
+<li>1 (c5)</li>
+</ul></li>
 </ul>
 <p>The groups are reflected in the scheduler via the “partition” setting.</p>
 <p>Group “threadripper” is about 3.5x faster than group “opteron”.</p>
@@ -269,11 +275,10 @@ Transfer speed ranges between 50 - 100 Mbit/s when you’re in the office so you
 Accessing files from outside will be slower.</p>
 <p>If you really run in trouble with transfer speed, you could directly connect to the <em>mars</em> server.</p>
 <p>Otherwise, the route is as follows: <code>&lt;local&gt; (sshfs) -&gt; edi (nfs) -&gt; mars</code></p>
-<p>In the near future the mars will be connected via iSCSI, as block device.</p>
 <div id="unix" class="section level3">
 <h3><span class="header-section-number">1.5.1</span> Unix</h3>
 <p>For Unix system, the following command can be used</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">sudo</span> sshfs -o reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa,allow_other,cache=yes,kernel_cache,compression=no,default_permissions,uid=1000,gid=100,umask=0 <span class="op">&lt;</span>username<span class="op">&gt;</span>@141.35.158.107:/ <span class="op">&lt;</span>local-directory<span class="op">&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="index.html#cb1-1"></a><span class="fu">sudo</span> sshfs -o reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa,allow_other,cache=yes,kernel_cache,compression=no,default_permissions,uid=1000,gid=100,umask=0 <span class="op">&lt;</span>username<span class="op">&gt;</span>@141.35.158.107:/ <span class="op">&lt;</span>local-directory<span class="op">&gt;</span></span></code></pre></div>
 <p>The mount process is passwordless if you do it via SSH (i.e. via your <code>~/.ssh/id_rsa</code> key).
 Note that the mount is actually performed by the root user, so you need to copy your SSH key to the root user: <code>cp ~/.ssh/id_rsa /root/.ssh/id_rsa</code>.</p>
 <p>For convenience you can create an executable script that performs this action every time you need it.</p>
@@ -296,20 +301,20 @@ Auto-mount during boot via <code>fstab</code> is not recommended since sometimes
 </div>
 <div id="local-web-server" class="section level3">
 <h3><span class="header-section-number">1.6.2</span> Local web server</h3>
-<p>The <em>Jupiter</em> server (jupiter.geogr.uni-jena.de) is set up as a web-server.
+<p>The <em>Jupiter</em> server (141.35.159.87) is set up as a web-server.
 This means it is able to render HTML contents and list files in a directory listing.</p>
 <p><em>Jupiter</em> is mounted to the cluster at <code>/mnt/nfs/jupiter</code>.
 To use the functionality, you simply need to copy your desired files to <code>/home/www/&lt;folder&gt;</code> on Jupiter.
 To do so, please follow these steps:</p>
 <ol style="list-style-type: decimal">
-<li>Request an account on Jupiter from Andreas</li>
+<li><p>Request an account on Jupiter from Andreas</p></li>
 <li><p>Login to <em>Jupiter</em> and create the desired folders.
 The public URL relates as follows to the local directory:</p>
-<code>https://jupiter.geogr.uni-jena.de/&lt;folder&gt;</code> -&gt; <code>/home/www/&lt;folder&gt;</code></li>
+<p><code>https://jupiter.geogr.uni-jena.de/&lt;folder&gt;</code> -&gt; <code>/home/www/&lt;folder&gt;</code></p></li>
 <li><p>Copy your files from the cluster to the desired location on <em>Jupiter</em> using the following code</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">rsync</span> -rlptDvzog --chown=www-data:www-data --fake-super \</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  /mnt/nfs/jupiter/<span class="op">&lt;</span>path-to-your-file<span class="op">&gt;</span> \</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  -e ssh <span class="op">&lt;</span>username<span class="op">&gt;</span>@jupiter.geogr.uni-jena.de:/home/www/<span class="op">&lt;</span>path-to-directory<span class="op">&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="index.html#cb2-1"></a><span class="fu">rsync</span> -rlptDvzog --chown=www-data:www-data --fake-super \</span>
+<span id="cb2-2"><a href="index.html#cb2-2"></a>  /mnt/nfs/jupiter/<span class="op">&lt;</span>path-to-your-file<span class="op">&gt;</span> \</span>
+<span id="cb2-3"><a href="index.html#cb2-3"></a>  -e ssh <span class="op">&lt;</span>username<span class="op">&gt;</span>@jupiter.geogr.uni-jena.de:/home/www/<span class="op">&lt;</span>path-to-directory<span class="op">&gt;</span></span></code></pre></div>
 <p>This code will only copy files that have changed when being compared to the last execution so you can safely automate the call into your workflow.</p></li>
 </ol>
 <p>Since all these contents will be available to everyone, you want to add a README.md file to your directory listing as well as an Impressum.
@@ -335,7 +340,7 @@ You can request this theme from Andreas.</p>
 <div class="footnotes">
 <hr />
 <ol start="1">
-<li id="fn1"><p>For example, <a href="https://ryanstutorials.net/linuxtutorial/" class="uri">https://ryanstutorials.net/linuxtutorial/</a>.<a href="index.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>For example, <a href="https://ryanstutorials.net/linuxtutorial/" class="uri">https://ryanstutorials.net/linuxtutorial/</a>.<a href="index.html#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -375,7 +380,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/giscience-fsu/hpc-user-guide/tree/gh-pages",
+"link": "https://venus.geogr.uni-jena.de/giscience/hpc-user-guide/edit/master/index.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Submitting jobs | HPC User Guide</title>
   <meta name="description" content="Chapter 4 Submitting jobs | HPC User Guide" />
-  <meta name="generator" content="bookdown 0.17.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21.6 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Submitting jobs | HPC User Guide" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Patrick Schratz, Jannes Muenchow" />
 
 
-<meta name="date" content="2020-02-13" />
+<meta name="date" content="2021-02-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,12 +50,15 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -64,16 +67,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -82,9 +85,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -116,6 +119,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -199,10 +203,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Every job submission is done via <code>clustermq::Q()</code> (either directly or via <code>drake</code>).
 See the setup instructions in the <a href="https://mschubert.github.io/clustermq/">clustermq</a> package on how to setup the package.</p>
 <p>First, you need to set some options in your <code>.Rprofile</code> (on the master node or in your project root when you use <em>packrat</em>):</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">options</span>(</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">    <span class="dt">clustermq.scheduler =</span> <span class="st">&quot;slurm&quot;</span>,</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3">    <span class="dt">clustermq.template =</span> <span class="st">&quot;&lt;/path/to/file/&quot;</span></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4">)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="submit-jobs.html#cb20-1"></a><span class="kw">options</span>(</span>
+<span id="cb20-2"><a href="submit-jobs.html#cb20-2"></a>    <span class="dt">clustermq.scheduler =</span> <span class="st">&quot;slurm&quot;</span>,</span>
+<span id="cb20-3"><a href="submit-jobs.html#cb20-3"></a>    <span class="dt">clustermq.template =</span> <span class="st">&quot;&lt;/path/to/file/&quot;</span></span>
+<span id="cb20-4"><a href="submit-jobs.html#cb20-4"></a>)</span></code></pre></div>
 <p>See the <a href="https://mschubert.github.io/clustermq/articles/userguide.html#slurm">package vignette</a> on how to set up the file.</p>
 <p>Note that you can have multiple <code>.Rprofile</code> files on your system:</p>
 <ol style="list-style-type: decimal">
@@ -226,21 +230,21 @@ Be aware of setting <code>n_cpus</code> in the <code>template</code> argument of
 <p>To successfully submit jobs to the scheduler, you need to set the <code>.Rprofile</code> options given above.
 Note that you can add any bash commands into the scripts between the <code>SBATCH</code> section and the final R call.
 For example, one of my templates looks like this:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co">#!/bin/sh</span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#SBATCH --job-name={{ job_name }}</span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#SBATCH --partition=all</span></a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co">#SBATCH --output={{ log_file | /dev/null }} # you can add .%a for array index</span></a>
-<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co">#SBATCH --error={{ log_file | /dev/null }}</span></a>
-<a class="sourceLine" id="cb21-6" data-line-number="6"><span class="co">#SBATCH --cpus-per-task={{ n_cpus }}</span></a>
-<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="co">#SBATCH --mem={{ memory }}</span></a>
-<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="co">#SBATCH --array=1-{{ n_jobs }}</span></a>
-<a class="sourceLine" id="cb21-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb21-10" data-line-number="10"><span class="bu">cd</span> path/to/project</a>
-<a class="sourceLine" id="cb21-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb21-12" data-line-number="12"><span class="co"># load desired R version</span></a>
-<a class="sourceLine" id="cb21-13" data-line-number="13"><span class="ex">module</span> load r-3.5.2-gcc-9.2.0-4syrmqv</a>
-<a class="sourceLine" id="cb21-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb21-15" data-line-number="15"><span class="va">CMQ_AUTH=</span>{<span class="kw">{</span> <span class="ex">auth</span> <span class="kw">}</span>} <span class="ex">R</span> --no-save --no-restore -e <span class="st">&#39;clustermq:::worker(&quot;{{ master }}&quot;)&#39;</span></a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb21-1"><a href="submit-jobs.html#cb21-1"></a><span class="co">#!/bin/sh</span></span>
+<span id="cb21-2"><a href="submit-jobs.html#cb21-2"></a><span class="co">#SBATCH --job-name={{ job_name }}</span></span>
+<span id="cb21-3"><a href="submit-jobs.html#cb21-3"></a><span class="co">#SBATCH --partition=all</span></span>
+<span id="cb21-4"><a href="submit-jobs.html#cb21-4"></a><span class="co">#SBATCH --output={{ log_file | /dev/null }} # you can add .%a for array index</span></span>
+<span id="cb21-5"><a href="submit-jobs.html#cb21-5"></a><span class="co">#SBATCH --error={{ log_file | /dev/null }}</span></span>
+<span id="cb21-6"><a href="submit-jobs.html#cb21-6"></a><span class="co">#SBATCH --cpus-per-task={{ n_cpus }}</span></span>
+<span id="cb21-7"><a href="submit-jobs.html#cb21-7"></a><span class="co">#SBATCH --mem={{ memory }}</span></span>
+<span id="cb21-8"><a href="submit-jobs.html#cb21-8"></a><span class="co">#SBATCH --array=1-{{ n_jobs }}</span></span>
+<span id="cb21-9"><a href="submit-jobs.html#cb21-9"></a></span>
+<span id="cb21-10"><a href="submit-jobs.html#cb21-10"></a><span class="bu">cd</span> path/to/project</span>
+<span id="cb21-11"><a href="submit-jobs.html#cb21-11"></a></span>
+<span id="cb21-12"><a href="submit-jobs.html#cb21-12"></a><span class="co"># load desired R version</span></span>
+<span id="cb21-13"><a href="submit-jobs.html#cb21-13"></a><span class="ex">module</span> load r-3.5.2-gcc-9.2.0-4syrmqv</span>
+<span id="cb21-14"><a href="submit-jobs.html#cb21-14"></a></span>
+<span id="cb21-15"><a href="submit-jobs.html#cb21-15"></a><span class="va">CMQ_AUTH=</span>{<span class="kw">{</span> <span class="ex">auth</span> <span class="kw">}</span>} <span class="ex">R</span> --no-save --no-restore -e <span class="st">&#39;clustermq:::worker(&quot;{{ master }}&quot;)&#39;</span></span></code></pre></div>
 <p>Note: The <code>#</code> signs are no mistakes here, they are no “comment” signs in this context.
 The <code>SBATCH</code> commands will be executed here.</p>
 <p>You can simply copy it and adjust it to your needs (set the right path to your project and specify the R version you want to use).</p>
@@ -252,9 +256,9 @@ The <code>SBATCH</code> commands will be executed here.</p>
 <li><p><code>drake</code> (recommended)</p></li>
 <li><p><code>clustermq</code></p></li>
 </ul>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">drake<span class="op">::</span><span class="kw">make</span>(<span class="dt">parallelism =</span> <span class="st">&quot;clustermq&quot;</span>, <span class="dt">n_jobs =</span> <span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">  <span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">n_cpus =</span> <span class="op">&lt;</span>X<span class="op">&gt;</span>, <span class="dt">log_file =</span> <span class="op">&lt;</span>Y<span class="op">&gt;</span>, <span class="dt">memory =</span> <span class="op">&lt;</span>Z<span class="op">&gt;</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">clustermq<span class="op">::</span><span class="kw">Q</span>(<span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">n_cpus =</span> <span class="op">&lt;</span>X<span class="op">&gt;</span>, <span class="dt">log_file =</span> <span class="op">&lt;</span>Y<span class="op">&gt;</span>, <span class="dt">memory =</span> <span class="op">&lt;</span>Z<span class="op">&gt;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="submit-jobs.html#cb22-1"></a>drake<span class="op">::</span><span class="kw">make</span>(<span class="dt">parallelism =</span> <span class="st">&quot;clustermq&quot;</span>, <span class="dt">n_jobs =</span> <span class="dv">1</span>, </span>
+<span id="cb22-2"><a href="submit-jobs.html#cb22-2"></a>  <span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">n_cpus =</span> <span class="op">&lt;</span>X<span class="op">&gt;</span>, <span class="dt">log_file =</span> <span class="op">&lt;</span>Y<span class="op">&gt;</span>, <span class="dt">memory =</span> <span class="op">&lt;</span>Z<span class="op">&gt;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="submit-jobs.html#cb23-1"></a>clustermq<span class="op">::</span><span class="kw">Q</span>(<span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">n_cpus =</span> <span class="op">&lt;</span>X<span class="op">&gt;</span>, <span class="dt">log_file =</span> <span class="op">&lt;</span>Y<span class="op">&gt;</span>, <span class="dt">memory =</span> <span class="op">&lt;</span>Z<span class="op">&gt;</span>))</span></code></pre></div>
 <p>(The individual components of these calls are explained in more detail below.)</p>
 <p>Note that <code>drake</code> uses <code>clustermq</code> under the hood.
 Notations like <code>&lt;X&gt;</code> are meant to be read as placeholders, meaning you need to replace them with valid content.)</p>
@@ -268,8 +272,8 @@ This might overload the node and eventually cause your script (and more importan
 </ol>
 <p>Pass the values via argument <code>template</code> like <code>template = list(n_cpus = &lt;X&gt;, memory = &lt;Y&gt;)</code>.
 It will then be passed to the <code>clustermq.template</code> file (frequently named <code>slurm_clustermq.tmpl</code>) which contains following lines:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co">#SBATCH --cpus-per-task{{ n_cpus }}</span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co">#SBATCH --mem={{ memory }}</span></a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb24-1"><a href="submit-jobs.html#cb24-1"></a><span class="co">#SBATCH --cpus-per-task{{ n_cpus }}</span></span>
+<span id="cb24-2"><a href="submit-jobs.html#cb24-2"></a><span class="co">#SBATCH --mem={{ memory }}</span></span></code></pre></div>
 <p>This tells the scheduler how many resources (here cpus) your job needs.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>via <code>drake::make()</code> (recommended)</li>
@@ -302,9 +306,9 @@ If you scale down the number of CPUs, you will have more memory/cpu available.</
 </div>
 <div id="monitoring-progress" class="section level2">
 <h2><span class="header-section-number">4.4</span> Monitoring progress</h2>
-<p>When submitting jobs you can track its progress by specifying a <code>log_file</code> in the <code>clustermq::Q()</code> call, e.g. <code>clustermq::Q(template = list(log_file = path/to/file))</code>.</p>
+<p>When submitting jobs you can track its progress by specifying a <code>log_file</code> in the <code>clustermq::Q()</code> call, e.g. <code>clustermq::Q(template = list(log_file = path/to/file))</code>.</p>
 <p>For <code>drake</code>, the equivalent is to specify <code>console_log_file()</code> in either <code>make()</code> or <code>drake_config()</code>.</p>
-<p>If your jobs are running on a node, you can SSH into the node, e.g. <code>ssh c0</code>.
+<p>If your jobs are running on a node, you can SSH into the node, e.g. <code>ssh c0</code>.
 There you can take a look at the current load by using <code>htop</code>.
 Note that you can only log in if you have a running progress on a specific node.</p>
 <p>Another option is to take a look <a href="http://141.35.158.107/ganglia/?r=hour&amp;cs=&amp;ce=&amp;m=load_one&amp;s=by+name&amp;c=OpenHPC&amp;tab=m&amp;vn=&amp;hide-hf=false">Ganglia</a> to see the load of the HPC.</p>
@@ -312,16 +316,16 @@ Note that you can only log in if you have a running progress on a specific node.
 <div id="summary" class="section level2">
 <h2><span class="header-section-number">4.5</span> Summary</h2>
 <ol style="list-style-type: decimal">
-<li><p>Set up your <code>.Rprofile</code> with <code>options(clustermq.template = &quot;/path/to/file&quot;)</code>.
+<li><p>Set up your <code>.Rprofile</code> with <code>options(clustermq.template = "/path/to/file")</code>.
 The <code>clustermq.template</code> should point to a SLURM template file in your $HOME or project directory.</p></li>
 <li><p>Decide which approach you want to use:</p></li>
 </ol>
 <ul>
-<li><code>drake::make(parallelism = &quot;clustermq&quot;, n_jobs = 1, template = list(n_cpus = X, log_file = Y, memory = Z))</code> (recommended!)</li>
+<li><code>drake::make(parallelism = "clustermq", n_jobs = 1, template = list(n_cpus = X, log_file = Y, memory = Z))</code> (recommended!)</li>
 <li><code>clustermq::Q(template = list(n_cpus = X, log_file = Y, memory = Z))</code></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
-<li>You need to have a Slurm template file in your project directory. This template needs to be linked in your <code>.Rprofile</code> with <code>options(clustermq.template = &quot;/path/to/file&quot;)</code>.</li>
+<li>You need to have a Slurm template file in your project directory. This template needs to be linked in your <code>.Rprofile</code> with <code>options(clustermq.template = "/path/to/file")</code>.</li>
 </ol>
 </div>
 <div id="best-practice" class="section level2">
@@ -334,9 +338,9 @@ By using <code>drake</code>, all of your intermediate R objects are “targets�
 You can specify any number of targets that should be build when calling <code>drake::make()</code>.
 <code>drake</code> will take care that for each target as separate job is created which is then added to the SLURM queue.</p>
 <p>For example, if you want to build three R objects named <code>object1</code>, <code>object2</code> and <code>object3</code> in parallel, one on each node:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">drake<span class="op">::</span><span class="kw">make</span>(plan, <span class="dt">targets =</span> <span class="kw">c</span>(<span class="st">&quot;object1&quot;</span>, <span class="st">&quot;object2&quot;</span>, <span class="st">&quot;object3&quot;</span>), <span class="dt">jobs =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb25-2" data-line-number="2">            <span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">n_cpus =</span> <span class="dv">16</span>, <span class="dt">memory =</span> <span class="st">&quot;100G&quot;</span>, </a>
-<a class="sourceLine" id="cb25-3" data-line-number="3">            <span class="dt">log_file =</span> <span class="st">&quot;/path/to/log.txt&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="submit-jobs.html#cb25-1"></a>drake<span class="op">::</span><span class="kw">make</span>(plan, <span class="dt">targets =</span> <span class="kw">c</span>(<span class="st">&quot;object1&quot;</span>, <span class="st">&quot;object2&quot;</span>, <span class="st">&quot;object3&quot;</span>), <span class="dt">jobs =</span> <span class="dv">3</span>, </span>
+<span id="cb25-2"><a href="submit-jobs.html#cb25-2"></a>            <span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">n_cpus =</span> <span class="dv">16</span>, <span class="dt">memory =</span> <span class="st">&quot;100G&quot;</span>, </span>
+<span id="cb25-3"><a href="submit-jobs.html#cb25-3"></a>            <span class="dt">log_file =</span> <span class="st">&quot;/path/to/log.txt&quot;</span>))</span></code></pre></div>
 <ul>
 <li>Creates three jobs which are added to the SLURM queue</li>
 <li>Each jobs requires 16 cores</li>
