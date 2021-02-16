@@ -1,4 +1,4 @@
---- 
+---
 title: "HPC User Guide"
 author: "Patrick Schratz, Jannes Muenchow"
 date: "`r Sys.Date()`"
@@ -56,7 +56,7 @@ The cluster consists of the following machines:
 Group "**threadripper**":
 
 - CPU: AMD Threadripper 2950X, 16-core, Hyperthreading support, 3.5 GHz - 4.4 GHz
-- RAM: 126 GB DDR4 
+- RAM: 126 GB DDR4
 - Number of nodes: 4 c[0-2] (+ frontend)
 - The "frontend" is only operating on 12 cores with 100 GB RAM
 
@@ -64,7 +64,7 @@ Group "**opteron**":
 
 - CPU: AMD Opteron 6172, 48 cores, no Hyperthreading, 2.1 GHz
 - RAM: 252 GB DDR3 (c5 only comes with 130 GB RAM)
-- Number of nodes: 
+- Number of nodes:
   - 2 (c[3-4])
   - 1 (c5)
 
@@ -76,7 +76,7 @@ Group "threadripper" is about 3.5x faster than group "opteron".
 
 The HPC was built following the installation guide provided by the [Open HPC](https://openhpc.community/) community (using the "Warewulf + Slurm" edition) and operates on a CentOS 7 base.
 The scheduler that is used for queuing processing job requests is [SLURM](https://slurm.schedmd.com/).
-Load monitoring is performed via [Ganglia](http://ganglia.sourceforge.net/). 
+Load monitoring is performed via [Ganglia](http://ganglia.sourceforge.net/).
 A live view is accessible [here](http://edi.geogr.uni-jena.de/ganglia/?r=hour&cs=&ce=&m=load_one&s=by+name&c=&tab=m&vn=&hide-hf=false).
 [Spack](https://spack.io/) is used as the package manager.
 More detailed instructions on the scheduler and the package manager can be found in their respective chapters.
@@ -96,6 +96,30 @@ Accessing files from outside will be slower.
 If you really run in trouble with transfer speed, you could directly connect to the _mars_ server.
 
 Otherwise, the route is as follows: `<local> (sshfs) -> edi (nfs) -> mars`
+
+## Accessing the HPC remotely (VPN)
+
+A VPN connection is required to access the HPC remotely.
+FSU uses the Cisco Anyconnect protocol for VPN purposes and recommends to use the ["Cisco Anyconnect Client"](https://www.uni-jena.de/VPN_Windows_Apple_Mobile).
+
+This is a GUI which requires manual connect/disconnect actions.
+In addition, the Cisco Anyconnect client is known to be slow and laggy (sorry no references here, just personal experience).
+The open-source alternative [openconnect](https://gitlab.com/openconnect/openconnect) does a much better job - and comes with a powerful CLI implementation.
+If a GUI is preferred, have a look [here](https://openconnect.github.io/openconnect-gui/) (looks like in Windows there is no way around the GUI?).
+
+**Installation**
+
+- macOS: `brew install openconnect`
+- Windows: `choco install openconnect-gui` or downloading the [GUI](https://openconnect.github.io/openconnect-gui/) directly
+
+**Usage**
+
+On a UNIX-based system:
+
+Start: `echo <PASSWORD> | sudo openconnect --user=<USER>@uni-jena.de --passwd-on-stdin --background vpn.uni-jena.de`
+Stop: `sudo killall -SIGINT openconnect`
+
+On Windows: Sorry, not using Windows - feel free to add this info here.
 
 ### Unix
 
@@ -138,7 +162,7 @@ To do so, please follow these steps:
 1. Login to _Jupiter_ and create the desired folders.
     The public URL relates as follows to the local directory:
 
-    `https://jupiter.geogr.uni-jena.de/<folder>` -> `/home/www/<folder>` 
+    `https://jupiter.geogr.uni-jena.de/<folder>` -> `/home/www/<folder>`
 1. Copy your files from the cluster to the desired location on _Jupiter_ using the following code
 
     ```{bash eval=FALSE}
@@ -148,7 +172,7 @@ To do so, please follow these steps:
     ```
 
     This code will only copy files that have changed when being compared to the last execution so you can safely automate the call into your workflow.
-    
+
 Since all these contents will be available to everyone, you want to add a README.md file to your directory listing as well as an Impressum.
 Even though no one usually knows this URL by default, be careful about sharing sensible files.
 
