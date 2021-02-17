@@ -4,9 +4,9 @@ hardware
 software
 data-storage
 accessing-files-from-your-local-computer
-accessing-the-hpc-remotely-vpn
 unix
 windows
+accessing-the-hpc-remotely-vpn
 sharing-of-results
 workflowr
 local-web-server
