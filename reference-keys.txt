@@ -4,6 +4,7 @@ hardware
 software
 data-storage
 accessing-files-from-your-local-computer
+accessing-the-hpc-remotely-vpn
 unix
 windows
 sharing-of-results
