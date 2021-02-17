@@ -97,6 +97,28 @@ If you really run in trouble with transfer speed, you could directly connect to 
 
 Otherwise, the route is as follows: `<local> (sshfs) -> edi (nfs) -> mars`
 
+### Unix
+
+For Unix system, the following command can be used
+
+```sh
+sudo sshfs -o reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa,allow_other,cache=yes,kernel_cache,compression=no,default_permissions,uid=1000,gid=100,umask=0 <username>@141.35.158.107:/ <local-directory>
+```
+
+The mount process is passwordless if you do it via SSH (i.e. via your `~/.ssh/id_rsa` key).
+Note that the mount is actually performed by the root user, so you need to copy your SSH key to the root user: `cp ~/.ssh/id_rsa /root/.ssh/id_rsa`.
+
+For convenience you can create an executable script that performs this action every time you need it.
+
+```{block, type='rmdcaution'}
+Auto-mount during boot via `fstab` is not recommended since sometimes the network is not yet up when the mount is executed.
+This applies especially if you are not in the office but accessing the server from outside.
+```
+
+### Windows
+
+Please install [sshfs-win](https://github.com/billziss-gh/sshfs-win) and follow the instructions.
+
 ## Accessing the HPC remotely (VPN)
 
 A VPN connection is required to access the HPC remotely.
@@ -120,28 +142,6 @@ Start: `echo <PASSWORD> | sudo openconnect --user=<USER>@uni-jena.de --passwd-on
 Stop: `sudo killall -SIGINT openconnect`
 
 On Windows: Sorry, not using Windows - feel free to add this info here.
-
-### Unix
-
-For Unix system, the following command can be used
-
-```sh
-sudo sshfs -o reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa,allow_other,cache=yes,kernel_cache,compression=no,default_permissions,uid=1000,gid=100,umask=0 <username>@141.35.158.107:/ <local-directory>
-```
-
-The mount process is passwordless if you do it via SSH (i.e. via your `~/.ssh/id_rsa` key).
-Note that the mount is actually performed by the root user, so you need to copy your SSH key to the root user: `cp ~/.ssh/id_rsa /root/.ssh/id_rsa`.
-
-For convenience you can create an executable script that performs this action every time you need it.
-
-```{block, type='rmdcaution'}
-Auto-mount during boot via `fstab` is not recommended since sometimes the network is not yet up when the mount is executed.
-This applies especially if you are not in the office but accessing the server from outside.
-```
-
-### Windows
-
-Please install [sshfs-win](https://github.com/billziss-gh/sshfs-win) and follow the instructions.
 
 ## Sharing of Results
 
