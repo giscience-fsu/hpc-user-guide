@@ -16,15 +16,15 @@ At first this might seem to be a more complex way to run R code than the interac
 But with time you will value the benefits of this approach:
 
 - By being forced to "functionize" your code and putting in into smaller pieces, you'll diverge from long R scripts
-- In combination with [drake](https://github.com/ropensci/drake) you are able to reproducibly track already built targets and parallelize the building of intermediate targets
+- In combination with [drake](https://github.com/ropensci/drake) you are able to track already built targets and parallelize the building of intermediate targets
 
-[drake](https://github.com/ropensci/drake) provides an interface to `clustermq` giving you the possibility of running multiple "targets" (which you can think of as one R script or one intermediate step) in parallel on the HPC.
+[drake](https://github.com/ropensci/drake) or its successor [targets](https://github.com/ropensci/targets) provides an interface to `clustermq` giving you the possibility of running multiple "targets" (which you can think of as one R script or one intermediate step) in parallel on the HPC.
 These "targets" can again be parallelized.
 For more information see the [drake manual](https://ropenscilabs.github.io/drake-manual/) and especially the section about [HPC computing](https://ropenscilabs.github.io/drake-manual/hpc.html).
 
 Is is highly recommended that you set up an [SSH key](https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server) (in case you have not done that already) for passwordless log in.
 
-Even thouhg _drake_ is highly recommend, if you do not want to use it, you can also use `clustermq::Q()` directly.
+Even though {drake} is highly recommend, if you do not want to use it, you can also use `clustermq::Q()` directly.
 And **no**, there is no other way to submit your jobs to the compute nodes of the cluster than by using any of the tools mentioned above.
 
 See also the section [best practice](#best-practice) for more information on how to get started.

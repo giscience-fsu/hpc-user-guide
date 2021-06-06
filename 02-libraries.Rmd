@@ -2,6 +2,13 @@
 
 ## Introduction
 
+```{block, type='rmdcaution'}
+Please note that RStudio Workbench is decoupled from Slurm.
+Everything which should be run on the nodes via Slurm requires to have the respective env modules loaded in the Slurm template file whereas if you run something in RStudio server, the libraries installed in the underlying Ubuntu 20.04 container will be used.
+```
+
+The following part only deals with the Spack configuration side as everything in the container should just work (with respect to R).
+
 Most system relevant libraries are installed via [Spack](spack.io).
 However, as a user you do not need to worry about this since you are loading everything via "environment modules".
 Available modules can be queried using `modules avail`.
@@ -81,21 +88,18 @@ python-3.7.4-gcc-9.2.0-nbjbfzi
 curl-7.63.0-gcc-9.2.0-cq4w37y
 ```
 
-You might wonder why you shouldn't add a R version to this list?
-The answer is that it will conflict with RStudio-Server.
-Whenever opening a session, your `~/.bashrc` file is sourced.
-If you specify an R version there, it will always override what is specified in the RStudio-Server settings related to R-versions.
-So yes, you always need to specifically load R when logging into a new session.
+You might wonder why you shouldn't add a R version to this list? Good question!
 
-Also make sure that `GDAL` and friends are loaded in your `.bashrc` file as otherwise RStudio Server will not find them.
-
-If you need to load specific modules for a project, try to [create a wrapper for your project](#wrapper).
+You can load an R module by default - just note that it will not have an effect on RStudio Workbench.
+And for all Slurm project configurations you should specify which R version to use within the template itself and not rely on a default set somewhere.
 
 ## R
 
+### SLURM
+
 All versions from v3.4.4 upwards are installed.
 
-To load a specific R version, load the specific environment module
+To load a specific R version for Slurm usage, load the specific environment module
 
 ```sh
 # loads R v3.5.2
@@ -125,9 +129,18 @@ When compiling R with the use of external BLAS/LAPACK, `openblas` tailors to the
 
 The use of the R internal BLAS/LAPACK comes with a substantial decrease in speed for numerical applications.
 
-## RStudio Server
+### RStudio Workbench
 
-RStudio Server Pro is running on port 8787 (https://edi.geogr.uni-jena.de:8787).
+For RStudio Workbench, R interpreters are installed within the image.
+
+## RStudio Workbench
+
+RStudio Workbench is running on port 8787 (https://edi.geogr.uni-jena.de:8787) (legacy) and directly on https://edi.geogr.uni-jena.de/.
+
+The service is running in a docker container (with Ubuntu 20.04 as the OS).
+Hence, a new terminal will start a terminal with Ubuntu 20.04 as the underlying OS.
+The service is decoupled from the CentOS host system.
+Also the R interpreters are different to the ones used in Slurm jobs which are environment modules via Spack.
 
 ## Shiny Server
 
@@ -144,6 +157,7 @@ Exemplary apps:
 ## Libraries
 
 If you cannot find a module you want to use, check it Spack supports it via `spack list <module>` and contact an admin to install it for you.
+The following subsections refer to installations on the host, not RStudio Workbench.
 
 ### Docker
 
@@ -225,11 +239,11 @@ When installing a package now, you will occasionally see that the `gcc` lines ar
 This means that this `gcc` call was already executed once and is now loaded from the cache rather than being run again.
 This saves a lot of time, especially for packages that take long to install (`dplyr`, `Rcpp`, `stringi`).
 
-#### Create a wrapper for your project {#wrapper}
+#### Create a bash alias for your project {#wrapper}
 
-Usually you might want to use a _packrat_ library in a specific directory with a specific R version.
+Often you might want to use an {renv} library in a specific directory with a specific R version.
 Rather than navigating there all the time by hand and loading the R version manually, you can create an alias that does this for you.
-You can of course also use this approach without _packrat_ - just to load a specific version. 
+You can of course also use this approach without {renv}  - just to load a specific version. 
 
 ```
 alias my-project="cd /path/to/project && <load custom env module> && r361"
