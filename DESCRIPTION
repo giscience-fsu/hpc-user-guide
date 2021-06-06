@@ -1,7 +1,13 @@
-Package: hpc-user-guide
 Type: Book
+Package: hpc-user-guide
 Title: Does not matter.
 Version: 0.0.1
-Imports: bookdown
-Remotes: rstudio/bookdown
 URL: https://github.com/giscience-fsu/hpc-user-guide
+Imports: 
+    bookdown,
+    bslib,
+    downlit,
+    xml2
+Remotes: 
+    rstudio/bookdown
+Encoding: UTF-8
