@@ -16,7 +16,9 @@ loading-modules
 checking-loaded-modules
 default-modules
 r
-rstudio-server
+slurm
+rstudio-workbench
+rstudio-workbench-1
 shiny-server
 libraries-1
 docker

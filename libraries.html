@@ -1,206 +1,62 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
-
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Libraries and Environment Modules | HPC User Guide</title>
-  <meta name="description" content="Chapter 2 Libraries and Environment Modules | HPC User Guide" />
-  <meta name="generator" content="bookdown 0.21.11 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="Chapter 2 Libraries and Environment Modules | HPC User Guide" />
-  <meta property="og:type" content="book" />
-  
-  
-  
-  
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Libraries and Environment Modules | HPC User Guide" />
-  
-  
-  
-
-<meta name="author" content="Patrick Schratz, Jannes Muenchow" />
-
-
-<meta name="date" content="2021-04-19" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-<link rel="prev" href="index.html"/>
-<link rel="next" href="scheduler.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-
-
-<style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-
-<link rel="stylesheet" href="style.css" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 2 Libraries and Environment Modules | HPC User Guide</title>
+<meta name="author" content="Patrick Schratz, Jannes Muenchow">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS -->
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#web-address"><i class="fa fa-check"></i><b>1.1</b> Web Address</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#hardware"><i class="fa fa-check"></i><b>1.2</b> Hardware</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#software"><i class="fa fa-check"></i><b>1.3</b> Software</a></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#data-storage"><i class="fa fa-check"></i><b>1.4</b> Data storage</a></li>
-<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#accessing-files-from-your-local-computer"><i class="fa fa-check"></i><b>1.5</b> Accessing files from your local computer</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="index.html"><a href="index.html#unix"><i class="fa fa-check"></i><b>1.5.1</b> Unix</a></li>
-<li class="chapter" data-level="1.5.2" data-path="index.html"><a href="index.html#windows"><i class="fa fa-check"></i><b>1.5.2</b> Windows</a></li>
-</ul></li>
-<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#accessing-the-hpc-remotely-vpn"><i class="fa fa-check"></i><b>1.6</b> Accessing the HPC remotely (VPN)</a></li>
-<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#sharing-of-results"><i class="fa fa-check"></i><b>1.7</b> Sharing of Results</a><ul>
-<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#workflowr"><i class="fa fa-check"></i><b>1.7.1</b> <code>workflowr</code></a></li>
-<li class="chapter" data-level="1.7.2" data-path="index.html"><a href="index.html#local-web-server"><i class="fa fa-check"></i><b>1.7.2</b> Local web server</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="libraries.html"><a href="libraries.html"><i class="fa fa-check"></i><b>2</b> Libraries and Environment Modules</a><ul>
-<li class="chapter" data-level="2.1" data-path="libraries.html"><a href="libraries.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
-<li class="chapter" data-level="2.2" data-path="libraries.html"><a href="libraries.html#loading-modules"><i class="fa fa-check"></i><b>2.2</b> Loading modules</a></li>
-<li class="chapter" data-level="2.3" data-path="libraries.html"><a href="libraries.html#checking-loaded-modules"><i class="fa fa-check"></i><b>2.3</b> Checking loaded modules</a></li>
-<li class="chapter" data-level="2.4" data-path="libraries.html"><a href="libraries.html#default-modules"><i class="fa fa-check"></i><b>2.4</b> Default modules</a></li>
-<li class="chapter" data-level="2.5" data-path="libraries.html"><a href="libraries.html#r"><i class="fa fa-check"></i><b>2.5</b> R</a></li>
-<li class="chapter" data-level="2.6" data-path="libraries.html"><a href="libraries.html#rstudio-server"><i class="fa fa-check"></i><b>2.6</b> RStudio Server</a></li>
-<li class="chapter" data-level="2.7" data-path="libraries.html"><a href="libraries.html#shiny-server"><i class="fa fa-check"></i><b>2.7</b> Shiny Server</a></li>
-<li class="chapter" data-level="2.8" data-path="libraries.html"><a href="libraries.html#libraries-1"><i class="fa fa-check"></i><b>2.8</b> Libraries</a><ul>
-<li class="chapter" data-level="2.8.1" data-path="libraries.html"><a href="libraries.html#docker"><i class="fa fa-check"></i><b>2.8.1</b> Docker</a></li>
-<li class="chapter" data-level="2.8.2" data-path="libraries.html"><a href="libraries.html#osrm"><i class="fa fa-check"></i><b>2.8.2</b> OSRM</a></li>
-<li class="chapter" data-level="2.8.3" data-path="libraries.html"><a href="libraries.html#gdal"><i class="fa fa-check"></i><b>2.8.3</b> GDAL</a></li>
-</ul></li>
-<li class="chapter" data-level="2.9" data-path="libraries.html"><a href="libraries.html#getting-started"><i class="fa fa-check"></i><b>2.9</b> Getting Started</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="scheduler.html"><a href="scheduler.html"><i class="fa fa-check"></i><b>3</b> Scheduler</a><ul>
-<li class="chapter" data-level="3.1" data-path="scheduler.html"><a href="scheduler.html#first-steps"><i class="fa fa-check"></i><b>3.1</b> First steps</a></li>
-<li class="chapter" data-level="3.2" data-path="scheduler.html"><a href="scheduler.html#slurm-commands"><i class="fa fa-check"></i><b>3.2</b> SLURM commands</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="submit-jobs.html"><a href="submit-jobs.html"><i class="fa fa-check"></i><b>4</b> Submitting jobs</a><ul>
-<li class="chapter" data-level="4.1" data-path="submit-jobs.html"><a href="submit-jobs.html#clustermq-setup"><i class="fa fa-check"></i><b>4.1</b> <code>clustermq</code> setup</a></li>
-<li class="chapter" data-level="4.2" data-path="submit-jobs.html"><a href="submit-jobs.html#the-scheduler-template"><i class="fa fa-check"></i><b>4.2</b> The scheduler template</a></li>
-<li class="chapter" data-level="4.3" data-path="submit-jobs.html"><a href="submit-jobs.html#allocating-resources"><i class="fa fa-check"></i><b>4.3</b> Allocating resources</a></li>
-<li class="chapter" data-level="4.4" data-path="submit-jobs.html"><a href="submit-jobs.html#monitoring-progress"><i class="fa fa-check"></i><b>4.4</b> Monitoring progress</a></li>
-<li class="chapter" data-level="4.5" data-path="submit-jobs.html"><a href="submit-jobs.html#summary"><i class="fa fa-check"></i><b>4.5</b> Summary</a></li>
-<li class="chapter" data-level="4.6" data-path="submit-jobs.html"><a href="submit-jobs.html#best-practice"><i class="fa fa-check"></i><b>4.6</b> Best practice</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="troubleshooting-and-cautionary-notes.html"><a href="troubleshooting-and-cautionary-notes.html"><i class="fa fa-check"></i><b>5</b> Troubleshooting and Cautionary Notes</a><ul>
-<li class="chapter" data-level="5.1" data-path="troubleshooting-and-cautionary-notes.html"><a href="troubleshooting-and-cautionary-notes.html#cautionary-notes"><i class="fa fa-check"></i><b>5.1</b> Cautionary Notes</a></li>
-<li class="chapter" data-level="5.2" data-path="troubleshooting-and-cautionary-notes.html"><a href="troubleshooting-and-cautionary-notes.html#faq"><i class="fa fa-check"></i><b>5.2</b> FAQ</a></li>
-</ul></li>
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">HPC User Guide</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">HPC User Guide</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="active" href="libraries.html"><span class="header-section-number">2</span> Libraries and Environment Modules</a></li>
+<li><a class="" href="scheduler.html"><span class="header-section-number">3</span> Scheduler</a></li>
+<li><a class="" href="submit-jobs.html"><span class="header-section-number">4</span> Submitting jobs</a></li>
+<li><a class="" href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">5</span> Troubleshooting and Cautionary Notes</a></li>
+</ul>
+
+        <div class="book-extra">
+          
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="libraries" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Libraries and Environment Modules</h1>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="libraries" class="section level1">
+<h1>
+<span class="header-section-number">2</span> Libraries and Environment Modules<a class="anchor" aria-label="anchor" href="#libraries"><i class="fas fa-link"></i></a>
+</h1>
 <div id="introduction" class="section level2">
-<h2><span class="header-section-number">2.1</span> Introduction</h2>
+<h2>
+<span class="header-section-number">2.1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction"><i class="fas fa-link"></i></a>
+</h2>
+<div class="rmdcaution">
+<p>
+Please note that RStudio Workbench is decoupled from Slurm. Everything which should be run on the nodes via Slurm requires to have the respective env modules loaded in the Slurm template file whereas if you run something in RStudio server, the libraries installed in the underlying Ubuntu 20.04 container will be used.
+</p>
+</div>
+<p>The following part only deals with the Spack configuration side as everything in the container should just work (with respect to R).</p>
 <p>Most system relevant libraries are installed via <a href="spack.io">Spack</a>.
 However, as a user you do not need to worry about this since you are loading everything via “environment modules”.
 Available modules can be queried using <code>modules avail</code>.</p>
@@ -215,7 +71,9 @@ Available modules can be queried using <code>modules avail</code>.</p>
 <span id="cb4-5"><a href="libraries.html#cb4-5"></a>   <span class="ex">fish-3.0.0-gcc-9.2.0-gdyab6r</span>      </span></code></pre></div>
 </div>
 <div id="loading-modules" class="section level2">
-<h2><span class="header-section-number">2.2</span> Loading modules</h2>
+<h2>
+<span class="header-section-number">2.2</span> Loading modules<a class="anchor" aria-label="anchor" href="#loading-modules"><i class="fas fa-link"></i></a>
+</h2>
 <p>Modules can be loaded via <code>module load &lt;module&gt;</code>.</p>
 <p>First, you need to load a C compiler as most programs depend on it.
 This module is the only one that you should which uses <code>gcc-4.8.5</code>.
@@ -227,11 +85,15 @@ Make sure to also put this one into your <code>~/.bashrc</code> file!</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="libraries.html#cb7-1"></a><span class="ex">gdalinfo</span> --version</span></code></pre></div>
 </div>
 <div id="checking-loaded-modules" class="section level2">
-<h2><span class="header-section-number">2.3</span> Checking loaded modules</h2>
+<h2>
+<span class="header-section-number">2.3</span> Checking loaded modules<a class="anchor" aria-label="anchor" href="#checking-loaded-modules"><i class="fas fa-link"></i></a>
+</h2>
 <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="libraries.html#cb8-1"></a><span class="ex">module</span> list</span></code></pre></div>
 </div>
 <div id="default-modules" class="section level2">
-<h2><span class="header-section-number">2.4</span> Default modules</h2>
+<h2>
+<span class="header-section-number">2.4</span> Default modules<a class="anchor" aria-label="anchor" href="#default-modules"><i class="fas fa-link"></i></a>
+</h2>
 <p>It is useful to have some modules loaded by default when logging in to the server.
 Simply add them to <code>~/.bashrc</code>.</p>
 <p>When running R for spatial analysis, the following are required:</p>
@@ -249,41 +111,58 @@ Simply add them to <code>~/.bashrc</code>.</p>
 <span id="cb10-3"><a href="libraries.html#cb10-3"></a><span class="ex">ccache-3.3.4-gcc-9.2.0-7klqklq</span></span>
 <span id="cb10-4"><a href="libraries.html#cb10-4"></a><span class="ex">python-3.7.4-gcc-9.2.0-nbjbfzi</span></span>
 <span id="cb10-5"><a href="libraries.html#cb10-5"></a><span class="ex">curl-7.63.0-gcc-9.2.0-cq4w37y</span></span></code></pre></div>
-<p>You might wonder why you shouldn’t add a R version to this list?
-The answer is that it will conflict with RStudio-Server.
-Whenever opening a session, your <code>~/.bashrc</code> file is sourced.
-If you specify an R version there, it will always override what is specified in the RStudio-Server settings related to R-versions.
-So yes, you always need to specifically load R when logging into a new session.</p>
-<p>Also make sure that <code>GDAL</code> and friends are loaded in your <code>.bashrc</code> file as otherwise RStudio Server will not find them.</p>
-<p>If you need to load specific modules for a project, try to <a href="libraries.html#wrapper">create a wrapper for your project</a>.</p>
+<p>You might wonder why you shouldn’t add a R version to this list? Good question!</p>
+<p>You can load an R module by default - just note that it will not have an effect on RStudio Workbench.
+And for all Slurm project configurations you should specify which R version to use within the template itself and not rely on a default set somewhere.</p>
 </div>
 <div id="r" class="section level2">
-<h2><span class="header-section-number">2.5</span> R</h2>
+<h2>
+<span class="header-section-number">2.5</span> R<a class="anchor" aria-label="anchor" href="#r"><i class="fas fa-link"></i></a>
+</h2>
+<div id="slurm" class="section level3">
+<h3>
+<span class="header-section-number">2.5.1</span> SLURM<a class="anchor" aria-label="anchor" href="#slurm"><i class="fas fa-link"></i></a>
+</h3>
 <p>All versions from v3.4.4 upwards are installed.</p>
-<p>To load a specific R version, load the specific environment module</p>
+<p>To load a specific R version for Slurm usage, load the specific environment module</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="libraries.html#cb11-1"></a><span class="co"># loads R v3.5.2</span></span>
 <span id="cb11-2"><a href="libraries.html#cb11-2"></a><span class="ex">module</span> load r-3.5.2-gcc-9.2.0-oxo76vo</span></code></pre></div>
 <p>and then execute <code>R</code>.</p>
 <p>You might find the following aliases helpful which you can put into <code>~/.bashrc</code>:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="libraries.html#cb12-1"></a><span class="bu">alias</span> r344=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.4.4-hobcfrryiwu34etqvf4khv427wwkxdf5/rlib/R &amp;&amp; radian&quot;</span></span>
-<span id="cb12-2"><a href="libraries.html#cb12-2"></a><span class="bu">alias</span> r350=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.0-jx2cc3ecnk4zkfz3kqwomwsm5rpfouiv/rlib/R &amp;&amp; radian&quot;</span></span>
-<span id="cb12-3"><a href="libraries.html#cb12-3"></a><span class="bu">alias</span> r351=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.1-h4fvapuqf65avikja735xn5lzyildzzi/rlib/R &amp;&amp; radian&quot;</span></span>
-<span id="cb12-4"><a href="libraries.html#cb12-4"></a><span class="bu">alias</span> r352=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.2-oxo76vo5ceamc2qp6nfr6zvcqstvzksb/rlib/R &amp;&amp; radian&quot;</span></span>
-<span id="cb12-5"><a href="libraries.html#cb12-5"></a><span class="bu">alias</span> r353=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.3-a75bebsahiaaz6lrcdallnjprx3iybjv/rlib/R &amp;&amp; radian&quot;</span></span>
-<span id="cb12-6"><a href="libraries.html#cb12-6"></a><span class="bu">alias</span> r360=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.0-2sbeu7xbnocpahdm7afuonsumblmgi5j/rlib/R &amp;&amp; radian&quot;</span></span>
-<span id="cb12-7"><a href="libraries.html#cb12-7"></a><span class="bu">alias</span> r361=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.1-j25wr6zcofibs2zfjwg37357rjj26lqb/rlib/R &amp;&amp; radian&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="libraries.html#cb12-1"></a><span class="bu">alias</span> r344=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.4.4-hobcfrryiwu34etqvf4khv427wwkxdf5/rlib/R &amp;&amp; radian"</span></span>
+<span id="cb12-2"><a href="libraries.html#cb12-2"></a><span class="bu">alias</span> r350=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.0-jx2cc3ecnk4zkfz3kqwomwsm5rpfouiv/rlib/R &amp;&amp; radian"</span></span>
+<span id="cb12-3"><a href="libraries.html#cb12-3"></a><span class="bu">alias</span> r351=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.1-h4fvapuqf65avikja735xn5lzyildzzi/rlib/R &amp;&amp; radian"</span></span>
+<span id="cb12-4"><a href="libraries.html#cb12-4"></a><span class="bu">alias</span> r352=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.2-oxo76vo5ceamc2qp6nfr6zvcqstvzksb/rlib/R &amp;&amp; radian"</span></span>
+<span id="cb12-5"><a href="libraries.html#cb12-5"></a><span class="bu">alias</span> r353=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.3-a75bebsahiaaz6lrcdallnjprx3iybjv/rlib/R &amp;&amp; radian"</span></span>
+<span id="cb12-6"><a href="libraries.html#cb12-6"></a><span class="bu">alias</span> r360=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.0-2sbeu7xbnocpahdm7afuonsumblmgi5j/rlib/R &amp;&amp; radian"</span></span>
+<span id="cb12-7"><a href="libraries.html#cb12-7"></a><span class="bu">alias</span> r361=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.1-j25wr6zcofibs2zfjwg37357rjj26lqb/rlib/R &amp;&amp; radian"</span></span></code></pre></div>
 <p>This enables you to launch the specific R version using the set command, e.g. <code>r360</code> will launch R v3.6.0.</p>
 <p><strong>BLAS/LAPACK</strong></p>
 <p>Unfortunately we cannot use an external BLAS/LAPACK like <code>openblas</code> due to the different architectures on the nodes.
 When compiling R with the use of external BLAS/LAPACK, <code>openblas</code> tailors to the arch of the main node (threadripper) and specific processes (e.g. function from the <code>mgcv</code>) package will segfault</p>
 <p>The use of the R internal BLAS/LAPACK comes with a substantial decrease in speed for numerical applications.</p>
 </div>
-<div id="rstudio-server" class="section level2">
-<h2><span class="header-section-number">2.6</span> RStudio Server</h2>
-<p>RStudio Server Pro is running on port 8787 (<a href="https://edi.geogr.uni-jena.de:8787" class="uri">https://edi.geogr.uni-jena.de:8787</a>).</p>
+<div id="rstudio-workbench" class="section level3">
+<h3>
+<span class="header-section-number">2.5.2</span> RStudio Workbench<a class="anchor" aria-label="anchor" href="#rstudio-workbench"><i class="fas fa-link"></i></a>
+</h3>
+<p>For RStudio Workbench, R interpreters are installed within the image.</p>
+</div>
+</div>
+<div id="rstudio-workbench-1" class="section level2">
+<h2>
+<span class="header-section-number">2.6</span> RStudio Workbench<a class="anchor" aria-label="anchor" href="#rstudio-workbench-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>RStudio Workbench is running on port 8787 (<a href="https://edi.geogr.uni-jena.de:8787" class="uri">https://edi.geogr.uni-jena.de:8787</a>) (legacy) and directly on <a href="https://edi.geogr.uni-jena.de/" class="uri">https://edi.geogr.uni-jena.de/</a>.</p>
+<p>The service is running in a docker container (with Ubuntu 20.04 as the OS).
+Hence, a new terminal will start a terminal with Ubuntu 20.04 as the underlying OS.
+The service is decoupled from the CentOS host system.
+Also the R interpreters are different to the ones used in Slurm jobs which are environment modules via Spack.</p>
 </div>
 <div id="shiny-server" class="section level2">
-<h2><span class="header-section-number">2.7</span> Shiny Server</h2>
+<h2>
+<span class="header-section-number">2.7</span> Shiny Server<a class="anchor" aria-label="anchor" href="#shiny-server"><i class="fas fa-link"></i></a>
+</h2>
 <p>Shiny server is running on port 3838 with user support.
 This means users can place apps in <code>$HOME/Shinyapps/</code> and they will be deployed as <code>http://edi.geogr.uni-jena.de:3838/&lt;username&gt;/&lt;appname&gt;</code>.</p>
 <p>Note the <code>http</code> (<code>https</code> is only available in the Pro version).</p>
@@ -294,31 +173,44 @@ This means users can place apps in <code>$HOME/Shinyapps/</code> and they will b
 </ul>
 </div>
 <div id="libraries-1" class="section level2">
-<h2><span class="header-section-number">2.8</span> Libraries</h2>
-<p>If you cannot find a module you want to use, check it Spack supports it via <code>spack list &lt;module&gt;</code> and contact an admin to install it for you.</p>
+<h2>
+<span class="header-section-number">2.8</span> Libraries<a class="anchor" aria-label="anchor" href="#libraries-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>If you cannot find a module you want to use, check it Spack supports it via <code>spack list &lt;module&gt;</code> and contact an admin to install it for you.
+The following subsections refer to installations on the host, not RStudio Workbench.</p>
 <div id="docker" class="section level3">
-<h3><span class="header-section-number">2.8.1</span> Docker</h3>
+<h3>
+<span class="header-section-number">2.8.1</span> Docker<a class="anchor" aria-label="anchor" href="#docker"><i class="fas fa-link"></i></a>
+</h3>
 <p>Docker is installed on the frontend only (for example to convert .html to .pdf).
 To use <code>docker</code>, your user needs to be added to the “docker” group.
 Please contact an Admin in case you want to use it.</p>
 </div>
 <div id="osrm" class="section level3">
-<h3><span class="header-section-number">2.8.2</span> OSRM</h3>
+<h3>
+<span class="header-section-number">2.8.2</span> OSRM<a class="anchor" aria-label="anchor" href="#osrm"><i class="fas fa-link"></i></a>
+</h3>
 <p><a href="https://github.com/Project-OSRM/osrm-backend">Open Source Routing Machine</a> is installed.</p>
-<p>Start the server with <code>osrm-routed</code>.<br />
+<p>Start the server with <code>osrm-routed</code>.<br>
 More information can be found <a href="https://github.com/Project-OSRM/osrm-backend/wiki/Running-OSRM">here</a>.</p>
 </div>
 <div id="gdal" class="section level3">
-<h3><span class="header-section-number">2.8.3</span> GDAL</h3>
+<h3>
+<span class="header-section-number">2.8.3</span> GDAL<a class="anchor" aria-label="anchor" href="#gdal"><i class="fas fa-link"></i></a>
+</h3>
 <p>Check <code>module avail</code> and look for GDAL to see which versions are available.</p>
 </div>
 </div>
 <div id="getting-started" class="section level2">
-<h2><span class="header-section-number">2.9</span> Getting Started</h2>
+<h2>
+<span class="header-section-number">2.9</span> Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"><i class="fas fa-link"></i></a>
+</h2>
 <p>If you worked through all these steps, you are almost good to go.
 Here are have some further recommendations to make your life easier.</p>
 <div id="byobu" class="section level4">
-<h4><span class="header-section-number">2.9.0.1</span> byobu</h4>
+<h4>
+<span class="header-section-number">2.9.0.1</span> byobu<a class="anchor" aria-label="anchor" href="#byobu"><i class="fas fa-link"></i></a>
+</h4>
 <p><code>byobu</code> is a wrapper for your SSH session that makes it possible to close your terminal session and not loose the command running in it.
 If you start long running jobs, you can safely start them in a <code>byobu</code> window without worrying about them to quit once you shut down your machine.</p>
 <p>Run <code>byobu</code> after being logged in and a <code>byobu</code> session will be launched.</p>
@@ -326,7 +218,9 @@ If you start long running jobs, you can safely start them in a <code>byobu</code
 Once you have multiple ones open, an interactive prompt will ask you which one you want to start next time.</p>
 </div>
 <div id="radian" class="section level4">
-<h4><span class="header-section-number">2.9.0.2</span> radian</h4>
+<h4>
+<span class="header-section-number">2.9.0.2</span> radian<a class="anchor" aria-label="anchor" href="#radian"><i class="fas fa-link"></i></a>
+</h4>
 <p><code>radian</code> is an optimized R command line tool.
 You will notice the benefits compared to the default <code>R</code> once you start using it.
 You need to install it via <code>pip</code> which is already installed if you installed <code>python</code>.</p>
@@ -340,7 +234,9 @@ See <a href="#R">here</a> for more details.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="libraries.html#cb14-1"></a><span class="bu">export</span> <span class="va">PATH=</span>~/.local/bin:<span class="va">$PATH</span></span></code></pre></div>
 </div>
 <div id="ccache" class="section level4">
-<h4><span class="header-section-number">2.9.0.3</span> ccache</h4>
+<h4>
+<span class="header-section-number">2.9.0.3</span> ccache<a class="anchor" aria-label="anchor" href="#ccache"><i class="fas fa-link"></i></a>
+</h4>
 <p>If you load <code>ccache</code>, you will speed-up source installations of R packages a lot.
 (On Linux, all R packages are installed from source.)
 Besides loading <code>ccache</code>, you also need to create the following file in your home directory (<code>~/.R/Makevars</code>):</p>
@@ -360,70 +256,69 @@ This means that this <code>gcc</code> call was already executed once and is now 
 This saves a lot of time, especially for packages that take long to install (<code>dplyr</code>, <code>Rcpp</code>, <code>stringi</code>).</p>
 </div>
 <div id="wrapper" class="section level4">
-<h4><span class="header-section-number">2.9.0.4</span> Create a wrapper for your project</h4>
-<p>Usually you might want to use a <em>packrat</em> library in a specific directory with a specific R version.
+<h4>
+<span class="header-section-number">2.9.0.4</span> Create a bash alias for your project<a class="anchor" aria-label="anchor" href="#wrapper"><i class="fas fa-link"></i></a>
+</h4>
+<p>Often you might want to use an {renv} library in a specific directory with a specific R version.
 Rather than navigating there all the time by hand and loading the R version manually, you can create an alias that does this for you.
-You can of course also use this approach without <em>packrat</em> - just to load a specific version.</p>
-<pre><code>alias my-project=&quot;cd /path/to/project &amp;&amp; &lt;load custom env module&gt; &amp;&amp; r361&quot;</code></pre>
+You can of course also use this approach without {renv} - just to load a specific version.</p>
+<pre><code>alias my-project="cd /path/to/project &amp;&amp; &lt;load custom env module&gt; &amp;&amp; r361"</code></pre>
 <p>Put this in your <code>.bashrc</code> and save time :)</p>
 
 </div>
 </div>
 </div>
-            </section>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"><span class="header-section-number">1</span> Introduction</a></div>
+<div class="next"><a href="scheduler.html"><span class="header-section-number">3</span> Scheduler</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#libraries"><span class="header-section-number">2</span> Libraries and Environment Modules</a></li>
+<li><a class="nav-link" href="#introduction"><span class="header-section-number">2.1</span> Introduction</a></li>
+<li><a class="nav-link" href="#loading-modules"><span class="header-section-number">2.2</span> Loading modules</a></li>
+<li><a class="nav-link" href="#checking-loaded-modules"><span class="header-section-number">2.3</span> Checking loaded modules</a></li>
+<li><a class="nav-link" href="#default-modules"><span class="header-section-number">2.4</span> Default modules</a></li>
+<li>
+<a class="nav-link" href="#r"><span class="header-section-number">2.5</span> R</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#slurm"><span class="header-section-number">2.5.1</span> SLURM</a></li>
+<li><a class="nav-link" href="#rstudio-workbench"><span class="header-section-number">2.5.2</span> RStudio Workbench</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#rstudio-workbench-1"><span class="header-section-number">2.6</span> RStudio Workbench</a></li>
+<li><a class="nav-link" href="#shiny-server"><span class="header-section-number">2.7</span> Shiny Server</a></li>
+<li>
+<a class="nav-link" href="#libraries-1"><span class="header-section-number">2.8</span> Libraries</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#docker"><span class="header-section-number">2.8.1</span> Docker</a></li>
+<li><a class="nav-link" href="#osrm"><span class="header-section-number">2.8.2</span> OSRM</a></li>
+<li><a class="nav-link" href="#gdal"><span class="header-section-number">2.8.3</span> GDAL</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#getting-started"><span class="header-section-number">2.9</span> Getting Started</a></li>
+</ul>
 
-          </div>
-        </div>
-      </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="scheduler.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>HPC User Guide</strong>" was written by Patrick Schratz, Jannes Muenchow. It was last built on 2021-06-06.</p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://venus.geogr.uni-jena.de/giscience/hpc-user-guide/edit/master/02-libraries.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["hpc-user-guide-fus-jena.pdf", "hpc-user-guide-fus-jena.epub"]
-});
-});
-</script>
 
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
 </body>
-
 </html>

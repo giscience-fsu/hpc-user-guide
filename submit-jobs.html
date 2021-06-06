@@ -1,213 +1,64 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
-
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Submitting jobs | HPC User Guide</title>
-  <meta name="description" content="Chapter 4 Submitting jobs | HPC User Guide" />
-  <meta name="generator" content="bookdown 0.21.11 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="Chapter 4 Submitting jobs | HPC User Guide" />
-  <meta property="og:type" content="book" />
-  
-  
-  
-  
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Submitting jobs | HPC User Guide" />
-  
-  
-  
-
-<meta name="author" content="Patrick Schratz, Jannes Muenchow" />
-
-
-<meta name="date" content="2021-04-19" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-<link rel="prev" href="scheduler.html"/>
-<link rel="next" href="troubleshooting-and-cautionary-notes.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-
-
-<style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-
-<link rel="stylesheet" href="style.css" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 4 Submitting jobs | HPC User Guide</title>
+<meta name="author" content="Patrick Schratz, Jannes Muenchow">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS -->
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#web-address"><i class="fa fa-check"></i><b>1.1</b> Web Address</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#hardware"><i class="fa fa-check"></i><b>1.2</b> Hardware</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#software"><i class="fa fa-check"></i><b>1.3</b> Software</a></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#data-storage"><i class="fa fa-check"></i><b>1.4</b> Data storage</a></li>
-<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#accessing-files-from-your-local-computer"><i class="fa fa-check"></i><b>1.5</b> Accessing files from your local computer</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="index.html"><a href="index.html#unix"><i class="fa fa-check"></i><b>1.5.1</b> Unix</a></li>
-<li class="chapter" data-level="1.5.2" data-path="index.html"><a href="index.html#windows"><i class="fa fa-check"></i><b>1.5.2</b> Windows</a></li>
-</ul></li>
-<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#accessing-the-hpc-remotely-vpn"><i class="fa fa-check"></i><b>1.6</b> Accessing the HPC remotely (VPN)</a></li>
-<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#sharing-of-results"><i class="fa fa-check"></i><b>1.7</b> Sharing of Results</a><ul>
-<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#workflowr"><i class="fa fa-check"></i><b>1.7.1</b> <code>workflowr</code></a></li>
-<li class="chapter" data-level="1.7.2" data-path="index.html"><a href="index.html#local-web-server"><i class="fa fa-check"></i><b>1.7.2</b> Local web server</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="libraries.html"><a href="libraries.html"><i class="fa fa-check"></i><b>2</b> Libraries and Environment Modules</a><ul>
-<li class="chapter" data-level="2.1" data-path="libraries.html"><a href="libraries.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
-<li class="chapter" data-level="2.2" data-path="libraries.html"><a href="libraries.html#loading-modules"><i class="fa fa-check"></i><b>2.2</b> Loading modules</a></li>
-<li class="chapter" data-level="2.3" data-path="libraries.html"><a href="libraries.html#checking-loaded-modules"><i class="fa fa-check"></i><b>2.3</b> Checking loaded modules</a></li>
-<li class="chapter" data-level="2.4" data-path="libraries.html"><a href="libraries.html#default-modules"><i class="fa fa-check"></i><b>2.4</b> Default modules</a></li>
-<li class="chapter" data-level="2.5" data-path="libraries.html"><a href="libraries.html#r"><i class="fa fa-check"></i><b>2.5</b> R</a></li>
-<li class="chapter" data-level="2.6" data-path="libraries.html"><a href="libraries.html#rstudio-server"><i class="fa fa-check"></i><b>2.6</b> RStudio Server</a></li>
-<li class="chapter" data-level="2.7" data-path="libraries.html"><a href="libraries.html#shiny-server"><i class="fa fa-check"></i><b>2.7</b> Shiny Server</a></li>
-<li class="chapter" data-level="2.8" data-path="libraries.html"><a href="libraries.html#libraries-1"><i class="fa fa-check"></i><b>2.8</b> Libraries</a><ul>
-<li class="chapter" data-level="2.8.1" data-path="libraries.html"><a href="libraries.html#docker"><i class="fa fa-check"></i><b>2.8.1</b> Docker</a></li>
-<li class="chapter" data-level="2.8.2" data-path="libraries.html"><a href="libraries.html#osrm"><i class="fa fa-check"></i><b>2.8.2</b> OSRM</a></li>
-<li class="chapter" data-level="2.8.3" data-path="libraries.html"><a href="libraries.html#gdal"><i class="fa fa-check"></i><b>2.8.3</b> GDAL</a></li>
-</ul></li>
-<li class="chapter" data-level="2.9" data-path="libraries.html"><a href="libraries.html#getting-started"><i class="fa fa-check"></i><b>2.9</b> Getting Started</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="scheduler.html"><a href="scheduler.html"><i class="fa fa-check"></i><b>3</b> Scheduler</a><ul>
-<li class="chapter" data-level="3.1" data-path="scheduler.html"><a href="scheduler.html#first-steps"><i class="fa fa-check"></i><b>3.1</b> First steps</a></li>
-<li class="chapter" data-level="3.2" data-path="scheduler.html"><a href="scheduler.html#slurm-commands"><i class="fa fa-check"></i><b>3.2</b> SLURM commands</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="submit-jobs.html"><a href="submit-jobs.html"><i class="fa fa-check"></i><b>4</b> Submitting jobs</a><ul>
-<li class="chapter" data-level="4.1" data-path="submit-jobs.html"><a href="submit-jobs.html#clustermq-setup"><i class="fa fa-check"></i><b>4.1</b> <code>clustermq</code> setup</a></li>
-<li class="chapter" data-level="4.2" data-path="submit-jobs.html"><a href="submit-jobs.html#the-scheduler-template"><i class="fa fa-check"></i><b>4.2</b> The scheduler template</a></li>
-<li class="chapter" data-level="4.3" data-path="submit-jobs.html"><a href="submit-jobs.html#allocating-resources"><i class="fa fa-check"></i><b>4.3</b> Allocating resources</a></li>
-<li class="chapter" data-level="4.4" data-path="submit-jobs.html"><a href="submit-jobs.html#monitoring-progress"><i class="fa fa-check"></i><b>4.4</b> Monitoring progress</a></li>
-<li class="chapter" data-level="4.5" data-path="submit-jobs.html"><a href="submit-jobs.html#summary"><i class="fa fa-check"></i><b>4.5</b> Summary</a></li>
-<li class="chapter" data-level="4.6" data-path="submit-jobs.html"><a href="submit-jobs.html#best-practice"><i class="fa fa-check"></i><b>4.6</b> Best practice</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="troubleshooting-and-cautionary-notes.html"><a href="troubleshooting-and-cautionary-notes.html"><i class="fa fa-check"></i><b>5</b> Troubleshooting and Cautionary Notes</a><ul>
-<li class="chapter" data-level="5.1" data-path="troubleshooting-and-cautionary-notes.html"><a href="troubleshooting-and-cautionary-notes.html#cautionary-notes"><i class="fa fa-check"></i><b>5.1</b> Cautionary Notes</a></li>
-<li class="chapter" data-level="5.2" data-path="troubleshooting-and-cautionary-notes.html"><a href="troubleshooting-and-cautionary-notes.html#faq"><i class="fa fa-check"></i><b>5.2</b> FAQ</a></li>
-</ul></li>
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">HPC User Guide</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">HPC User Guide</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="libraries.html"><span class="header-section-number">2</span> Libraries and Environment Modules</a></li>
+<li><a class="" href="scheduler.html"><span class="header-section-number">3</span> Scheduler</a></li>
+<li><a class="active" href="submit-jobs.html"><span class="header-section-number">4</span> Submitting jobs</a></li>
+<li><a class="" href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">5</span> Troubleshooting and Cautionary Notes</a></li>
+</ul>
+
+        <div class="book-extra">
+          
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="submit-jobs" class="section level1">
-<h1><span class="header-section-number">Chapter 4</span> Submitting jobs</h1>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="submit-jobs" class="section level1">
+<h1>
+<span class="header-section-number">4</span> Submitting jobs<a class="anchor" aria-label="anchor" href="#submit-jobs"><i class="fas fa-link"></i></a>
+</h1>
 <div id="clustermq-setup" class="section level2">
-<h2><span class="header-section-number">4.1</span> <code>clustermq</code> setup</h2>
+<h2>
+<span class="header-section-number">4.1</span> <code>clustermq</code> setup<a class="anchor" aria-label="anchor" href="#clustermq-setup"><i class="fas fa-link"></i></a>
+</h2>
 <p>Every job submission is done via <code>clustermq::Q()</code> (either directly or via <code>drake</code>).
 See the setup instructions in the <a href="https://mschubert.github.io/clustermq/">clustermq</a> package on how to setup the package.</p>
 <p>First, you need to set some options in your <code>.Rprofile</code> (on the master node or in your project root when you use <em>packrat</em>):</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="submit-jobs.html#cb20-1"></a><span class="kw">options</span>(</span>
-<span id="cb20-2"><a href="submit-jobs.html#cb20-2"></a>    <span class="dt">clustermq.scheduler =</span> <span class="st">&quot;slurm&quot;</span>,</span>
-<span id="cb20-3"><a href="submit-jobs.html#cb20-3"></a>    <span class="dt">clustermq.template =</span> <span class="st">&quot;&lt;/path/to/file/&quot;</span></span>
-<span id="cb20-4"><a href="submit-jobs.html#cb20-4"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>
+    clustermq.scheduler <span class="op">=</span> <span class="st">"slurm"</span>,
+    clustermq.template <span class="op">=</span> <span class="st">"&lt;/path/to/file/"</span>
+<span class="op">)</span></code></pre></div>
 <p>See the <a href="https://mschubert.github.io/clustermq/articles/userguide.html#slurm">package vignette</a> on how to set up the file.</p>
 <p>Note that you can have multiple <code>.Rprofile</code> files on your system:</p>
 <ol style="list-style-type: decimal">
@@ -227,7 +78,9 @@ Be aware of setting <code>n_cpus</code> in the <code>template</code> argument of
 </div>
 </div>
 <div id="the-scheduler-template" class="section level2">
-<h2><span class="header-section-number">4.2</span> The scheduler template</h2>
+<h2>
+<span class="header-section-number">4.2</span> The scheduler template<a class="anchor" aria-label="anchor" href="#the-scheduler-template"><i class="fas fa-link"></i></a>
+</h2>
 <p>To successfully submit jobs to the scheduler, you need to set the <code>.Rprofile</code> options given above.
 Note that you can add any bash commands into the scripts between the <code>SBATCH</code> section and the final R call.
 For example, one of my templates looks like this:</p>
@@ -245,19 +98,21 @@ For example, one of my templates looks like this:</p>
 <span id="cb21-12"><a href="submit-jobs.html#cb21-12"></a><span class="co"># load desired R version</span></span>
 <span id="cb21-13"><a href="submit-jobs.html#cb21-13"></a><span class="ex">module</span> load r-3.5.2-gcc-9.2.0-4syrmqv</span>
 <span id="cb21-14"><a href="submit-jobs.html#cb21-14"></a></span>
-<span id="cb21-15"><a href="submit-jobs.html#cb21-15"></a><span class="va">CMQ_AUTH=</span>{<span class="kw">{</span> <span class="ex">auth</span> <span class="kw">}</span>} <span class="ex">R</span> --no-save --no-restore -e <span class="st">&#39;clustermq:::worker(&quot;{{ master }}&quot;)&#39;</span></span></code></pre></div>
+<span id="cb21-15"><a href="submit-jobs.html#cb21-15"></a><span class="va">CMQ_AUTH=</span>{<span class="kw">{</span> <span class="ex">auth</span> <span class="kw">}</span>} <span class="ex">R</span> --no-save --no-restore -e <span class="st">'clustermq:::worker("{{ master }}")'</span></span></code></pre></div>
 <p>Note: The <code>#</code> signs are no mistakes here, they are no “comment” signs in this context.
 The <code>SBATCH</code> commands will be executed here.</p>
 <p>You can simply copy it and adjust it to your needs (set the right path to your project and specify the R version you want to use).</p>
 </div>
 <div id="allocating-resources" class="section level2">
-<h2><span class="header-section-number">4.3</span> Allocating resources</h2>
+<h2>
+<span class="header-section-number">4.3</span> Allocating resources<a class="anchor" aria-label="anchor" href="#allocating-resources"><i class="fas fa-link"></i></a>
+</h2>
 <p>There are two approaches/packages you can use:</p>
 <ul>
 <li><p><code>drake</code> (recommended)</p></li>
 <li><p><code>clustermq</code></p></li>
 </ul>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="submit-jobs.html#cb22-1"></a>drake<span class="op">::</span><span class="kw">make</span>(<span class="dt">parallelism =</span> <span class="st">&quot;clustermq&quot;</span>, <span class="dt">n_jobs =</span> <span class="dv">1</span>, </span>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="submit-jobs.html#cb22-1"></a>drake<span class="op">::</span><span class="kw">make</span>(<span class="dt">parallelism =</span> <span class="st">"clustermq"</span>, <span class="dt">n_jobs =</span> <span class="dv">1</span>, </span>
 <span id="cb22-2"><a href="submit-jobs.html#cb22-2"></a>  <span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">n_cpus =</span> <span class="op">&lt;</span>X<span class="op">&gt;</span>, <span class="dt">log_file =</span> <span class="op">&lt;</span>Y<span class="op">&gt;</span>, <span class="dt">memory =</span> <span class="op">&lt;</span>Z<span class="op">&gt;</span>))</span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="submit-jobs.html#cb23-1"></a>clustermq<span class="op">::</span><span class="kw">Q</span>(<span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">n_cpus =</span> <span class="op">&lt;</span>X<span class="op">&gt;</span>, <span class="dt">log_file =</span> <span class="op">&lt;</span>Y<span class="op">&gt;</span>, <span class="dt">memory =</span> <span class="op">&lt;</span>Z<span class="op">&gt;</span>))</span></code></pre></div>
 <p>(The individual components of these calls are explained in more detail below.)</p>
@@ -306,7 +161,9 @@ In this case, you reserve 16 CPUs from the machine but only use 11 at most. This
 If you scale down the number of CPUs, you will have more memory/cpu available.</p>
 </div>
 <div id="monitoring-progress" class="section level2">
-<h2><span class="header-section-number">4.4</span> Monitoring progress</h2>
+<h2>
+<span class="header-section-number">4.4</span> Monitoring progress<a class="anchor" aria-label="anchor" href="#monitoring-progress"><i class="fas fa-link"></i></a>
+</h2>
 <p>When submitting jobs you can track its progress by specifying a <code>log_file</code> in the <code>clustermq::Q()</code> call, e.g. <code>clustermq::Q(template = list(log_file = path/to/file))</code>.</p>
 <p>For <code>drake</code>, the equivalent is to specify <code>console_log_file()</code> in either <code>make()</code> or <code>drake_config()</code>.</p>
 <p>If your jobs are running on a node, you can SSH into the node, e.g. <code>ssh c0</code>.
@@ -315,22 +172,27 @@ Note that you can only log in if you have a running progress on a specific node.
 <p>Another option is to take a look <a href="http://141.35.158.107/ganglia/?r=hour&amp;cs=&amp;ce=&amp;m=load_one&amp;s=by+name&amp;c=OpenHPC&amp;tab=m&amp;vn=&amp;hide-hf=false">Ganglia</a> to see the load of the HPC.</p>
 </div>
 <div id="summary" class="section level2">
-<h2><span class="header-section-number">4.5</span> Summary</h2>
+<h2>
+<span class="header-section-number">4.5</span> Summary<a class="anchor" aria-label="anchor" href="#summary"><i class="fas fa-link"></i></a>
+</h2>
 <ol style="list-style-type: decimal">
-<li><p>Set up your <code>.Rprofile</code> with <code>options(clustermq.template = "/path/to/file")</code>.
+<li><p>Set up your <code>.Rprofile</code> with <code><a href="https://rdrr.io/r/base/options.html">options(clustermq.template = "/path/to/file")</a></code>.
 The <code>clustermq.template</code> should point to a SLURM template file in your $HOME or project directory.</p></li>
 <li><p>Decide which approach you want to use:</p></li>
 </ol>
 <ul>
-<li><code>drake::make(parallelism = "clustermq", n_jobs = 1, template = list(n_cpus = X, log_file = Y, memory = Z))</code> (recommended!)</li>
+<li>
+<code>drake::make(parallelism = "clustermq", n_jobs = 1, template = list(n_cpus = X, log_file = Y, memory = Z))</code> (recommended!)</li>
 <li><code>clustermq::Q(template = list(n_cpus = X, log_file = Y, memory = Z))</code></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
-<li>You need to have a Slurm template file in your project directory. This template needs to be linked in your <code>.Rprofile</code> with <code>options(clustermq.template = "/path/to/file")</code>.</li>
+<li>You need to have a Slurm template file in your project directory. This template needs to be linked in your <code>.Rprofile</code> with <code><a href="https://rdrr.io/r/base/options.html">options(clustermq.template = "/path/to/file")</a></code>.</li>
 </ol>
 </div>
 <div id="best-practice" class="section level2">
-<h2><span class="header-section-number">4.6</span> Best practice</h2>
+<h2>
+<span class="header-section-number">4.6</span> Best practice<a class="anchor" aria-label="anchor" href="#best-practice"><i class="fas fa-link"></i></a>
+</h2>
 <p>You can submit as many tasks as you want in separate R sessions, they will be processed as ranked in the queue of the scheduler.
 However, submitting single jobs that finish quickly is tedious.
 The same applies to the submission of multiple jobs in separate R sessions.</p>
@@ -339,9 +201,10 @@ By using <code>drake</code>, all of your intermediate R objects are “targets�
 You can specify any number of targets that should be build when calling <code>drake::make()</code>.
 <code>drake</code> will take care that for each target as separate job is created which is then added to the SLURM queue.</p>
 <p>For example, if you want to build three R objects named <code>object1</code>, <code>object2</code> and <code>object3</code> in parallel, one on each node:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="submit-jobs.html#cb25-1"></a>drake<span class="op">::</span><span class="kw">make</span>(plan, <span class="dt">targets =</span> <span class="kw">c</span>(<span class="st">&quot;object1&quot;</span>, <span class="st">&quot;object2&quot;</span>, <span class="st">&quot;object3&quot;</span>), <span class="dt">jobs =</span> <span class="dv">3</span>, </span>
-<span id="cb25-2"><a href="submit-jobs.html#cb25-2"></a>            <span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">n_cpus =</span> <span class="dv">16</span>, <span class="dt">memory =</span> <span class="st">&quot;100G&quot;</span>, </span>
-<span id="cb25-3"><a href="submit-jobs.html#cb25-3"></a>            <span class="dt">log_file =</span> <span class="st">&quot;/path/to/log.txt&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">drake</span><span class="fu">::</span><span class="fu">make</span><span class="op">(</span><span class="va">plan</span>, targets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"object1"</span>, <span class="st">"object2"</span>, <span class="st">"object3"</span><span class="op">)</span>, jobs <span class="op">=</span> <span class="fl">3</span>, 
+            template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>n_cpus <span class="op">=</span> <span class="fl">16</span>, memory <span class="op">=</span> <span class="st">"100G"</span>, 
+            log_file <span class="op">=</span> <span class="st">"/path/to/log.txt"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <ul>
 <li>Creates three jobs which are added to the SLURM queue</li>
 <li>Each jobs requires 16 cores</li>
@@ -353,60 +216,43 @@ You can specify any number of targets that should be build when calling <code>dr
 
 </div>
 </div>
-            </section>
+  <div class="chapter-nav">
+<div class="prev"><a href="scheduler.html"><span class="header-section-number">3</span> Scheduler</a></div>
+<div class="next"><a href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">5</span> Troubleshooting and Cautionary Notes</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#submit-jobs"><span class="header-section-number">4</span> Submitting jobs</a></li>
+<li><a class="nav-link" href="#clustermq-setup"><span class="header-section-number">4.1</span> clustermq setup</a></li>
+<li><a class="nav-link" href="#the-scheduler-template"><span class="header-section-number">4.2</span> The scheduler template</a></li>
+<li><a class="nav-link" href="#allocating-resources"><span class="header-section-number">4.3</span> Allocating resources</a></li>
+<li><a class="nav-link" href="#monitoring-progress"><span class="header-section-number">4.4</span> Monitoring progress</a></li>
+<li><a class="nav-link" href="#summary"><span class="header-section-number">4.5</span> Summary</a></li>
+<li><a class="nav-link" href="#best-practice"><span class="header-section-number">4.6</span> Best practice</a></li>
+</ul>
 
-          </div>
-        </div>
-      </div>
-<a href="scheduler.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="troubleshooting-and-cautionary-notes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>HPC User Guide</strong>" was written by Patrick Schratz, Jannes Muenchow. It was last built on 2021-06-06.</p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://venus.geogr.uni-jena.de/giscience/hpc-user-guide/edit/master/04-executing-jobs.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["hpc-user-guide-fus-jena.pdf", "hpc-user-guide-fus-jena.epub"]
-});
-});
-</script>
 
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
 </body>
-
 </html>

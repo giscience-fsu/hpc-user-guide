@@ -1,209 +1,52 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
-
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>HPC User Guide</title>
-  <meta name="description" content="HPC User Guide" />
-  <meta name="generator" content="bookdown 0.21.11 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="HPC User Guide" />
-  <meta property="og:type" content="book" />
-  
-  
-  
-  
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HPC User Guide" />
-  
-  
-  
-
-<meta name="author" content="Patrick Schratz, Jannes Muenchow" />
-
-
-<meta name="date" content="2021-04-19" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-
-<link rel="next" href="libraries.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-
-
-<style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-
-<link rel="stylesheet" href="style.css" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 1 Introduction | HPC User Guide</title>
+<meta name="author" content="Patrick Schratz, Jannes Muenchow">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS -->
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#web-address"><i class="fa fa-check"></i><b>1.1</b> Web Address</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#hardware"><i class="fa fa-check"></i><b>1.2</b> Hardware</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#software"><i class="fa fa-check"></i><b>1.3</b> Software</a></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#data-storage"><i class="fa fa-check"></i><b>1.4</b> Data storage</a></li>
-<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#accessing-files-from-your-local-computer"><i class="fa fa-check"></i><b>1.5</b> Accessing files from your local computer</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="index.html"><a href="index.html#unix"><i class="fa fa-check"></i><b>1.5.1</b> Unix</a></li>
-<li class="chapter" data-level="1.5.2" data-path="index.html"><a href="index.html#windows"><i class="fa fa-check"></i><b>1.5.2</b> Windows</a></li>
-</ul></li>
-<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#accessing-the-hpc-remotely-vpn"><i class="fa fa-check"></i><b>1.6</b> Accessing the HPC remotely (VPN)</a></li>
-<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#sharing-of-results"><i class="fa fa-check"></i><b>1.7</b> Sharing of Results</a><ul>
-<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#workflowr"><i class="fa fa-check"></i><b>1.7.1</b> <code>workflowr</code></a></li>
-<li class="chapter" data-level="1.7.2" data-path="index.html"><a href="index.html#local-web-server"><i class="fa fa-check"></i><b>1.7.2</b> Local web server</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="libraries.html"><a href="libraries.html"><i class="fa fa-check"></i><b>2</b> Libraries and Environment Modules</a><ul>
-<li class="chapter" data-level="2.1" data-path="libraries.html"><a href="libraries.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
-<li class="chapter" data-level="2.2" data-path="libraries.html"><a href="libraries.html#loading-modules"><i class="fa fa-check"></i><b>2.2</b> Loading modules</a></li>
-<li class="chapter" data-level="2.3" data-path="libraries.html"><a href="libraries.html#checking-loaded-modules"><i class="fa fa-check"></i><b>2.3</b> Checking loaded modules</a></li>
-<li class="chapter" data-level="2.4" data-path="libraries.html"><a href="libraries.html#default-modules"><i class="fa fa-check"></i><b>2.4</b> Default modules</a></li>
-<li class="chapter" data-level="2.5" data-path="libraries.html"><a href="libraries.html#r"><i class="fa fa-check"></i><b>2.5</b> R</a></li>
-<li class="chapter" data-level="2.6" data-path="libraries.html"><a href="libraries.html#rstudio-server"><i class="fa fa-check"></i><b>2.6</b> RStudio Server</a></li>
-<li class="chapter" data-level="2.7" data-path="libraries.html"><a href="libraries.html#shiny-server"><i class="fa fa-check"></i><b>2.7</b> Shiny Server</a></li>
-<li class="chapter" data-level="2.8" data-path="libraries.html"><a href="libraries.html#libraries-1"><i class="fa fa-check"></i><b>2.8</b> Libraries</a><ul>
-<li class="chapter" data-level="2.8.1" data-path="libraries.html"><a href="libraries.html#docker"><i class="fa fa-check"></i><b>2.8.1</b> Docker</a></li>
-<li class="chapter" data-level="2.8.2" data-path="libraries.html"><a href="libraries.html#osrm"><i class="fa fa-check"></i><b>2.8.2</b> OSRM</a></li>
-<li class="chapter" data-level="2.8.3" data-path="libraries.html"><a href="libraries.html#gdal"><i class="fa fa-check"></i><b>2.8.3</b> GDAL</a></li>
-</ul></li>
-<li class="chapter" data-level="2.9" data-path="libraries.html"><a href="libraries.html#getting-started"><i class="fa fa-check"></i><b>2.9</b> Getting Started</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="scheduler.html"><a href="scheduler.html"><i class="fa fa-check"></i><b>3</b> Scheduler</a><ul>
-<li class="chapter" data-level="3.1" data-path="scheduler.html"><a href="scheduler.html#first-steps"><i class="fa fa-check"></i><b>3.1</b> First steps</a></li>
-<li class="chapter" data-level="3.2" data-path="scheduler.html"><a href="scheduler.html#slurm-commands"><i class="fa fa-check"></i><b>3.2</b> SLURM commands</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="submit-jobs.html"><a href="submit-jobs.html"><i class="fa fa-check"></i><b>4</b> Submitting jobs</a><ul>
-<li class="chapter" data-level="4.1" data-path="submit-jobs.html"><a href="submit-jobs.html#clustermq-setup"><i class="fa fa-check"></i><b>4.1</b> <code>clustermq</code> setup</a></li>
-<li class="chapter" data-level="4.2" data-path="submit-jobs.html"><a href="submit-jobs.html#the-scheduler-template"><i class="fa fa-check"></i><b>4.2</b> The scheduler template</a></li>
-<li class="chapter" data-level="4.3" data-path="submit-jobs.html"><a href="submit-jobs.html#allocating-resources"><i class="fa fa-check"></i><b>4.3</b> Allocating resources</a></li>
-<li class="chapter" data-level="4.4" data-path="submit-jobs.html"><a href="submit-jobs.html#monitoring-progress"><i class="fa fa-check"></i><b>4.4</b> Monitoring progress</a></li>
-<li class="chapter" data-level="4.5" data-path="submit-jobs.html"><a href="submit-jobs.html#summary"><i class="fa fa-check"></i><b>4.5</b> Summary</a></li>
-<li class="chapter" data-level="4.6" data-path="submit-jobs.html"><a href="submit-jobs.html#best-practice"><i class="fa fa-check"></i><b>4.6</b> Best practice</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="troubleshooting-and-cautionary-notes.html"><a href="troubleshooting-and-cautionary-notes.html"><i class="fa fa-check"></i><b>5</b> Troubleshooting and Cautionary Notes</a><ul>
-<li class="chapter" data-level="5.1" data-path="troubleshooting-and-cautionary-notes.html"><a href="troubleshooting-and-cautionary-notes.html#cautionary-notes"><i class="fa fa-check"></i><b>5.1</b> Cautionary Notes</a></li>
-<li class="chapter" data-level="5.2" data-path="troubleshooting-and-cautionary-notes.html"><a href="troubleshooting-and-cautionary-notes.html#faq"><i class="fa fa-check"></i><b>5.2</b> FAQ</a></li>
-</ul></li>
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">HPC User Guide</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">HPC User Guide</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="active" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="libraries.html"><span class="header-section-number">2</span> Libraries and Environment Modules</a></li>
+<li><a class="" href="scheduler.html"><span class="header-section-number">3</span> Scheduler</a></li>
+<li><a class="" href="submit-jobs.html"><span class="header-section-number">4</span> Submitting jobs</a></li>
+<li><a class="" href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">5</span> Troubleshooting and Cautionary Notes</a></li>
+</ul>
+
+        <div class="book-extra">
+          
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">HPC User Guide</h1>
-<p class="author"><em>Patrick Schratz, Jannes Muenchow</em></p>
-<p class="date" style="margin-top: 1.5em;"><em>2021-04-19</em></p>
+      </nav>
 </div>
-<div id="intro" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><!--bookdown:title:end--><!--bookdown:title:start--><div id="intro" class="section level1">
+<h1>
+<span class="header-section-number">1</span> Introduction<a class="anchor" aria-label="anchor" href="#intro"><i class="fas fa-link"></i></a>
+</h1>
 <p>Welcome to the user manual of the High-Performance-Server (HPC) of the GIScience group (University Jena).</p>
 <p>It is tailored towards R processing.
 This document describes how to get started and submit jobs to the cluster.</p>
@@ -217,8 +60,8 @@ Administration is further simplified by using the <a href="https://spack.io">Spa
 <p><strong>Before you start</strong>:</p>
 <ul>
 <li><p>Working on a Linux server naturally requires a certain amount of familiarity with UNIX command-line shells and text editors.
-There are dozens of Linux online tutorials which should help to get you started.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
-Of course, there are also great books on how to use Linux such as <span class="citation">Shotts (<a href="#ref-shotts_linux_2012" role="doc-biblioref">2012</a>)</span>, <span class="citation">Sobell (<a href="#ref-sobell_practical_2010" role="doc-biblioref">2010</a>)</span> and <span class="citation">Ward (<a href="#ref-ward_how_2015" role="doc-biblioref">2015</a>)</span> all of which are freely available.
+There are dozens of Linux online tutorials which should help to get you started.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;For example, &lt;a href="https://ryanstutorials.net/linuxtutorial/" class="uri"&gt;https://ryanstutorials.net/linuxtutorial/&lt;/a&gt;.&lt;/p&gt;'><sup>1</sup></a>
+Of course, there are also great books on how to use Linux such as <span class="citation">Shotts (<a href="troubleshooting-and-cautionary-notes.html#ref-shotts_linux_2012" role="doc-biblioref">2012</a>)</span>, <span class="citation">Sobell (<a href="troubleshooting-and-cautionary-notes.html#ref-sobell_practical_2010" role="doc-biblioref">2010</a>)</span> and <span class="citation">Ward (<a href="troubleshooting-and-cautionary-notes.html#ref-ward_how_2015" role="doc-biblioref">2015</a>)</span> all of which are freely available.
 If you still get stuck, Google might help you.</p></li>
 <li><p>Please add a SSH key pair to your account to be able to log in to the server without having to type your password.
 This is especially useful since your password will consist of many letters and numbers (&gt; 10) which you do not want to memorize.
@@ -227,12 +70,16 @@ If you already use a SSH key pair on your machine, you can use <code>ssh-copy-id
 Afterwards you should be able to login via <code>ssh &lt;username&gt;@141.35.158.107</code> without being prompted for your password.</p></li>
 </ul>
 <div id="web-address" class="section level2">
-<h2><span class="header-section-number">1.1</span> Web Address</h2>
+<h2>
+<span class="header-section-number">1.1</span> Web Address<a class="anchor" aria-label="anchor" href="#web-address"><i class="fas fa-link"></i></a>
+</h2>
 <p><a href="https://edi.geogr.uni-jena.de" class="uri">https://edi.geogr.uni-jena.de</a></p>
 <p>IP: 10.232.16.28</p>
 </div>
 <div id="hardware" class="section level2">
-<h2><span class="header-section-number">1.2</span> Hardware</h2>
+<h2>
+<span class="header-section-number">1.2</span> Hardware<a class="anchor" aria-label="anchor" href="#hardware"><i class="fas fa-link"></i></a>
+</h2>
 <p>The cluster consists of the following machines:</p>
 <p>Group “<strong>threadripper</strong>”:</p>
 <ul>
@@ -249,13 +96,16 @@ Afterwards you should be able to login via <code>ssh &lt;username&gt;@141.35.158
 <ul>
 <li>2 (c[3-4])</li>
 <li>1 (c5)</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <p>The groups are reflected in the scheduler via the “partition” setting.</p>
 <p>Group “threadripper” is about 3.5x faster than group “opteron”.</p>
 </div>
 <div id="software" class="section level2">
-<h2><span class="header-section-number">1.3</span> Software</h2>
+<h2>
+<span class="header-section-number">1.3</span> Software<a class="anchor" aria-label="anchor" href="#software"><i class="fas fa-link"></i></a>
+</h2>
 <p>The HPC was built following the installation guide provided by the <a href="https://openhpc.community/">Open HPC</a> community (using the “Warewulf + Slurm” edition) and operates on a CentOS 7 base.
 The scheduler that is used for queuing processing job requests is <a href="https://slurm.schedmd.com/">SLURM</a>.
 Load monitoring is performed via <a href="http://ganglia.sourceforge.net/">Ganglia</a>.
@@ -264,20 +114,26 @@ A live view is accessible <a href="http://edi.geogr.uni-jena.de/ganglia/?r=hour&
 More detailed instructions on the scheduler and the package manager can be found in their respective chapters.</p>
 </div>
 <div id="data-storage" class="section level2">
-<h2><span class="header-section-number">1.4</span> Data storage</h2>
+<h2>
+<span class="header-section-number">1.4</span> Data storage<a class="anchor" aria-label="anchor" href="#data-storage"><i class="fas fa-link"></i></a>
+</h2>
 <p>The <em>mars</em> data server is mounted at <code>/home</code> and stores all the data.
 Currently we have a capacity of 20 TB for all users combined.
 Data can be stored directly under your <code>/home</code> directory.</p>
 </div>
 <div id="accessing-files-from-your-local-computer" class="section level2">
-<h2><span class="header-section-number">1.5</span> Accessing files from your local computer</h2>
+<h2>
+<span class="header-section-number">1.5</span> Accessing files from your local computer<a class="anchor" aria-label="anchor" href="#accessing-files-from-your-local-computer"><i class="fas fa-link"></i></a>
+</h2>
 <p>It is recommended to mount the server via <code>sshfs</code> to your local machine.
 Transfer speed ranges between 50 - 100 Mbit/s when you’re in the office so you should be able to access files without a delay.
 Accessing files from outside will be slower.</p>
 <p>If you really run in trouble with transfer speed, you could directly connect to the <em>mars</em> server.</p>
 <p>Otherwise, the route is as follows: <code>&lt;local&gt; (sshfs) -&gt; edi (nfs) -&gt; mars</code></p>
 <div id="unix" class="section level3">
-<h3><span class="header-section-number">1.5.1</span> Unix</h3>
+<h3>
+<span class="header-section-number">1.5.1</span> Unix<a class="anchor" aria-label="anchor" href="#unix"><i class="fas fa-link"></i></a>
+</h3>
 <p>For Unix system, the following command can be used</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="index.html#cb1-1"></a><span class="fu">sudo</span> sshfs -o reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa,allow_other,cache=yes,kernel_cache,compression=no,default_permissions,uid=1000,gid=100,umask=0 <span class="op">&lt;</span>username<span class="op">&gt;</span>@141.35.158.107:/ <span class="op">&lt;</span>local-directory<span class="op">&gt;</span></span></code></pre></div>
 <p>The mount process is passwordless if you do it via SSH (i.e. via your <code>~/.ssh/id_rsa</code> key).
@@ -290,12 +146,16 @@ Auto-mount during boot via <code>fstab</code> is not recommended since sometimes
 </div>
 </div>
 <div id="windows" class="section level3">
-<h3><span class="header-section-number">1.5.2</span> Windows</h3>
+<h3>
+<span class="header-section-number">1.5.2</span> Windows<a class="anchor" aria-label="anchor" href="#windows"><i class="fas fa-link"></i></a>
+</h3>
 <p>Please install <a href="https://github.com/billziss-gh/sshfs-win">sshfs-win</a> and follow the instructions.</p>
 </div>
 </div>
 <div id="accessing-the-hpc-remotely-vpn" class="section level2">
-<h2><span class="header-section-number">1.6</span> Accessing the HPC remotely (VPN)</h2>
+<h2>
+<span class="header-section-number">1.6</span> Accessing the HPC remotely (VPN)<a class="anchor" aria-label="anchor" href="#accessing-the-hpc-remotely-vpn"><i class="fas fa-link"></i></a>
+</h2>
 <p>A VPN connection is required to access the HPC remotely.
 FSU uses the Cisco Anyconnect protocol for VPN purposes and recommends to use the <a href="https://www.uni-jena.de/VPN_Windows_Apple_Mobile">“Cisco Anyconnect Client”</a>.</p>
 <p>This is a GUI which requires manual connect/disconnect actions.
@@ -304,7 +164,8 @@ The open-source alternative <a href="https://gitlab.com/openconnect/openconnect"
 If a GUI is preferred, have a look <a href="https://openconnect.github.io/openconnect-gui/">here</a> (looks like in Windows there is no way around the GUI?).</p>
 <p><strong>Installation</strong></p>
 <ul>
-<li>macOS: <code>brew install openconnect</code></li>
+<li>macOS: <code>brew install openconnect</code>
+</li>
 <li>Windows: <code>choco install openconnect-gui</code> or downloading the <a href="https://openconnect.github.io/openconnect-gui/">GUI</a> directly</li>
 </ul>
 <p><strong>Usage</strong></p>
@@ -314,13 +175,19 @@ Stop: <code>sudo killall -SIGINT openconnect</code></p>
 <p>On Windows: Sorry, not using Windows - feel free to add this info here.</p>
 </div>
 <div id="sharing-of-results" class="section level2">
-<h2><span class="header-section-number">1.7</span> Sharing of Results</h2>
+<h2>
+<span class="header-section-number">1.7</span> Sharing of Results<a class="anchor" aria-label="anchor" href="#sharing-of-results"><i class="fas fa-link"></i></a>
+</h2>
 <div id="workflowr" class="section level3">
-<h3><span class="header-section-number">1.7.1</span> <code>workflowr</code></h3>
+<h3>
+<span class="header-section-number">1.7.1</span> <code>workflowr</code><a class="anchor" aria-label="anchor" href="#workflowr"><i class="fas fa-link"></i></a>
+</h3>
 <p>Take a look at the R package <a href="https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html">workflowr</a> which allows automatic deployment of R Notebooks.</p>
 </div>
 <div id="local-web-server" class="section level3">
-<h3><span class="header-section-number">1.7.2</span> Local web server</h3>
+<h3>
+<span class="header-section-number">1.7.2</span> Local web server<a class="anchor" aria-label="anchor" href="#local-web-server"><i class="fas fa-link"></i></a>
+</h3>
 <p>The <em>Jupiter</em> server (141.35.159.87) is set up as a web-server.
 This means it is able to render HTML contents and list files in a directory listing.</p>
 <p><em>Jupiter</em> is mounted to the cluster at <code>/mnt/nfs/jupiter</code>.
@@ -328,14 +195,18 @@ To use the functionality, you simply need to copy your desired files to <code>/h
 To do so, please follow these steps:</p>
 <ol style="list-style-type: decimal">
 <li><p>Request an account on Jupiter from Andreas</p></li>
-<li><p>Login to <em>Jupiter</em> and create the desired folders.
+<li>
+<p>Login to <em>Jupiter</em> and create the desired folders.
 The public URL relates as follows to the local directory:</p>
-<p><code>https://jupiter.geogr.uni-jena.de/&lt;folder&gt;</code> -&gt; <code>/home/www/&lt;folder&gt;</code></p></li>
-<li><p>Copy your files from the cluster to the desired location on <em>Jupiter</em> using the following code</p>
+<p><code>https://jupiter.geogr.uni-jena.de/&lt;folder&gt;</code> -&gt; <code>/home/www/&lt;folder&gt;</code></p>
+</li>
+<li>
+<p>Copy your files from the cluster to the desired location on <em>Jupiter</em> using the following code</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="index.html#cb2-1"></a><span class="fu">rsync</span> -rlptDvzog --chown=www-data:www-data --fake-super \</span>
 <span id="cb2-2"><a href="index.html#cb2-2"></a>  /mnt/nfs/jupiter/<span class="op">&lt;</span>path-to-your-file<span class="op">&gt;</span> \</span>
 <span id="cb2-3"><a href="index.html#cb2-3"></a>  -e ssh <span class="op">&lt;</span>username<span class="op">&gt;</span>@jupiter.geogr.uni-jena.de:/home/www/<span class="op">&lt;</span>path-to-directory<span class="op">&gt;</span></span></code></pre></div>
-<p>This code will only copy files that have changed when being compared to the last execution so you can safely automate the call into your workflow.</p></li>
+<p>This code will only copy files that have changed when being compared to the last execution so you can safely automate the call into your workflow.</p>
+</li>
 </ol>
 <p>Since all these contents will be available to everyone, you want to add a README.md file to your directory listing as well as an Impressum.
 Even though no one usually knows this URL by default, be careful about sharing sensible files.</p>
@@ -345,78 +216,55 @@ You can request this theme from Andreas.</p>
 </div>
 </div>
 </div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-shotts_linux_2012">
-<p>Shotts, William E. 2012. <em>The Linux Command Line: A Complete Introduction</em>. San Francisco: No Starch Press.</p>
-</div>
-<div id="ref-sobell_practical_2010">
-<p>Sobell, Mark G. 2010. <em>A Practical Guide to Linux Commands, Editors, and Shell Programming</em>. 2nd ed. Upper Saddle River, NJ: Prentice Hall.</p>
-</div>
-<div id="ref-ward_how_2015">
-<p>Ward, Brian. 2015. <em>How Linux Works: What Every Superuser Should Know</em>. 2nd edition. San Francisco: No Starch Press.</p>
-</div>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="1">
-<li id="fn1"><p>For example, <a href="https://ryanstutorials.net/linuxtutorial/" class="uri">https://ryanstutorials.net/linuxtutorial/</a>.<a href="index.html#fnref1" class="footnote-back">↩︎</a></p></li>
-</ol>
-</div>
-            </section>
 
-          </div>
-        </div>
-      </div>
+  <div class="chapter-nav">
+<div class="empty"></div>
+<div class="next"><a href="libraries.html"><span class="header-section-number">2</span> Libraries and Environment Modules</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#intro"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="nav-link" href="#web-address"><span class="header-section-number">1.1</span> Web Address</a></li>
+<li><a class="nav-link" href="#hardware"><span class="header-section-number">1.2</span> Hardware</a></li>
+<li><a class="nav-link" href="#software"><span class="header-section-number">1.3</span> Software</a></li>
+<li><a class="nav-link" href="#data-storage"><span class="header-section-number">1.4</span> Data storage</a></li>
+<li>
+<a class="nav-link" href="#accessing-files-from-your-local-computer"><span class="header-section-number">1.5</span> Accessing files from your local computer</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#unix"><span class="header-section-number">1.5.1</span> Unix</a></li>
+<li><a class="nav-link" href="#windows"><span class="header-section-number">1.5.2</span> Windows</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#accessing-the-hpc-remotely-vpn"><span class="header-section-number">1.6</span> Accessing the HPC remotely (VPN)</a></li>
+<li>
+<a class="nav-link" href="#sharing-of-results"><span class="header-section-number">1.7</span> Sharing of Results</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#workflowr"><span class="header-section-number">1.7.1</span> workflowr</a></li>
+<li><a class="nav-link" href="#local-web-server"><span class="header-section-number">1.7.2</span> Local web server</a></li>
+</ul>
+</li>
+</ul>
 
-<a href="libraries.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>HPC User Guide</strong>" was written by Patrick Schratz, Jannes Muenchow. It was last built on 2021-06-06.</p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://venus.geogr.uni-jena.de/giscience/hpc-user-guide/edit/master/index.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["hpc-user-guide-fus-jena.pdf", "hpc-user-guide-fus-jena.epub"]
-});
-});
-</script>
 
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
 </body>
-
 </html>
