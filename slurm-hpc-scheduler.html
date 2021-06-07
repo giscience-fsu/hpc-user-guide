@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 4 SLURM: HPC scheduler | HPC User Guide</title>
+<meta name="author" content="Patrick Schratz, Jannes Muenchow">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS -->
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">HPC User Guide</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="rstudio-workbench.html"><span class="header-section-number">2</span> RStudio Workbench</a></li>
+<li><a class="" href="shiny-server.html"><span class="header-section-number">3</span> Shiny Server</a></li>
+<li><a class="active" href="slurm-hpc-scheduler.html"><span class="header-section-number">4</span> SLURM: HPC scheduler</a></li>
+<li><a class="" href="libraries.html"><span class="header-section-number">5</span> Libraries and Environment Modules</a></li>
+<li><a class="" href="getting-started.html"><span class="header-section-number">6</span> Getting Started</a></li>
+<li><a class="" href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">7</span> Troubleshooting and Cautionary Notes</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="slurm-hpc-scheduler" class="section level1">
+<h1>
+<span class="header-section-number">4</span> SLURM: HPC scheduler<a class="anchor" aria-label="anchor" href="#slurm-hpc-scheduler"><i class="fas fa-link"></i></a>
+</h1>
+<p>If you have written some scripts and want to execute them, it is advisable to send them to the scheduler.
+The scheduler (SLURM) will distribute the jobs across the cluster (6+ machines) and make sure that there are no conflicts with respect to CPU and memory if multiple people send jobs to the cluster.
+This is the essential job of a scheduler.</p>
+<div id="first-steps" class="section level2">
+<h2>
+<span class="header-section-number">4.1</span> First steps<a class="anchor" aria-label="anchor" href="#first-steps"><i class="fas fa-link"></i></a>
+</h2>
+<p>Sending jobs to SLURM in R is supported via the R package <a href="https://github.com/mschubert/clustermq">clustermq</a>.</p>
+<p>Rather than calling a R script directly, you need to wrap your code into a function and invoke it using <code>clustermq::Q()</code>.
+Instead of using <code>clustermq</code> directly, you can make use of R packages like <a href="https://cran.r-project.org/web/packages/targets/index.html">{targets}</a> or <a href="https://cran.r-project.org/web/packages/drake/index.html">{drake}</a> to automatically wrap your whole analysis in a way that it executes all layers of your analysis on the HPC.</p>
+<p>There is no other way to submit your R jobs to the compute nodes of the cluster than by using any of the tools mentioned above.</p>
+</div>
+<div id="slurm-commands" class="section level2">
+<h2>
+<span class="header-section-number">4.2</span> SLURM commands<a class="anchor" aria-label="anchor" href="#slurm-commands"><i class="fas fa-link"></i></a>
+</h2>
+<p>While the execution of jobs is explained in more detail in <a href="slurm-hpc-scheduler.html#submit-jobs">Chapter 4</a>, the following section aims familiarizing yourself with the usage of the scheduler.
+The scheduler is queried via the terminal, i.e. you need to <code>ssh</code> into the server or switch to the “Terminal” tab in RStudio.</p>
+<p>The most important SLURM commands are</p>
+<ul>
+<li>
+<code>sinfo</code>: An overview of the current state of the nodes</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="slurm-hpc-scheduler.html#cb2-1"></a><span class="ex">sinfo</span></span>
+<span id="cb2-2"><a href="slurm-hpc-scheduler.html#cb2-2"></a></span>
+<span id="cb2-3"><a href="slurm-hpc-scheduler.html#cb2-3"></a><span class="ex">PARTITION</span>    AVAIL  TIMELIMIT  NODES  STATE NODELIST</span>
+<span id="cb2-4"><a href="slurm-hpc-scheduler.html#cb2-4"></a><span class="ex">all*</span>            up   infinite      4  alloc c[0-2],edi</span>
+<span id="cb2-5"><a href="slurm-hpc-scheduler.html#cb2-5"></a><span class="ex">all*</span>            up   infinite      2   idle c[3-4]</span>
+<span id="cb2-6"><a href="slurm-hpc-scheduler.html#cb2-6"></a><span class="ex">frontend</span>        up   infinite      1  alloc edi</span>
+<span id="cb2-7"><a href="slurm-hpc-scheduler.html#cb2-7"></a><span class="ex">threadripper</span>    up   infinite      4  alloc c[0-2],edi</span>
+<span id="cb2-8"><a href="slurm-hpc-scheduler.html#cb2-8"></a><span class="ex">opteron</span>         up   infinite      2   idle c[3-4]</span></code></pre></div>
+<ul>
+<li>
+<code>squeue</code>: An overview of the current jobs that are queued, including information about running jobs</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="slurm-hpc-scheduler.html#cb3-1"></a><span class="ex">squeue</span></span>
+<span id="cb3-2"><a href="slurm-hpc-scheduler.html#cb3-2"></a></span>
+<span id="cb3-3"><a href="slurm-hpc-scheduler.html#cb3-3"></a><span class="ex">JOBID</span>     PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)</span>
+<span id="cb3-4"><a href="slurm-hpc-scheduler.html#cb3-4"></a><span class="ex">129_</span>[2-5]    threadripper  cmq7381  patrick PD       0:00      1 (Resources)</span>
+<span id="cb3-5"><a href="slurm-hpc-scheduler.html#cb3-5"></a><span class="ex">121_2</span>        threadripper  cmq7094  patrick  R    6:24:17      1 c1</span>
+<span id="cb3-6"><a href="slurm-hpc-scheduler.html#cb3-6"></a><span class="ex">121_3</span>        threadripper  cmq7094  patrick  R    6:24:17      1 c2</span>
+<span id="cb3-7"><a href="slurm-hpc-scheduler.html#cb3-7"></a><span class="ex">129_1</span>        threadripper  cmq7381  patrick  R    5:40:44      1 c0</span></code></pre></div>
+<ul>
+<li>
+<code>sacct</code>: Overview of jobs that were submitted in the past including their end state</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="slurm-hpc-scheduler.html#cb4-1"></a><span class="ex">122</span>             cmq7094     threadripper     (null)          <span class="ex">0</span>  COMPLETED      0:0</span>
+<span id="cb4-2"><a href="slurm-hpc-scheduler.html#cb4-2"></a><span class="ex">123</span>             cmq7094     threadripper     (null)          <span class="ex">0</span>    PENDING      0:0</span>
+<span id="cb4-3"><a href="slurm-hpc-scheduler.html#cb4-3"></a><span class="ex">121</span>             cmq7094     threadripper     (null)          <span class="ex">0</span>    PENDING      0:0</span>
+<span id="cb4-4"><a href="slurm-hpc-scheduler.html#cb4-4"></a><span class="ex">125</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</span>
+<span id="cb4-5"><a href="slurm-hpc-scheduler.html#cb4-5"></a><span class="ex">126</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</span>
+<span id="cb4-6"><a href="slurm-hpc-scheduler.html#cb4-6"></a><span class="ex">127</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</span>
+<span id="cb4-7"><a href="slurm-hpc-scheduler.html#cb4-7"></a><span class="ex">128</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</span>
+<span id="cb4-8"><a href="slurm-hpc-scheduler.html#cb4-8"></a><span class="ex">124</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</span>
+<span id="cb4-9"><a href="slurm-hpc-scheduler.html#cb4-9"></a><span class="ex">130</span>             cmq7381     threadripper     (null)          <span class="ex">0</span>    PENDING      0:0</span></code></pre></div>
+<ul>
+<li>
+<p><code>scancel</code>: Cancel running jobs using the job ID identifier</p>
+<p>If you want to cancel all jobs for your specific user, you can call <code>scancel -u &lt;username&gt;</code>.</p>
+</li>
+</ul>
+</div>
+<div id="submit-jobs" class="section level2">
+<h2>
+<span class="header-section-number">4.3</span> Submitting jobs<a class="anchor" aria-label="anchor" href="#submit-jobs"><i class="fas fa-link"></i></a>
+</h2>
+<div id="clustermq-setup" class="section level3">
+<h3>
+<span class="header-section-number">4.3.1</span> <code>clustermq</code> setup<a class="anchor" aria-label="anchor" href="#clustermq-setup"><i class="fas fa-link"></i></a>
+</h3>
+<p>Every job submission is done via <code>clustermq::Q()</code> (either directly or via <code>drake</code>).
+See the setup instructions in the <a href="https://mschubert.github.io/clustermq/">clustermq</a> package on how to setup the package.</p>
+<p>First, you need to set some options in your <code>.Rprofile</code> (on the master node or in your project root when you use {renv} or {packrat}):</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>
+    clustermq.scheduler <span class="op">=</span> <span class="st">"slurm"</span>,
+    clustermq.template <span class="op">=</span> <span class="st">"&lt;/path/to/file/"</span>
+<span class="op">)</span></code></pre></div>
+<p>See the <a href="https://mschubert.github.io/clustermq/articles/userguide.html#slurm">package vignette</a> on how to set up the file.</p>
+<p>Note that you can have multiple <code>.Rprofile</code> files on your system:</p>
+<ol style="list-style-type: decimal">
+<li>Your default R interpreter will use the <code>.Rprofile</code> found in the home directory (<code>~/</code>).</li>
+<li>But you can also save an <code>.Rprofile</code> file in the root directory of a (RStudio) project (which will be preferred over the one in $HOME).</li>
+</ol>
+<p>This way you can use customized <code>.Rprofile</code> files tailored to a project.</p>
+<p>At this stage you should be able to run the <a href="https://github.com/mschubert/clustermq">example</a> at the top of the <code>README</code> of the {clustermq} package.
+It is a very simple example which finishes in a few seconds.
+If it does not work, you either did something wrong or the nodes are busy.
+Check with <code>sinfo</code> and <code>squeue</code>.
+Otherwise see the <a href="#troubleshooting">troubleshooting</a> chapter.</p>
+<div class="rmdcaution">
+<p>
+Be aware of setting <code>n_cpus</code> in the <code>template</code> argument of <code>clustermq::Q()</code> if your submitted job is parallelized! If you submit a job that is parallelized without telling the scheduler, the scheduler will reserve 1 core for this job (because it thinks it is sequential) but in fact multiple processes will spawn. This will potentially affect all running processes on the server since the scheduler will accept more processing than it actually can take.
+</p>
+</div>
+</div>
+<div id="the-scheduler-template" class="section level3">
+<h3>
+<span class="header-section-number">4.3.2</span> The scheduler template<a class="anchor" aria-label="anchor" href="#the-scheduler-template"><i class="fas fa-link"></i></a>
+</h3>
+<p>To successfully submit jobs to the scheduler, you need to set the <code>.Rprofile</code> options given above.
+Note that you can add any bash commands into the scripts between the <code>SBATCH</code> section and the final R call.</p>
+<p>For example, a template could look as follows:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="slurm-hpc-scheduler.html#cb6-1"></a><span class="co">#!/bin/sh</span></span>
+<span id="cb6-2"><a href="slurm-hpc-scheduler.html#cb6-2"></a><span class="co">#SBATCH --job-name={{ job_name }}</span></span>
+<span id="cb6-3"><a href="slurm-hpc-scheduler.html#cb6-3"></a><span class="co">#SBATCH --partition=all</span></span>
+<span id="cb6-4"><a href="slurm-hpc-scheduler.html#cb6-4"></a><span class="co">#SBATCH --output={{ log_file | /dev/null }} # you can add .%a for array index</span></span>
+<span id="cb6-5"><a href="slurm-hpc-scheduler.html#cb6-5"></a><span class="co">#SBATCH --error={{ log_file | /dev/null }}</span></span>
+<span id="cb6-6"><a href="slurm-hpc-scheduler.html#cb6-6"></a><span class="co">#SBATCH --cpus-per-task={{ n_cpus }}</span></span>
+<span id="cb6-7"><a href="slurm-hpc-scheduler.html#cb6-7"></a><span class="co">#SBATCH --mem={{ memory }}</span></span>
+<span id="cb6-8"><a href="slurm-hpc-scheduler.html#cb6-8"></a><span class="co">#SBATCH --array=1-{{ n_jobs }}</span></span>
+<span id="cb6-9"><a href="slurm-hpc-scheduler.html#cb6-9"></a></span>
+<span id="cb6-10"><a href="slurm-hpc-scheduler.html#cb6-10"></a><span class="bu">cd</span> /full/path/to/project</span>
+<span id="cb6-11"><a href="slurm-hpc-scheduler.html#cb6-11"></a></span>
+<span id="cb6-12"><a href="slurm-hpc-scheduler.html#cb6-12"></a><span class="co"># load desired R version via an env module</span></span>
+<span id="cb6-13"><a href="slurm-hpc-scheduler.html#cb6-13"></a><span class="ex">module</span> load r-3.5.2-gcc-9.2.0-4syrmqv</span>
+<span id="cb6-14"><a href="slurm-hpc-scheduler.html#cb6-14"></a></span>
+<span id="cb6-15"><a href="slurm-hpc-scheduler.html#cb6-15"></a><span class="va">CMQ_AUTH=</span>{<span class="kw">{</span> <span class="ex">auth</span> <span class="kw">}</span>} <span class="ex">R</span> --no-save --no-restore -e <span class="st">'clustermq:::worker("{{ master }}")'</span></span></code></pre></div>
+<p>Note: The <code>#</code> signs are no mistakes here, they are no “comment” signs in this context.
+The <code>SBATCH</code> commands will be executed here.</p>
+<p>You can simply copy it and adjust it to your needs.
+You only need to set the right path to your project and specify the R version you want to use.</p>
+</div>
+<div id="allocating-resources" class="section level3">
+<h3>
+<span class="header-section-number">4.3.3</span> Allocating resources<a class="anchor" aria-label="anchor" href="#allocating-resources"><i class="fas fa-link"></i></a>
+</h3>
+<p>There are two approaches/packages you can use:</p>
+<ul>
+<li><p><code>drake</code> / <code>targets</code></p></li>
+<li><p><code>clustermq</code></p></li>
+</ul>
+<p>The <code>drake</code> approach is only valid if you have set up your project as a <code>drake</code> or <code>targets</code> project.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="slurm-hpc-scheduler.html#cb7-1"></a>drake<span class="op">::</span><span class="kw">make</span>(<span class="dt">parallelism =</span> <span class="st">"clustermq"</span>, <span class="dt">n_jobs =</span> <span class="dv">1</span>, </span>
+<span id="cb7-2"><a href="slurm-hpc-scheduler.html#cb7-2"></a>  <span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">n_cpus =</span> <span class="op">&lt;</span>X<span class="op">&gt;</span>, <span class="dt">log_file =</span> <span class="op">&lt;</span>Y<span class="op">&gt;</span>, <span class="dt">memory =</span> <span class="op">&lt;</span>Z<span class="op">&gt;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="slurm-hpc-scheduler.html#cb8-1"></a>clustermq<span class="op">::</span><span class="kw">Q</span>(<span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">n_cpus =</span> <span class="op">&lt;</span>X<span class="op">&gt;</span>, <span class="dt">log_file =</span> <span class="op">&lt;</span>Y<span class="op">&gt;</span>, <span class="dt">memory =</span> <span class="op">&lt;</span>Z<span class="op">&gt;</span>))</span></code></pre></div>
+<p>(The individual components of these calls are explained in more detail below.)</p>
+<p>Note that <code>drake</code> uses <code>clustermq</code> under the hood.
+Notations like <code>&lt;X&gt;</code> are meant to be read as placeholders, meaning they need to be replaced with valid content.)</p>
+<p>When submitting jobs via <code>clustermq::Q()</code>, it is important to tell the scheduler how many cores and memory should be reserved for you.
+This step is very important.</p>
+<p>If you specify less cores than you actually use in your script (e.g. by internal parallelization), the scheduler will plan with X cores although your submitted code will spawn Y processes in the background.
+This might overload the node and eventually cause your script (and more importantly) the processes of others to crash.</p>
+<p>There are two ways to specify these settings, depending on which approach you use:</p>
+<ol style="list-style-type: decimal">
+<li>via <code>clustermq::Q()</code> directly</li>
+</ol>
+<p>Pass the values via argument <code>template</code> like <code>template = list(n_cpus = &lt;X&gt;, memory = &lt;Y&gt;)</code>.
+It will then be passed to the <code>clustermq.template</code> file (frequently named <code>slurm_clustermq.tmpl</code>) which contains following lines:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="slurm-hpc-scheduler.html#cb9-1"></a><span class="co">#SBATCH --cpus-per-task{{ n_cpus }}</span></span>
+<span id="cb9-2"><a href="slurm-hpc-scheduler.html#cb9-2"></a><span class="co">#SBATCH --mem={{ memory }}</span></span></code></pre></div>
+<p>This tells the scheduler how many resources (here cpus) your job needs.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>via <code>drake::make()</code>
+</li>
+</ol>
+<p>Again, set the options via argument <code>template = list(n_cpus = X, memory = Y)</code>.
+See section <a href="https://ropenscilabs.github.io/drake-manual/hpc.html#advanced-options">“The resources column for transient workers”</a> in the drake manual.</p>
+<div class="rmdcaution">
+<p>
+Please think upfront how many cpus and memory your task requires. The following two examples show you the implications of wrong specifications.
+</p>
+</div>
+<div class="rmdcaution">
+<p>
+<code>mclapply(cores = 20)</code> (in your script) &gt; <code>n_cpus = 16</code>
+</p>
+<p>
+In this case, four workers will always be in “waiting mode” since only 16 cpus can be used by your resource request. This slows down your parallelization but does no harm to other users.
+</p>
+</div>
+<div class="rmdcaution">
+<p>
+<code>mclapply(cores = 11)</code> &lt; <code>n_cpus = 16</code>
+</p>
+<p>
+In this case, you reserve 16 CPUs from the machine but only use 11 at most. This blocks five CPUs of the machine for no reason potentially causing other people to be added to the queue rather than getting their job processed immediately.
+</p>
+</div>
+<p>Furthermore, if you want to use all resources of a node and run into memory problems, try reducing the number of CPUs (if you already increased the memory to its maximum).
+If you scale down the number of CPUs, you will have more memory/cpu available.</p>
+</div>
+<div id="monitoring-progress" class="section level3">
+<h3>
+<span class="header-section-number">4.3.4</span> Monitoring progress<a class="anchor" aria-label="anchor" href="#monitoring-progress"><i class="fas fa-link"></i></a>
+</h3>
+<p>When submitting jobs you can track its progress by specifying a <code>log_file</code> in the <code>clustermq::Q()</code> call, e.g. <code>clustermq::Q(template = list(log_file = path/to/file))</code>.</p>
+<p>For <code>drake</code>, the equivalent is to specify <code>console_log_file()</code> in either <code>make()</code> or <code>drake_config()</code>.</p>
+<p>If your jobs are running on a node, you can SSH into the node, e.g. <code>ssh c0</code>.
+There you can take a look at the current load by using <code>htop</code>.
+Note that you can only log in if you have a running progress on a specific node.</p>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2>
+<span class="header-section-number">4.4</span> Summary<a class="anchor" aria-label="anchor" href="#summary"><i class="fas fa-link"></i></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li><p>Set up your <code>.Rprofile</code> with <code><a href="https://rdrr.io/r/base/options.html">options(clustermq.template = "/path/to/file")</a></code>.
+The <code>clustermq.template</code> should point to a SLURM template file in your $HOME or project directory.</p></li>
+<li><p>Decide which approach you want to use <code>drake</code>/<code>targets</code> or <code>clustermq</code></p></li>
+<li><p>A Slurm template file is required.
+This template needs to be linked in your <code>.Rprofile</code> with <code><a href="https://rdrr.io/r/base/options.html">options(clustermq.template = "/path/to/file")</a></code>.</p></li>
+</ol>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="shiny-server.html"><span class="header-section-number">3</span> Shiny Server</a></div>
+<div class="next"><a href="libraries.html"><span class="header-section-number">5</span> Libraries and Environment Modules</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#slurm-hpc-scheduler"><span class="header-section-number">4</span> SLURM: HPC scheduler</a></li>
+<li><a class="nav-link" href="#first-steps"><span class="header-section-number">4.1</span> First steps</a></li>
+<li><a class="nav-link" href="#slurm-commands"><span class="header-section-number">4.2</span> SLURM commands</a></li>
+<li>
+<a class="nav-link" href="#submit-jobs"><span class="header-section-number">4.3</span> Submitting jobs</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#clustermq-setup"><span class="header-section-number">4.3.1</span> clustermq setup</a></li>
+<li><a class="nav-link" href="#the-scheduler-template"><span class="header-section-number">4.3.2</span> The scheduler template</a></li>
+<li><a class="nav-link" href="#allocating-resources"><span class="header-section-number">4.3.3</span> Allocating resources</a></li>
+<li><a class="nav-link" href="#monitoring-progress"><span class="header-section-number">4.3.4</span> Monitoring progress</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#summary"><span class="header-section-number">4.4</span> Summary</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>HPC User Guide</strong>" was written by Patrick Schratz, Jannes Muenchow. It was last built on 2021-06-07.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

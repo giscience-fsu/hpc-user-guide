@@ -32,10 +32,12 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="active" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="" href="libraries.html"><span class="header-section-number">2</span> Libraries and Environment Modules</a></li>
-<li><a class="" href="scheduler.html"><span class="header-section-number">3</span> Scheduler</a></li>
-<li><a class="" href="submit-jobs.html"><span class="header-section-number">4</span> Submitting jobs</a></li>
-<li><a class="" href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">5</span> Troubleshooting and Cautionary Notes</a></li>
+<li><a class="" href="rstudio-workbench.html"><span class="header-section-number">2</span> RStudio Workbench</a></li>
+<li><a class="" href="shiny-server.html"><span class="header-section-number">3</span> Shiny Server</a></li>
+<li><a class="" href="slurm-hpc-scheduler.html"><span class="header-section-number">4</span> SLURM: HPC scheduler</a></li>
+<li><a class="" href="libraries.html"><span class="header-section-number">5</span> Libraries and Environment Modules</a></li>
+<li><a class="" href="getting-started.html"><span class="header-section-number">6</span> Getting Started</a></li>
+<li><a class="" href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">7</span> Troubleshooting and Cautionary Notes</a></li>
 </ul>
 
         <div class="book-extra">
@@ -47,7 +49,7 @@
 <h1>
 <span class="header-section-number">1</span> Introduction<a class="anchor" aria-label="anchor" href="#intro"><i class="fas fa-link"></i></a>
 </h1>
-<p>Welcome to the user manual of the High-Performance-Server (HPC) of the GIScience group (University Jena).</p>
+<p>Welcome to the user manual of the High-Performance-Server (HPC) of the GIScience group (University of Jena).</p>
 <p>It is tailored towards R processing.
 This document describes how to get started and submit jobs to the cluster.</p>
 <p><strong>A short introduction to HPCs</strong></p>
@@ -55,19 +57,19 @@ This document describes how to get started and submit jobs to the cluster.</p>
 Incoming processing requests (jobs) are handled by the scheduler (SLURM), taking away the work of queuing the job and the potential issue of clashing into jobs from other users.</p>
 <p>Administration is simplified by provisioning all computing nodes with the same virtual image.
 This way, maintenance tasks are reduced and differences between the machines are avoided.
-Administration is further simplified by using the <a href="https://spack.io">Spack</a> package manager as this application allows for version-agnostic environment module installations.</p>
+Library management across nodes is is done via the <a href="https://spack.io">Spack</a> package manager as this application allows for version-agnostic environment module installations.</p>
 <p>The <code>$HOME</code> directory of every user is shared across all nodes, avoiding the need to keep data and scripts in sync across multiple machines.</p>
 <p><strong>Before you start</strong>:</p>
 <ul>
 <li><p>Working on a Linux server naturally requires a certain amount of familiarity with UNIX command-line shells and text editors.
 There are dozens of Linux online tutorials which should help to get you started.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;For example, &lt;a href="https://ryanstutorials.net/linuxtutorial/" class="uri"&gt;https://ryanstutorials.net/linuxtutorial/&lt;/a&gt;.&lt;/p&gt;'><sup>1</sup></a>
 Of course, there are also great books on how to use Linux such as <span class="citation">Shotts (<a href="troubleshooting-and-cautionary-notes.html#ref-shotts_linux_2012" role="doc-biblioref">2012</a>)</span>, <span class="citation">Sobell (<a href="troubleshooting-and-cautionary-notes.html#ref-sobell_practical_2010" role="doc-biblioref">2010</a>)</span> and <span class="citation">Ward (<a href="troubleshooting-and-cautionary-notes.html#ref-ward_how_2015" role="doc-biblioref">2015</a>)</span> all of which are freely available.
-If you still get stuck, Google might help you.</p></li>
-<li><p>Please add a SSH key pair to your account to be able to log in to the server without having to type your password.
+If you still get stuck, Google will certainly help you.</p></li>
+<li><p>Please add a SSH key pair to your account to be able to log in to the server without having to type your password every time.
 This is especially useful since your password will consist of many letters and numbers (&gt; 10) which you do not want to memorize.
 See <a href="https://help.github.com/articles/connecting-to-github-with-ssh/">this</a> guide if you have never worked with SSH keys before.
-If you already use a SSH key pair on your machine, you can use <code>ssh-copy-id &lt;username&gt;@141.35.158.107</code> to copy your key to the server.
-Afterwards you should be able to login via <code>ssh &lt;username&gt;@141.35.158.107</code> without being prompted for your password.</p></li>
+If you already use a SSH key pair on your machine, you can use <code>ssh-copy-id &lt;username&gt;@10.232.16.28</code> to copy your key to the server.
+Afterwards you should be able to login via <code>ssh &lt;username&gt;@10.232.16.28</code> without being prompted for your password.</p></li>
 </ul>
 <div id="web-address" class="section level2">
 <h2>
@@ -135,7 +137,7 @@ Accessing files from outside will be slower.</p>
 <span class="header-section-number">1.5.1</span> Unix<a class="anchor" aria-label="anchor" href="#unix"><i class="fas fa-link"></i></a>
 </h3>
 <p>For Unix system, the following command can be used</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="index.html#cb1-1"></a><span class="fu">sudo</span> sshfs -o reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa,allow_other,cache=yes,kernel_cache,compression=no,default_permissions,uid=1000,gid=100,umask=0 <span class="op">&lt;</span>username<span class="op">&gt;</span>@141.35.158.107:/ <span class="op">&lt;</span>local-directory<span class="op">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="index.html#cb1-1"></a><span class="fu">sudo</span> sshfs -o reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa,allow_other,cache=yes,kernel_cache,compression=no,default_permissions,uid=1000,gid=100,umask=0 <span class="op">&lt;</span>username<span class="op">&gt;</span>@10.232.16.28:/ <span class="op">&lt;</span>local-directory<span class="op">&gt;</span></span></code></pre></div>
 <p>The mount process is passwordless if you do it via SSH (i.e. via your <code>~/.ssh/id_rsa</code> key).
 Note that the mount is actually performed by the root user, so you need to copy your SSH key to the root user: <code>cp ~/.ssh/id_rsa /root/.ssh/id_rsa</code>.</p>
 <p>For convenience you can create an executable script that performs this action every time you need it.</p>
@@ -173,53 +175,13 @@ If a GUI is preferred, have a look <a href="https://openconnect.github.io/openco
 <p>Start: <code>echo &lt;PASSWORD&gt; | sudo openconnect --user=&lt;USER&gt;@uni-jena.de --passwd-on-stdin --background vpn.uni-jena.de</code>
 Stop: <code>sudo killall -SIGINT openconnect</code></p>
 <p>On Windows: Sorry, not using Windows - feel free to add this info here.</p>
-</div>
-<div id="sharing-of-results" class="section level2">
-<h2>
-<span class="header-section-number">1.7</span> Sharing of Results<a class="anchor" aria-label="anchor" href="#sharing-of-results"><i class="fas fa-link"></i></a>
-</h2>
-<div id="workflowr" class="section level3">
-<h3>
-<span class="header-section-number">1.7.1</span> <code>workflowr</code><a class="anchor" aria-label="anchor" href="#workflowr"><i class="fas fa-link"></i></a>
-</h3>
-<p>Take a look at the R package <a href="https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html">workflowr</a> which allows automatic deployment of R Notebooks.</p>
-</div>
-<div id="local-web-server" class="section level3">
-<h3>
-<span class="header-section-number">1.7.2</span> Local web server<a class="anchor" aria-label="anchor" href="#local-web-server"><i class="fas fa-link"></i></a>
-</h3>
-<p>The <em>Jupiter</em> server (141.35.159.87) is set up as a web-server.
-This means it is able to render HTML contents and list files in a directory listing.</p>
-<p><em>Jupiter</em> is mounted to the cluster at <code>/mnt/nfs/jupiter</code>.
-To use the functionality, you simply need to copy your desired files to <code>/home/www/&lt;folder&gt;</code> on Jupiter.
-To do so, please follow these steps:</p>
-<ol style="list-style-type: decimal">
-<li><p>Request an account on Jupiter from Andreas</p></li>
-<li>
-<p>Login to <em>Jupiter</em> and create the desired folders.
-The public URL relates as follows to the local directory:</p>
-<p><code>https://jupiter.geogr.uni-jena.de/&lt;folder&gt;</code> -&gt; <code>/home/www/&lt;folder&gt;</code></p>
-</li>
-<li>
-<p>Copy your files from the cluster to the desired location on <em>Jupiter</em> using the following code</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="index.html#cb2-1"></a><span class="fu">rsync</span> -rlptDvzog --chown=www-data:www-data --fake-super \</span>
-<span id="cb2-2"><a href="index.html#cb2-2"></a>  /mnt/nfs/jupiter/<span class="op">&lt;</span>path-to-your-file<span class="op">&gt;</span> \</span>
-<span id="cb2-3"><a href="index.html#cb2-3"></a>  -e ssh <span class="op">&lt;</span>username<span class="op">&gt;</span>@jupiter.geogr.uni-jena.de:/home/www/<span class="op">&lt;</span>path-to-directory<span class="op">&gt;</span></span></code></pre></div>
-<p>This code will only copy files that have changed when being compared to the last execution so you can safely automate the call into your workflow.</p>
-</li>
-</ol>
-<p>Since all these contents will be available to everyone, you want to add a README.md file to your directory listing as well as an Impressum.
-Even though no one usually knows this URL by default, be careful about sharing sensible files.</p>
-<p>See <a href="https://jupiter.geogr.uni-jena.de/life-healthy-forest/" class="uri">https://jupiter.geogr.uni-jena.de/life-healthy-forest/</a> for an example.
-You can request this theme from Andreas.</p>
 
-</div>
 </div>
 </div>
 
   <div class="chapter-nav">
 <div class="empty"></div>
-<div class="next"><a href="libraries.html"><span class="header-section-number">2</span> Libraries and Environment Modules</a></div>
+<div class="next"><a href="rstudio-workbench.html"><span class="header-section-number">2</span> RStudio Workbench</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -235,12 +197,6 @@ You can request this theme from Andreas.</p>
 </ul>
 </li>
 <li><a class="nav-link" href="#accessing-the-hpc-remotely-vpn"><span class="header-section-number">1.6</span> Accessing the HPC remotely (VPN)</a></li>
-<li>
-<a class="nav-link" href="#sharing-of-results"><span class="header-section-number">1.7</span> Sharing of Results</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#workflowr"><span class="header-section-number">1.7.1</span> workflowr</a></li>
-<li><a class="nav-link" href="#local-web-server"><span class="header-section-number">1.7.2</span> Local web server</a></li>
-</ul>
-</li>
 </ul>
 
       <div class="book-extra">

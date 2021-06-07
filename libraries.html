@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 2 Libraries and Environment Modules | HPC User Guide</title>
+<title>Chapter 5 Libraries and Environment Modules | HPC User Guide</title>
 <meta name="author" content="Patrick Schratz, Jannes Muenchow">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -32,10 +32,12 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="active" href="libraries.html"><span class="header-section-number">2</span> Libraries and Environment Modules</a></li>
-<li><a class="" href="scheduler.html"><span class="header-section-number">3</span> Scheduler</a></li>
-<li><a class="" href="submit-jobs.html"><span class="header-section-number">4</span> Submitting jobs</a></li>
-<li><a class="" href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">5</span> Troubleshooting and Cautionary Notes</a></li>
+<li><a class="" href="rstudio-workbench.html"><span class="header-section-number">2</span> RStudio Workbench</a></li>
+<li><a class="" href="shiny-server.html"><span class="header-section-number">3</span> Shiny Server</a></li>
+<li><a class="" href="slurm-hpc-scheduler.html"><span class="header-section-number">4</span> SLURM: HPC scheduler</a></li>
+<li><a class="active" href="libraries.html"><span class="header-section-number">5</span> Libraries and Environment Modules</a></li>
+<li><a class="" href="getting-started.html"><span class="header-section-number">6</span> Getting Started</a></li>
+<li><a class="" href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">7</span> Troubleshooting and Cautionary Notes</a></li>
 </ul>
 
         <div class="book-extra">
@@ -45,256 +47,54 @@
 </div>
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="libraries" class="section level1">
 <h1>
-<span class="header-section-number">2</span> Libraries and Environment Modules<a class="anchor" aria-label="anchor" href="#libraries"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5</span> Libraries and Environment Modules<a class="anchor" aria-label="anchor" href="#libraries"><i class="fas fa-link"></i></a>
 </h1>
 <div id="introduction" class="section level2">
 <h2>
-<span class="header-section-number">2.1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction"><i class="fas fa-link"></i></a>
 </h2>
+<p>Environment modules are needed to make certain libraries (e.g. R) available across all nodes in the cluster.</p>
+<p>Environment variables are installed and maintained via <a href="spack.io">Spack</a>.</p>
 <div class="rmdcaution">
 <p>
-Please note that RStudio Workbench is decoupled from Slurm. Everything which should be run on the nodes via Slurm requires to have the respective env modules loaded in the Slurm template file whereas if you run something in RStudio server, the libraries installed in the underlying Ubuntu 20.04 container will be used.
+Please note that RStudio Workbench is decoupled from Slurm. Everything which should be run on the nodes via Slurm requires to have the respective environment modules loaded in the Slurm template file whereas if you run something in RStudio server, the libraries installed in the underlying Ubuntu 20.04 container will be used.
 </p>
 </div>
 <p>The following part only deals with the Spack configuration side as everything in the container should just work (with respect to R).</p>
-<p>Most system relevant libraries are installed via <a href="spack.io">Spack</a>.
-However, as a user you do not need to worry about this since you are loading everything via “environment modules”.
-Available modules can be queried using <code>modules avail</code>.</p>
-<p>For setup reasons, please put the following at the top of your <code>~/.bashrc</code> file</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="libraries.html#cb3-1"></a><span class="bu">export</span> <span class="va">SPACK_ROOT=</span>/opt/spack</span>
-<span id="cb3-2"><a href="libraries.html#cb3-2"></a><span class="bu">.</span> <span class="va">$SPACK_ROOT</span><span class="ex">/share/spack/setup-env.sh</span></span></code></pre></div>
-<p>Here is a snapshot:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="libraries.html#cb4-1"></a><span class="ex">-------------------------</span> /opt/spack/share/spack/modules/linux-centos7-x86_64 --------------------------</span>
-<span id="cb4-2"><a href="libraries.html#cb4-2"></a>   <span class="ex">byobu-5.127-gcc-9.2.0-by2qc2g</span>          (L)    <span class="ex">python-3.7.4-gcc-9.2.0-nbjbfzi</span>     (L)</span>
-<span id="cb4-3"><a href="libraries.html#cb4-3"></a>   <span class="ex">ccache-3.3.4-gcc-9.2.0-v3xzqqh</span>         (L)    <span class="ex">r-3.5.2-gcc-9.2.0-oxo76vo</span></span>
-<span id="cb4-4"><a href="libraries.html#cb4-4"></a>   <span class="ex">curl-7.63.0-gcc-9.2.0-cq4w37y</span>          (L)    <span class="ex">r-3.6.1-gcc-9.2.0-j25wr6z</span></span>
-<span id="cb4-5"><a href="libraries.html#cb4-5"></a>   <span class="ex">fish-3.0.0-gcc-9.2.0-gdyab6r</span>      </span></code></pre></div>
+<p>Available env modules can be queried in the terminal via <code>modules avail</code>.</p>
+<p>To be able to load modules, put the following at the top of your <code>~/.bashrc</code> file:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="libraries.html#cb10-1"></a><span class="bu">export</span> <span class="va">SPACK_ROOT=</span>/opt/spack</span>
+<span id="cb10-2"><a href="libraries.html#cb10-2"></a><span class="bu">.</span> <span class="va">$SPACK_ROOT</span><span class="ex">/share/spack/setup-env.sh</span></span></code></pre></div>
+<p>Here is a sample output of <code>module avail</code>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="libraries.html#cb11-1"></a><span class="ex">-------------------------</span> /opt/spack/share/spack/modules/linux-centos7-x86_64 --------------------------</span>
+<span id="cb11-2"><a href="libraries.html#cb11-2"></a>   <span class="ex">byobu-5.127-gcc-9.2.0-by2qc2g</span>          (L)    <span class="ex">python-3.7.4-gcc-9.2.0-nbjbfzi</span>     (L)</span>
+<span id="cb11-3"><a href="libraries.html#cb11-3"></a>   <span class="ex">ccache-3.3.4-gcc-9.2.0-v3xzqqh</span>         (L)    <span class="ex">r-3.5.2-gcc-9.2.0-oxo76vo</span></span>
+<span id="cb11-4"><a href="libraries.html#cb11-4"></a>   <span class="ex">curl-7.63.0-gcc-9.2.0-cq4w37y</span>          (L)    <span class="ex">r-3.6.1-gcc-9.2.0-j25wr6z</span></span>
+<span id="cb11-5"><a href="libraries.html#cb11-5"></a>   <span class="ex">fish-3.0.0-gcc-9.2.0-gdyab6r</span>      </span></code></pre></div>
 </div>
 <div id="loading-modules" class="section level2">
 <h2>
-<span class="header-section-number">2.2</span> Loading modules<a class="anchor" aria-label="anchor" href="#loading-modules"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2</span> Loading modules<a class="anchor" aria-label="anchor" href="#loading-modules"><i class="fas fa-link"></i></a>
 </h2>
 <p>Modules can be loaded via <code>module load &lt;module&gt;</code>.</p>
-<p>First, you need to load a C compiler as most programs depend on it.
-This module is the only one that you should which uses <code>gcc-4.8.5</code>.
+<p>First, a C compiler need to be loaded as most other libraries depend on it.
 Make sure to also put this one into your <code>~/.bashrc</code> file!</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="libraries.html#cb5-1"></a><span class="ex">module</span> load gcc-9.2.0-gcc-4.8.5-wqdecm4</span></code></pre></div>
-<p>Now you can (for example) load GDAL:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="libraries.html#cb6-1"></a><span class="ex">module</span> load gdal-2.4.2-gcc-9.2.0-henhg26</span></code></pre></div>
-<p>You can check that it worked via</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="libraries.html#cb7-1"></a><span class="ex">gdalinfo</span> --version</span></code></pre></div>
-</div>
-<div id="checking-loaded-modules" class="section level2">
-<h2>
-<span class="header-section-number">2.3</span> Checking loaded modules<a class="anchor" aria-label="anchor" href="#checking-loaded-modules"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="libraries.html#cb8-1"></a><span class="ex">module</span> list</span></code></pre></div>
-</div>
-<div id="default-modules" class="section level2">
-<h2>
-<span class="header-section-number">2.4</span> Default modules<a class="anchor" aria-label="anchor" href="#default-modules"><i class="fas fa-link"></i></a>
-</h2>
-<p>It is useful to have some modules loaded by default when logging in to the server.
-Simply add them to <code>~/.bashrc</code>.</p>
-<p>When running R for spatial analysis, the following are required:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="libraries.html#cb9-1"></a><span class="ex">module</span> load \</span>
-<span id="cb9-2"><a href="libraries.html#cb9-2"></a>  gcc-9.2.0-gcc-4.8.5-wqdecm4 \</span>
-<span id="cb9-3"><a href="libraries.html#cb9-3"></a>  gdal-2.4.2-gcc-9.2.0-henhg26 \</span>
-<span id="cb9-4"><a href="libraries.html#cb9-4"></a>  geos-3.7.2-gcc-9.2.0-jxq7o2n \</span>
-<span id="cb9-5"><a href="libraries.html#cb9-5"></a>  git-2.21.0-gcc-9.2.0-o45v5mj \</span>
-<span id="cb9-6"><a href="libraries.html#cb9-6"></a>  proj-5.2.0-gcc-9.2.0-5t4r5t4 \</span>
-<span id="cb9-7"><a href="libraries.html#cb9-7"></a>  udunits2-2.2.24-gcc-9.2.0-hupsw3n \</span>
-<span id="cb9-8"><a href="libraries.html#cb9-8"></a>  zlib-1.2.11-gcc-9.2.0-j3zdmzq</span></code></pre></div>
-<p>Furthermore, I recommend the following ones (don’t forget to append your version and compiler):</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="libraries.html#cb10-1"></a><span class="ex">byobu-5.127-gcc-9.2.0-x5e5mnz</span></span>
-<span id="cb10-2"><a href="libraries.html#cb10-2"></a><span class="ex">git-2.21.0-gcc-9.2.0-hhkbkhg</span></span>
-<span id="cb10-3"><a href="libraries.html#cb10-3"></a><span class="ex">ccache-3.3.4-gcc-9.2.0-7klqklq</span></span>
-<span id="cb10-4"><a href="libraries.html#cb10-4"></a><span class="ex">python-3.7.4-gcc-9.2.0-nbjbfzi</span></span>
-<span id="cb10-5"><a href="libraries.html#cb10-5"></a><span class="ex">curl-7.63.0-gcc-9.2.0-cq4w37y</span></span></code></pre></div>
-<p>You might wonder why you shouldn’t add a R version to this list? Good question!</p>
-<p>You can load an R module by default - just note that it will not have an effect on RStudio Workbench.
-And for all Slurm project configurations you should specify which R version to use within the template itself and not rely on a default set somewhere.</p>
-</div>
-<div id="r" class="section level2">
-<h2>
-<span class="header-section-number">2.5</span> R<a class="anchor" aria-label="anchor" href="#r"><i class="fas fa-link"></i></a>
-</h2>
-<div id="slurm" class="section level3">
-<h3>
-<span class="header-section-number">2.5.1</span> SLURM<a class="anchor" aria-label="anchor" href="#slurm"><i class="fas fa-link"></i></a>
-</h3>
-<p>All versions from v3.4.4 upwards are installed.</p>
-<p>To load a specific R version for Slurm usage, load the specific environment module</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="libraries.html#cb11-1"></a><span class="co"># loads R v3.5.2</span></span>
-<span id="cb11-2"><a href="libraries.html#cb11-2"></a><span class="ex">module</span> load r-3.5.2-gcc-9.2.0-oxo76vo</span></code></pre></div>
-<p>and then execute <code>R</code>.</p>
-<p>You might find the following aliases helpful which you can put into <code>~/.bashrc</code>:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="libraries.html#cb12-1"></a><span class="bu">alias</span> r344=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.4.4-hobcfrryiwu34etqvf4khv427wwkxdf5/rlib/R &amp;&amp; radian"</span></span>
-<span id="cb12-2"><a href="libraries.html#cb12-2"></a><span class="bu">alias</span> r350=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.0-jx2cc3ecnk4zkfz3kqwomwsm5rpfouiv/rlib/R &amp;&amp; radian"</span></span>
-<span id="cb12-3"><a href="libraries.html#cb12-3"></a><span class="bu">alias</span> r351=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.1-h4fvapuqf65avikja735xn5lzyildzzi/rlib/R &amp;&amp; radian"</span></span>
-<span id="cb12-4"><a href="libraries.html#cb12-4"></a><span class="bu">alias</span> r352=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.2-oxo76vo5ceamc2qp6nfr6zvcqstvzksb/rlib/R &amp;&amp; radian"</span></span>
-<span id="cb12-5"><a href="libraries.html#cb12-5"></a><span class="bu">alias</span> r353=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.3-a75bebsahiaaz6lrcdallnjprx3iybjv/rlib/R &amp;&amp; radian"</span></span>
-<span id="cb12-6"><a href="libraries.html#cb12-6"></a><span class="bu">alias</span> r360=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.0-2sbeu7xbnocpahdm7afuonsumblmgi5j/rlib/R &amp;&amp; radian"</span></span>
-<span id="cb12-7"><a href="libraries.html#cb12-7"></a><span class="bu">alias</span> r361=<span class="st">"export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.1-j25wr6zcofibs2zfjwg37357rjj26lqb/rlib/R &amp;&amp; radian"</span></span></code></pre></div>
-<p>This enables you to launch the specific R version using the set command, e.g. <code>r360</code> will launch R v3.6.0.</p>
-<p><strong>BLAS/LAPACK</strong></p>
-<p>Unfortunately we cannot use an external BLAS/LAPACK like <code>openblas</code> due to the different architectures on the nodes.
-When compiling R with the use of external BLAS/LAPACK, <code>openblas</code> tailors to the arch of the main node (threadripper) and specific processes (e.g. function from the <code>mgcv</code>) package will segfault</p>
-<p>The use of the R internal BLAS/LAPACK comes with a substantial decrease in speed for numerical applications.</p>
-</div>
-<div id="rstudio-workbench" class="section level3">
-<h3>
-<span class="header-section-number">2.5.2</span> RStudio Workbench<a class="anchor" aria-label="anchor" href="#rstudio-workbench"><i class="fas fa-link"></i></a>
-</h3>
-<p>For RStudio Workbench, R interpreters are installed within the image.</p>
-</div>
-</div>
-<div id="rstudio-workbench-1" class="section level2">
-<h2>
-<span class="header-section-number">2.6</span> RStudio Workbench<a class="anchor" aria-label="anchor" href="#rstudio-workbench-1"><i class="fas fa-link"></i></a>
-</h2>
-<p>RStudio Workbench is running on port 8787 (<a href="https://edi.geogr.uni-jena.de:8787" class="uri">https://edi.geogr.uni-jena.de:8787</a>) (legacy) and directly on <a href="https://edi.geogr.uni-jena.de/" class="uri">https://edi.geogr.uni-jena.de/</a>.</p>
-<p>The service is running in a docker container (with Ubuntu 20.04 as the OS).
-Hence, a new terminal will start a terminal with Ubuntu 20.04 as the underlying OS.
-The service is decoupled from the CentOS host system.
-Also the R interpreters are different to the ones used in Slurm jobs which are environment modules via Spack.</p>
-</div>
-<div id="shiny-server" class="section level2">
-<h2>
-<span class="header-section-number">2.7</span> Shiny Server<a class="anchor" aria-label="anchor" href="#shiny-server"><i class="fas fa-link"></i></a>
-</h2>
-<p>Shiny server is running on port 3838 with user support.
-This means users can place apps in <code>$HOME/Shinyapps/</code> and they will be deployed as <code>http://edi.geogr.uni-jena.de:3838/&lt;username&gt;/&lt;appname&gt;</code>.</p>
-<p>Note the <code>http</code> (<code>https</code> is only available in the Pro version).</p>
-<p>Exemplary apps:</p>
-<ul>
-<li><a href="http://edi.geogr.uni-jena.de:3838/patrick/hyperspectral/" class="uri">http://edi.geogr.uni-jena.de:3838/patrick/hyperspectral/</a></li>
-<li><a href="http://edi.geogr.uni-jena.de:3838/jannes/cluster_map/" class="uri">http://edi.geogr.uni-jena.de:3838/jannes/cluster_map/</a></li>
-</ul>
-</div>
-<div id="libraries-1" class="section level2">
-<h2>
-<span class="header-section-number">2.8</span> Libraries<a class="anchor" aria-label="anchor" href="#libraries-1"><i class="fas fa-link"></i></a>
-</h2>
-<p>If you cannot find a module you want to use, check it Spack supports it via <code>spack list &lt;module&gt;</code> and contact an admin to install it for you.
-The following subsections refer to installations on the host, not RStudio Workbench.</p>
-<div id="docker" class="section level3">
-<h3>
-<span class="header-section-number">2.8.1</span> Docker<a class="anchor" aria-label="anchor" href="#docker"><i class="fas fa-link"></i></a>
-</h3>
-<p>Docker is installed on the frontend only (for example to convert .html to .pdf).
-To use <code>docker</code>, your user needs to be added to the “docker” group.
-Please contact an Admin in case you want to use it.</p>
-</div>
-<div id="osrm" class="section level3">
-<h3>
-<span class="header-section-number">2.8.2</span> OSRM<a class="anchor" aria-label="anchor" href="#osrm"><i class="fas fa-link"></i></a>
-</h3>
-<p><a href="https://github.com/Project-OSRM/osrm-backend">Open Source Routing Machine</a> is installed.</p>
-<p>Start the server with <code>osrm-routed</code>.<br>
-More information can be found <a href="https://github.com/Project-OSRM/osrm-backend/wiki/Running-OSRM">here</a>.</p>
-</div>
-<div id="gdal" class="section level3">
-<h3>
-<span class="header-section-number">2.8.3</span> GDAL<a class="anchor" aria-label="anchor" href="#gdal"><i class="fas fa-link"></i></a>
-</h3>
-<p>Check <code>module avail</code> and look for GDAL to see which versions are available.</p>
-</div>
-</div>
-<div id="getting-started" class="section level2">
-<h2>
-<span class="header-section-number">2.9</span> Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"><i class="fas fa-link"></i></a>
-</h2>
-<p>If you worked through all these steps, you are almost good to go.
-Here are have some further recommendations to make your life easier.</p>
-<div id="byobu" class="section level4">
-<h4>
-<span class="header-section-number">2.9.0.1</span> byobu<a class="anchor" aria-label="anchor" href="#byobu"><i class="fas fa-link"></i></a>
-</h4>
-<p><code>byobu</code> is a wrapper for your SSH session that makes it possible to close your terminal session and not loose the command running in it.
-If you start long running jobs, you can safely start them in a <code>byobu</code> window without worrying about them to quit once you shut down your machine.</p>
-<p>Run <code>byobu</code> after being logged in and a <code>byobu</code> session will be launched.</p>
-<p>You can open multiple ones with <code>byobu -S &lt;session name&gt;</code>, e.g. <code>byobu -S session2</code>.
-Once you have multiple ones open, an interactive prompt will ask you which one you want to start next time.</p>
-</div>
-<div id="radian" class="section level4">
-<h4>
-<span class="header-section-number">2.9.0.2</span> radian<a class="anchor" aria-label="anchor" href="#radian"><i class="fas fa-link"></i></a>
-</h4>
-<p><code>radian</code> is an optimized R command line tool.
-You will notice the benefits compared to the default <code>R</code> once you start using it.
-You need to install it via <code>pip</code> which is already installed if you installed <code>python</code>.</p>
-<p>Usually <code>setuptools</code> needs to be upgraded first.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="libraries.html#cb13-1"></a><span class="ex">pip</span> install --user --upgrade setuptools</span>
-<span id="cb13-2"><a href="libraries.html#cb13-2"></a><span class="ex">pip</span> install --user radian</span></code></pre></div>
-<p>Now you can either always use <code>radian</code> or set an alias in your <code>.bashrc</code> , e.g. <code>alias r="radian"</code>.
-Note that <code>radian</code> only works if you have set the env variable <code>R_HOME</code> correctly.
-See <a href="#R">here</a> for more details.</p>
-<p>If is does not work at this moment, you might need to add the binary to your <code>$PATH</code> variable in your <code>~/.bashrc</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="libraries.html#cb14-1"></a><span class="bu">export</span> <span class="va">PATH=</span>~/.local/bin:<span class="va">$PATH</span></span></code></pre></div>
-</div>
-<div id="ccache" class="section level4">
-<h4>
-<span class="header-section-number">2.9.0.3</span> ccache<a class="anchor" aria-label="anchor" href="#ccache"><i class="fas fa-link"></i></a>
-</h4>
-<p>If you load <code>ccache</code>, you will speed-up source installations of R packages a lot.
-(On Linux, all R packages are installed from source.)
-Besides loading <code>ccache</code>, you also need to create the following file in your home directory (<code>~/.R/Makevars</code>):</p>
-<p>(Note that you need to create the folder first, it does not exist by default (<code>mkdir ~/.R/</code>).)</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="libraries.html#cb15-1"></a><span class="ex">CXX_STD</span> = CXX14</span>
-<span id="cb15-2"><a href="libraries.html#cb15-2"></a></span>
-<span id="cb15-3"><a href="libraries.html#cb15-3"></a><span class="va">VER=</span></span>
-<span id="cb15-4"><a href="libraries.html#cb15-4"></a><span class="va">CCACHE=</span>ccache</span>
-<span id="cb15-5"><a href="libraries.html#cb15-5"></a><span class="va">CC=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="fu">gcc</span> <span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
-<span id="cb15-6"><a href="libraries.html#cb15-6"></a><span class="va">CXX=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">g++</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
-<span id="cb15-7"><a href="libraries.html#cb15-7"></a><span class="va">C11=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">g++</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
-<span id="cb15-8"><a href="libraries.html#cb15-8"></a><span class="va">C14=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">g++</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
-<span id="cb15-9"><a href="libraries.html#cb15-9"></a><span class="va">FC=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">gfortran</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
-<span id="cb15-10"><a href="libraries.html#cb15-10"></a><span class="va">F77=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">gfortran</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span></code></pre></div>
-<p>When installing a package now, you will occasionally see that the <code>gcc</code> lines are prefixed with <code>ccache</code>.
-This means that this <code>gcc</code> call was already executed once and is now loaded from the cache rather than being run again.
-This saves a lot of time, especially for packages that take long to install (<code>dplyr</code>, <code>Rcpp</code>, <code>stringi</code>).</p>
-</div>
-<div id="wrapper" class="section level4">
-<h4>
-<span class="header-section-number">2.9.0.4</span> Create a bash alias for your project<a class="anchor" aria-label="anchor" href="#wrapper"><i class="fas fa-link"></i></a>
-</h4>
-<p>Often you might want to use an {renv} library in a specific directory with a specific R version.
-Rather than navigating there all the time by hand and loading the R version manually, you can create an alias that does this for you.
-You can of course also use this approach without {renv} - just to load a specific version.</p>
-<pre><code>alias my-project="cd /path/to/project &amp;&amp; &lt;load custom env module&gt; &amp;&amp; r361"</code></pre>
-<p>Put this in your <code>.bashrc</code> and save time :)</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="libraries.html#cb12-1"></a><span class="ex">module</span> load gcc-9.2.0-gcc-4.8.5-wqdecm4</span></code></pre></div>
+<p>Other than that, you should only need to load an R interpreter which is executing all scripts on the nodes.
+The R interpreter in RStudio only live in the container and are not on the HPC nodes.</p>
+<p>You should load the modules within your SLURM template.</p>
 
 </div>
 </div>
-</div>
   <div class="chapter-nav">
-<div class="prev"><a href="index.html"><span class="header-section-number">1</span> Introduction</a></div>
-<div class="next"><a href="scheduler.html"><span class="header-section-number">3</span> Scheduler</a></div>
+<div class="prev"><a href="slurm-hpc-scheduler.html"><span class="header-section-number">4</span> SLURM: HPC scheduler</a></div>
+<div class="next"><a href="getting-started.html"><span class="header-section-number">6</span> Getting Started</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#libraries"><span class="header-section-number">2</span> Libraries and Environment Modules</a></li>
-<li><a class="nav-link" href="#introduction"><span class="header-section-number">2.1</span> Introduction</a></li>
-<li><a class="nav-link" href="#loading-modules"><span class="header-section-number">2.2</span> Loading modules</a></li>
-<li><a class="nav-link" href="#checking-loaded-modules"><span class="header-section-number">2.3</span> Checking loaded modules</a></li>
-<li><a class="nav-link" href="#default-modules"><span class="header-section-number">2.4</span> Default modules</a></li>
-<li>
-<a class="nav-link" href="#r"><span class="header-section-number">2.5</span> R</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#slurm"><span class="header-section-number">2.5.1</span> SLURM</a></li>
-<li><a class="nav-link" href="#rstudio-workbench"><span class="header-section-number">2.5.2</span> RStudio Workbench</a></li>
-</ul>
-</li>
-<li><a class="nav-link" href="#rstudio-workbench-1"><span class="header-section-number">2.6</span> RStudio Workbench</a></li>
-<li><a class="nav-link" href="#shiny-server"><span class="header-section-number">2.7</span> Shiny Server</a></li>
-<li>
-<a class="nav-link" href="#libraries-1"><span class="header-section-number">2.8</span> Libraries</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#docker"><span class="header-section-number">2.8.1</span> Docker</a></li>
-<li><a class="nav-link" href="#osrm"><span class="header-section-number">2.8.2</span> OSRM</a></li>
-<li><a class="nav-link" href="#gdal"><span class="header-section-number">2.8.3</span> GDAL</a></li>
-</ul>
-</li>
-<li><a class="nav-link" href="#getting-started"><span class="header-section-number">2.9</span> Getting Started</a></li>
+<li><a class="nav-link" href="#libraries"><span class="header-section-number">5</span> Libraries and Environment Modules</a></li>
+<li><a class="nav-link" href="#introduction"><span class="header-section-number">5.1</span> Introduction</a></li>
+<li><a class="nav-link" href="#loading-modules"><span class="header-section-number">5.2</span> Loading modules</a></li>
 </ul>
 
       <div class="book-extra">

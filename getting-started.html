@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 6 Getting Started | HPC User Guide</title>
+<meta name="author" content="Patrick Schratz, Jannes Muenchow">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS -->
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">HPC User Guide</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="rstudio-workbench.html"><span class="header-section-number">2</span> RStudio Workbench</a></li>
+<li><a class="" href="shiny-server.html"><span class="header-section-number">3</span> Shiny Server</a></li>
+<li><a class="" href="slurm-hpc-scheduler.html"><span class="header-section-number">4</span> SLURM: HPC scheduler</a></li>
+<li><a class="" href="libraries.html"><span class="header-section-number">5</span> Libraries and Environment Modules</a></li>
+<li><a class="active" href="getting-started.html"><span class="header-section-number">6</span> Getting Started</a></li>
+<li><a class="" href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">7</span> Troubleshooting and Cautionary Notes</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="getting-started" class="section level1">
+<h1>
+<span class="header-section-number">6</span> Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"><i class="fas fa-link"></i></a>
+</h1>
+<p>If you worked through all these steps, you are almost good to go.
+Here are have some additional recommendations to make your server life easier.</p>
+<div id="byobu" class="section level2">
+<h2>
+<span class="header-section-number">6.1</span> byobu<a class="anchor" aria-label="anchor" href="#byobu"><i class="fas fa-link"></i></a>
+</h2>
+<p><code>byobu</code> is a wrapper for your SSH session that makes it possible to close your terminal session and not loose the command running in it.
+If you start long running jobs, you can safely start them in a <code>byobu</code> window without worrying about them to quit once you shut down your machine.</p>
+<p>Run <code>byobu</code> after being logged in and a <code>byobu</code> session will be launched.</p>
+<p>You can open multiple ones with <code>byobu -S &lt;session name&gt;</code>, e.g. <code>byobu -S session2</code>.
+Once you have multiple ones open, an interactive prompt will ask you which one you want to start next time.</p>
+</div>
+<div id="radian" class="section level2">
+<h2>
+<span class="header-section-number">6.2</span> radian<a class="anchor" aria-label="anchor" href="#radian"><i class="fas fa-link"></i></a>
+</h2>
+<p><code>radian</code> is an optimized R command line tool.
+You will notice the benefits compared to the default <code>R</code> once you start using it.
+You need to install it via <code>pip</code> which is already installed if you installed <code>python</code>.</p>
+<p>Usually <code>setuptools</code> needs to be upgraded first.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="getting-started.html#cb13-1"></a><span class="ex">pip</span> install --user --upgrade setuptools</span>
+<span id="cb13-2"><a href="getting-started.html#cb13-2"></a><span class="ex">pip</span> install --user radian</span></code></pre></div>
+<p>Now you can either always use <code>radian</code> or set an alias in your <code>.bashrc</code> , e.g. <code>alias r="radian"</code>.
+Note that <code>radian</code> only works if you have set the env variable <code>R_HOME</code> correctly.
+See <a href="#R">here</a> for more details.</p>
+<p>If is does not work at this moment, you might need to add the binary to your <code>$PATH</code> variable in your <code>~/.bashrc</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="getting-started.html#cb14-1"></a><span class="bu">export</span> <span class="va">PATH=</span>~/.local/bin:<span class="va">$PATH</span></span></code></pre></div>
+</div>
+<div id="ccache" class="section level2">
+<h2>
+<span class="header-section-number">6.3</span> ccache<a class="anchor" aria-label="anchor" href="#ccache"><i class="fas fa-link"></i></a>
+</h2>
+<p>If you load <code>ccache</code>, you will speed-up source installations of R packages a lot.
+(On Linux, all R packages are installed from source.)
+Besides loading <code>ccache</code>, you also need to create the following file in your home directory (<code>~/.R/Makevars</code>):</p>
+<p>(Note that you need to create the folder first, it does not exist by default (<code>mkdir ~/.R/</code>).)</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="getting-started.html#cb15-1"></a><span class="ex">CXX_STD</span> = CXX14</span>
+<span id="cb15-2"><a href="getting-started.html#cb15-2"></a></span>
+<span id="cb15-3"><a href="getting-started.html#cb15-3"></a><span class="va">VER=</span></span>
+<span id="cb15-4"><a href="getting-started.html#cb15-4"></a><span class="va">CCACHE=</span>ccache</span>
+<span id="cb15-5"><a href="getting-started.html#cb15-5"></a><span class="va">CC=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="fu">gcc</span> <span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
+<span id="cb15-6"><a href="getting-started.html#cb15-6"></a><span class="va">CXX=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">g++</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
+<span id="cb15-7"><a href="getting-started.html#cb15-7"></a><span class="va">C11=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">g++</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
+<span id="cb15-8"><a href="getting-started.html#cb15-8"></a><span class="va">C14=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">g++</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
+<span id="cb15-9"><a href="getting-started.html#cb15-9"></a><span class="va">FC=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">gfortran</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
+<span id="cb15-10"><a href="getting-started.html#cb15-10"></a><span class="va">F77=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">gfortran</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span></code></pre></div>
+<p>When installing a package now, you will occasionally see that the <code>gcc</code> lines are prefixed with <code>ccache</code>.
+This means that this <code>gcc</code> call was already executed once and is now loaded from the cache rather than being run again.
+This saves a lot of time, especially for packages that take long to install (<code>dplyr</code>, <code>Rcpp</code>, <code>stringi</code>).</p>
+</div>
+<div id="wrapper" class="section level2">
+<h2>
+<span class="header-section-number">6.4</span> Create a bash alias for your project<a class="anchor" aria-label="anchor" href="#wrapper"><i class="fas fa-link"></i></a>
+</h2>
+<p>Often you might want to use an {renv} library in a specific directory with a specific R version after having logged into the server.</p>
+<p>Rather than navigating there all the time by hand and loading the R version manually, you can create an alias that does this for you.
+You can of course also use this approach without {renv} - just to load a specific version.</p>
+<pre><code>alias my-project="cd /path/to/project &amp;&amp; &lt;load custom R env module&gt; &amp;&amp; R"</code></pre>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="libraries.html"><span class="header-section-number">5</span> Libraries and Environment Modules</a></div>
+<div class="next"><a href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">7</span> Troubleshooting and Cautionary Notes</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#getting-started"><span class="header-section-number">6</span> Getting Started</a></li>
+<li><a class="nav-link" href="#byobu"><span class="header-section-number">6.1</span> byobu</a></li>
+<li><a class="nav-link" href="#radian"><span class="header-section-number">6.2</span> radian</a></li>
+<li><a class="nav-link" href="#ccache"><span class="header-section-number">6.3</span> ccache</a></li>
+<li><a class="nav-link" href="#wrapper"><span class="header-section-number">6.4</span> Create a bash alias for your project</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>HPC User Guide</strong>" was written by Patrick Schratz, Jannes Muenchow. It was last built on 2021-06-07.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

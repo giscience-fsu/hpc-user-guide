@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 7 Troubleshooting and Cautionary Notes | HPC User Guide</title>
+<title>Chapter 2 RStudio Workbench | HPC User Guide</title>
 <meta name="author" content="Patrick Schratz, Jannes Muenchow">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -32,12 +32,12 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="" href="rstudio-workbench.html"><span class="header-section-number">2</span> RStudio Workbench</a></li>
+<li><a class="active" href="rstudio-workbench.html"><span class="header-section-number">2</span> RStudio Workbench</a></li>
 <li><a class="" href="shiny-server.html"><span class="header-section-number">3</span> Shiny Server</a></li>
 <li><a class="" href="slurm-hpc-scheduler.html"><span class="header-section-number">4</span> SLURM: HPC scheduler</a></li>
 <li><a class="" href="libraries.html"><span class="header-section-number">5</span> Libraries and Environment Modules</a></li>
 <li><a class="" href="getting-started.html"><span class="header-section-number">6</span> Getting Started</a></li>
-<li><a class="active" href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">7</span> Troubleshooting and Cautionary Notes</a></li>
+<li><a class="" href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">7</span> Troubleshooting and Cautionary Notes</a></li>
 </ul>
 
         <div class="book-extra">
@@ -45,51 +45,55 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="troubleshooting-and-cautionary-notes" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="rstudio-workbench" class="section level1">
 <h1>
-<span class="header-section-number">7</span> Troubleshooting and Cautionary Notes<a class="anchor" aria-label="anchor" href="#troubleshooting-and-cautionary-notes"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2</span> RStudio Workbench<a class="anchor" aria-label="anchor" href="#rstudio-workbench"><i class="fas fa-link"></i></a>
 </h1>
-<div id="cautionary-notes" class="section level2">
+<p>RStudio Workbench (RSW) is running on the main node of the cluster.
+It aims to be the central go-to place for scripts and analysis development.</p>
+<p>RSW is running in a Docker container which is running on Ubuntu 20.04.
+This means that if you open a terminal in RSW, you are in an Ubuntu environment.</p>
+<div class="rmdcaution">
+<p>
+This is different to the environment if you <code>ssh</code> directly onto the server, which is running on a CentOS7 system.
+</p>
+</div>
+<p>All packages installed in RSW are linked against Ubuntu 20.04 system libraries which are already installed in the RSW container.</p>
+<p>RSW is running on the main node which has 32 cores and 124 GB RAM.
+This machine is shared with multiple people, so please ensure that you do not use too much memory and clean up from time to time.
+RSW shows you your memory usage in the “Environment” pane of the IDE.
+Besides, you can go to the terminal and execute <code>htop</code> to check the current load on the server.</p>
+<div id="slurm" class="section level2">
 <h2>
-<span class="header-section-number">7.1</span> Cautionary Notes<a class="anchor" aria-label="anchor" href="#cautionary-notes"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.1</span> SLURM<a class="anchor" aria-label="anchor" href="#slurm"><i class="fas fa-link"></i></a>
 </h2>
+<p>RSW is connected to the SLURM scheduler and is able to add jobs to the SLURM queue.</p>
 </div>
-<div id="faq" class="section level2">
+<div id="python" class="section level2">
 <h2>
-<span class="header-section-number">7.2</span> FAQ<a class="anchor" aria-label="anchor" href="#faq"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.2</span> Python<a class="anchor" aria-label="anchor" href="#python"><i class="fas fa-link"></i></a>
 </h2>
-<p><strong>Question</strong>: I ran <code>sinfo</code> and saw that the state of the nodes is “down”.<br><strong>Answer</strong>: Please contact the admin to resume the nodes.</p>
-<hr>
-<p><strong>Question</strong>: I ran <code>sinfo</code> and saw that some nodes have status “mix” and some “alloc”. What are the differences?<br><strong>Answer</strong>: “mix” means that the node is not fully loaded and is in a mixed state between processing and being idle. “alloc” means that the node is fully allocated.</p>
-
-<div id="refs" class="references">
-<div id="ref-shotts_linux_2012">
-<p>Shotts, William E. 2012. <em>The Linux Command Line: A Complete Introduction</em>. San Francisco: No Starch Press.</p>
+<p>RSW ships with support for JupyterLab and JupyterNotebooks.
+You an launch a Jupyter session by selecting it in the drop-down of a new session instead of “RStudio”.</p>
 </div>
-<div id="ref-sobell_practical_2010">
-<p>Sobell, Mark G. 2010. <em>A Practical Guide to Linux Commands, Editors, and Shell Programming</em>. 2nd ed. Upper Saddle River, NJ: Prentice Hall.</p>
-</div>
-<div id="ref-ward_how_2015">
-<p>Ward, Brian. 2015. <em>How Linux Works: What Every Superuser Should Know</em>. 2nd edition. San Francisco: No Starch Press.</p>
+<div id="vscode" class="section level2">
+<h2>
+<span class="header-section-number">2.3</span> VSCode<a class="anchor" aria-label="anchor" href="#vscode"><i class="fas fa-link"></i></a>
+</h2>
+<p>RSW &gt;= 1.4 ships with a full VSCode integration.
+You an launch a VSCode session by selecting it in the drop-down of a new session instead of “RStudio”.</p>
 </div>
 </div>
-</div>
-</div>
-
-
-
-
-
-
   <div class="chapter-nav">
-<div class="prev"><a href="getting-started.html"><span class="header-section-number">6</span> Getting Started</a></div>
-<div class="empty"></div>
+<div class="prev"><a href="index.html"><span class="header-section-number">1</span> Introduction</a></div>
+<div class="next"><a href="shiny-server.html"><span class="header-section-number">3</span> Shiny Server</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#troubleshooting-and-cautionary-notes"><span class="header-section-number">7</span> Troubleshooting and Cautionary Notes</a></li>
-<li><a class="nav-link" href="#cautionary-notes"><span class="header-section-number">7.1</span> Cautionary Notes</a></li>
-<li><a class="nav-link" href="#faq"><span class="header-section-number">7.2</span> FAQ</a></li>
+<li><a class="nav-link" href="#rstudio-workbench"><span class="header-section-number">2</span> RStudio Workbench</a></li>
+<li><a class="nav-link" href="#slurm"><span class="header-section-number">2.1</span> SLURM</a></li>
+<li><a class="nav-link" href="#python"><span class="header-section-number">2.2</span> Python</a></li>
+<li><a class="nav-link" href="#vscode"><span class="header-section-number">2.3</span> VSCode</a></li>
 </ul>
 
       <div class="book-extra">
