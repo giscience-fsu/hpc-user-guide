@@ -13,10 +13,9 @@ link-citations: yes
 
 # Introduction {#intro}
 
-Welcome to the user manual of the High-Performance-Server (HPC) of the GIScience group (University of Jena).
+Welcome to the user manual of the High-Performance-Cluster (HPC) of the GIScience group (University of Jena).
 
-It is tailored towards R processing.
-This document describes how to get started and submit jobs to the cluster.
+It is tailored towards R processing but can also be used with any other programming language.
 
 **A short introduction to HPCs**
 
