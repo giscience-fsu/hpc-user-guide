@@ -1,0 +1,73 @@
+# Getting Started
+
+If you worked through all these steps, you are almost good to go.
+Here are have some additional recommendations to make your server life easier.
+
+## byobu
+
+`byobu` is a wrapper for your SSH session that makes it possible to close your terminal session and not loose the command running in it.
+If you start long running jobs, you can safely start them in a `byobu` window without worrying about them to quit once you shut down your machine.
+
+Run `byobu` after being logged in and a `byobu` session will be launched.
+
+You can open multiple ones with `byobu -S <session name>`, e.g. `byobu -S session2`.
+Once you have multiple ones open, an interactive prompt will ask you which one you want to start next time.
+
+## radian {#radian}
+
+`radian` is an optimized R command line tool. 
+You will notice the benefits compared to the default `R` once you start using it.
+You need to install it via `pip` which is already installed if you installed `python`.
+
+Usually `setuptools` needs to be upgraded first.
+
+```sh
+pip install --user --upgrade setuptools
+pip install --user radian
+```
+
+Now you can either always use `radian` or set an alias in your `.bashrc` , e.g. `alias r="radian"`.
+Note that `radian` only works if you have set the env variable `R_HOME` correctly.
+See [here](#R) for more details.
+
+If is does not work at this moment, you might need to add the binary to your `$PATH` variable in your `~/.bashrc`.
+
+```sh
+export PATH=~/.local/bin:$PATH
+```
+
+## ccache
+
+If you load `ccache`, you will speed-up source installations of R packages a lot.
+(On Linux, all R packages are installed from source.)
+Besides loading `ccache`, you also need to create the following file in your home directory (`~/.R/Makevars`):
+
+(Note that you need to create the folder first, it does not exist by default (`mkdir ~/.R/`).)
+
+```sh
+CXX_STD = CXX14
+
+VER=
+CCACHE=ccache
+CC=$(CCACHE) gcc $(VER)
+CXX=$(CCACHE) g++$(VER)
+C11=$(CCACHE) g++$(VER)
+C14=$(CCACHE) g++$(VER)
+FC=$(CCACHE) gfortran$(VER)
+F77=$(CCACHE) gfortran$(VER)
+```
+
+When installing a package now, you will occasionally see that the `gcc` lines are prefixed with `ccache`.
+This means that this `gcc` call was already executed once and is now loaded from the cache rather than being run again.
+This saves a lot of time, especially for packages that take long to install (`dplyr`, `Rcpp`, `stringi`).
+
+## Create a bash alias for your project {#wrapper}
+
+Often you might want to use an {renv} library in a specific directory with a specific R version after having logged into the server.
+
+Rather than navigating there all the time by hand and loading the R version manually, you can create an alias that does this for you.
+You can of course also use this approach without {renv}  - just to load a specific version. 
+
+```
+alias my-project="cd /path/to/project && <load custom R env module> && R"
+```

@@ -1,0 +1,13 @@
+# Troubleshooting and Cautionary Notes
+
+## Cautionary Notes
+
+## FAQ
+
+**Question**: I ran `sinfo` and saw that the state of the nodes is "down".  
+**Answer**: Please contact the admin to resume the nodes.
+
+---
+
+**Question**: I ran `sinfo` and saw that some nodes have status "mix" and some "alloc". What are the differences?  
+**Answer**: "mix" means that the node is not fully loaded and is in a mixed state between processing and being idle. "alloc" means that the node is fully allocated.

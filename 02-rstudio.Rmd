@@ -1,0 +1,45 @@
+# RStudio Workbench
+
+RStudio Workbench (RSW) is running on the main node of the cluster.
+It aims to be the central go-to place for scripts and analysis development.
+
+RSW is running in a Docker container which is running on Ubuntu 20.04.
+This means that if you open a terminal in RSW, you are in an Ubuntu environment.
+
+```{block, type='rmdcaution'}
+This is different to the environment if you `ssh` directly onto the server, which is running on a CentOS7 system.
+```
+
+All packages installed in RSW are linked against Ubuntu 20.04 system libraries which are already installed in the RSW container.
+
+RSW is running on the main node which has 32 cores and 124 GB RAM.
+This machine is shared with multiple people, so please ensure that you do not use too much memory and clean up from time to time.
+RSW shows you your memory usage in the "Environment" pane of the IDE.
+Besides, you can go to the terminal and execute `htop` to check the current load on the server.
+
+## SLURM
+
+RSW is connected to the SLURM scheduler and is able to add jobs to the SLURM queue.
+
+## Python
+
+RSW ships with support for JupyterLab and JupyterNotebooks.
+You an launch a Jupyter session by selecting it in the drop-down of a new session instead of "RStudio".
+
+## VSCode
+
+RSW >= 1.4 ships with a full VSCode integration.
+You an launch a VSCode session by selecting it in the drop-down of a new session instead of "RStudio".
+
+# Shiny Server
+
+Shiny server is running on port 3838 with user support.
+This means users can place apps in `$HOME/Shinyapps/` and they will be deployed as `http://edi.geogr.uni-jena.de:3838/<username>/<appname>`.
+
+Note the `http` (`https` is only available in the Pro version).
+
+Exemplary apps:
+
+- http://edi.geogr.uni-jena.de:3838/patrick/hyperspectral/
+- http://edi.geogr.uni-jena.de:3838/jannes/cluster_map/
+

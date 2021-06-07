@@ -3,7 +3,6 @@ title: "HPC User Guide"
 author: "Patrick Schratz, Jannes Muenchow"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-output: bookdown::gitbook
 documentclass: book
 bibliography: [book.bib]
 biblio-style: apalike
@@ -14,7 +13,7 @@ link-citations: yes
 
 # Introduction {#intro}
 
-Welcome to the user manual of the High-Performance-Server (HPC) of the GIScience group (University Jena).
+Welcome to the user manual of the High-Performance-Server (HPC) of the GIScience group (University of Jena).
 
 It is tailored towards R processing.
 This document describes how to get started and submit jobs to the cluster.
@@ -26,7 +25,7 @@ Incoming processing requests (jobs) are handled by the scheduler (SLURM), taking
 
 Administration is simplified by provisioning all computing nodes with the same virtual image.
 This way, maintenance tasks are reduced and differences between the machines are avoided.
-Administration is further simplified by using the [Spack](https://spack.io) package manager as this application allows for version-agnostic environment module installations.
+Library management across nodes is is done via the [Spack](https://spack.io) package manager as this application allows for version-agnostic environment module installations.
 
 The `$HOME` directory of every user is shared across all nodes, avoiding the need to keep data and scripts in sync across multiple machines.
 
@@ -35,13 +34,13 @@ The `$HOME` directory of every user is shared across all nodes, avoiding the nee
 - Working on a Linux server naturally requires a certain amount of familiarity with UNIX command-line shells and text editors.
 There are dozens of Linux online tutorials which should help to get you started.^[For example, https://ryanstutorials.net/linuxtutorial/.]
 Of course, there are also great books on how to use Linux such as @shotts_linux_2012, @sobell_practical_2010 and @ward_how_2015 all of which are freely available.
-If you still get stuck, Google might help you.
+If you still get stuck, Google will certainly help you.
 
-- Please add a SSH key pair to your account to be able to log in to the server without having to type your password.
-This is especially useful since your password will consist of many letters and numbers (> 10) which you do not want to memorize.
-See [this](https://help.github.com/articles/connecting-to-github-with-ssh/) guide if you have never worked with SSH keys before.
-If you already use a SSH key pair on your machine, you can use `ssh-copy-id <username>@10.232.16.28` to copy your key to the server.
-Afterwards you should be able to login via `ssh <username>@10.232.16.28` without being prompted for your password.
+- Please add a SSH key pair to your account to be able to log in to the server without having to type your password every time.
+  This is especially useful since your password will consist of many letters and numbers (> 10) which you do not want to memorize.
+  See [this](https://help.github.com/articles/connecting-to-github-with-ssh/) guide if you have never worked with SSH keys before.
+  If you already use a SSH key pair on your machine, you can use `ssh-copy-id <username>@10.232.16.28` to copy your key to the server.
+  Afterwards you should be able to login via `ssh <username>@10.232.16.28` without being prompted for your password.
 
 ## Web Address
 

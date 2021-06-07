@@ -1,11 +1,76 @@
-# Submitting jobs {#submit-jobs}
+# SLURM: HPC scheduler
 
-## `clustermq` setup
+If you have written some scripts and want to execute them, it is advisable to send them to the scheduler.
+The scheduler (SLURM) will distribute the jobs across the cluster (6+ machines) and make sure that there are no conflicts with respect to CPU and memory if multiple people send jobs to the cluster.
+This is the essential job of a scheduler.
+
+## First steps
+
+Sending jobs to SLURM in R is supported via the R package [clustermq](https://github.com/mschubert/clustermq).
+
+Rather than calling a R script directly, you need to wrap your code into a function and invoke it using `clustermq::Q()`.
+Instead of using `clustermq` directly, you can make use of R packages like [{targets}](https://cran.r-project.org/web/packages/targets/index.html) or [{drake}](https://cran.r-project.org/web/packages/drake/index.html) to automatically wrap your whole analysis in a way that it executes all layers of your analysis on the HPC.
+
+There is no other way to submit your R jobs to the compute nodes of the cluster than by using any of the tools mentioned above.
+
+## SLURM commands
+
+While the execution of jobs is explained in more detail in [Chapter 4](#submit-jobs), the following section aims familiarizing yourself with the usage of the scheduler.
+The scheduler is queried via the terminal, i.e. you need to `ssh` into the server or switch to the "Terminal" tab in RStudio.
+
+The most important SLURM commands are
+
+- `sinfo`: An overview of the current state of the nodes
+
+```sh
+sinfo
+
+PARTITION    AVAIL  TIMELIMIT  NODES  STATE NODELIST
+all*            up   infinite      4  alloc c[0-2],edi
+all*            up   infinite      2   idle c[3-4]
+frontend        up   infinite      1  alloc edi
+threadripper    up   infinite      4  alloc c[0-2],edi
+opteron         up   infinite      2   idle c[3-4]
+```
+
+- `squeue`: An overview of the current jobs that are queued, including information about running jobs
+
+```sh
+squeue
+
+JOBID     PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+129_[2-5]    threadripper  cmq7381  patrick PD       0:00      1 (Resources)
+121_2        threadripper  cmq7094  patrick  R    6:24:17      1 c1
+121_3        threadripper  cmq7094  patrick  R    6:24:17      1 c2
+129_1        threadripper  cmq7381  patrick  R    5:40:44      1 c0
+```
+
+- `sacct`: Overview of jobs that were submitted in the past including their end state
+
+```sh
+122             cmq7094     threadripper     (null)          0  COMPLETED      0:0
+123             cmq7094     threadripper     (null)          0    PENDING      0:0
+121             cmq7094     threadripper     (null)          0    PENDING      0:0
+125             cmq6623     threadripper     (null)          0     FAILED      1:0
+126             cmq6623     threadripper     (null)          0     FAILED      1:0
+127             cmq6623     threadripper     (null)          0     FAILED      1:0
+128             cmq6623     threadripper     (null)          0     FAILED      1:0
+124             cmq6623     threadripper     (null)          0     FAILED      1:0
+130             cmq7381     threadripper     (null)          0    PENDING      0:0
+```
+
+- `scancel`: Cancel running jobs using the job ID identifier
+
+  If you want to cancel all jobs for your specific user, you can call `scancel -u <username>`.
+
+## Submitting jobs {#submit-jobs}
+
+### `clustermq` setup
 
 Every job submission is done via `clustermq::Q()` (either directly or via `drake`). 
 See the setup instructions in the [clustermq](https://mschubert.github.io/clustermq/) package on how to setup the package.
 
-First, you need to set some options in your `.Rprofile` (on the master node or in your project root when you use _packrat_):
+First, you need to set some options in your `.Rprofile` (on the master node or in your project root when you use {renv} or {packrat}):
 
 ```r
 options(
@@ -23,7 +88,7 @@ Note that you can have multiple `.Rprofile` files on your system:
 
 This way you can use customized `.Rprofile` files tailored to a project.
 
-At this stage you should be able to run the [example](https://github.com/mschubert/clustermq) at the top of the `README` of the _clustermq_ package.
+At this stage you should be able to run the [example](https://github.com/mschubert/clustermq) at the top of the `README` of the {clustermq} package.
 It is a very simple example which finishes in a few seconds.
 If it does not work, you either did something wrong or the nodes are busy.
 Check with `sinfo` and `squeue`.
@@ -35,11 +100,12 @@ If you submit a job that is parallelized without telling the scheduler, the sche
 This will potentially affect all running processes on the server since the scheduler will accept more processing than it actually can take.
 ```
 
-## The scheduler template
+### The scheduler template
 
 To successfully submit jobs to the scheduler, you need to set the `.Rprofile` options given above.
 Note that you can add any bash commands into the scripts between the `SBATCH` section and the final R call.
-For example, one of my templates looks like this:
+
+For example, a template could look as follows:
 
 ```sh
 #!/bin/sh
@@ -51,9 +117,9 @@ For example, one of my templates looks like this:
 #SBATCH --mem={{ memory }}
 #SBATCH --array=1-{{ n_jobs }}
 
-cd path/to/project
+cd /full/path/to/project
 
-# load desired R version
+# load desired R version via an env module
 module load r-3.5.2-gcc-9.2.0-4syrmqv
 
 CMQ_AUTH={{ auth }} R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
@@ -62,15 +128,18 @@ CMQ_AUTH={{ auth }} R --no-save --no-restore -e 'clustermq:::worker("{{ master }
 Note: The `#` signs are no mistakes here, they are no "comment" signs in this context. 
 The `SBATCH` commands will be executed here.
 
-You can simply copy it and adjust it to your needs (set the right path to your project and specify the R version you want to use).
+You can simply copy it and adjust it to your needs.
+You only need to set the right path to your project and specify the R version you want to use.
 
-## Allocating resources
+### Allocating resources
 
 There are two approaches/packages you can use: 
 
-- `drake` (recommended)
+- `drake` / `targets`
 
 - `clustermq`
+
+The `drake` approach is only valid if you have set up your project as a `drake` or `targets` project.
 
 ```{r eval = FALSE}
 drake::make(parallelism = "clustermq", n_jobs = 1, 
@@ -84,10 +153,11 @@ clustermq::Q(template = list(n_cpus = <X>, log_file = <Y>, memory = <Z>))
 (The individual components of these calls are explained in more detail below.)
 
 Note that `drake` uses `clustermq` under the hood. 
-Notations like `<X>` are meant to be read as placeholders, meaning you need to replace them with valid content.)
+Notations like `<X>` are meant to be read as placeholders, meaning they need to be replaced with valid content.)
 
 When submitting jobs via `clustermq::Q()`, it is important to tell the scheduler how many cores and memory should be reserved for you.
 This step is very important.
+
 If you specify less cores than you actually use in your script (e.g. by internal parallelization), the scheduler will plan with X cores although your submitted code will spawn Y processes in the background.
 This might overload the node and eventually cause your script (and more importantly) the processes of others to crash.
 
@@ -105,7 +175,7 @@ It will then be passed to the `clustermq.template` file (frequently named `slurm
 
 This tells the scheduler how many resources (here cpus) your job needs.
 
-2. via `drake::make()` (recommended)
+2. via `drake::make()`
 
 Again, set the options via argument `template = list(n_cpus = X, memory = Y)`.
 See section ["The resources column for transient workers"](https://ropenscilabs.github.io/drake-manual/hpc.html#advanced-options) in the drake manual.
@@ -132,7 +202,7 @@ This blocks five CPUs of the machine for no reason potentially causing other peo
 Furthermore, if you want to use all resources of a node and run into memory problems, try reducing the number of CPUs (if you already increased the memory to its maximum).
 If you scale down the number of CPUs, you will have more memory/cpu available.
 
-## Monitoring progress
+### Monitoring progress
 
 When submitting jobs you can track its progress by specifying a `log_file` in the `clustermq::Q()` call, e.g. `clustermq::Q(template = list(log_file = path/to/file))`.
 
@@ -142,44 +212,12 @@ If your jobs are running on a node, you can SSH into the node, e.g. `ssh c0`.
 There you can take a look at the current load by using `htop`.
 Note that you can only log in if you have a running progress on a specific node.
 
-Another option is to take a look [Ganglia](http://141.35.158.107/ganglia/?r=hour&cs=&ce=&m=load_one&s=by+name&c=OpenHPC&tab=m&vn=&hide-hf=false) to see the load of the HPC.
-
 ## Summary
 
 1. Set up your `.Rprofile` with `options(clustermq.template = "/path/to/file")`.
   The `clustermq.template` should point to a SLURM template file in your $HOME or project directory.
 
-1. Decide which approach you want to use:
+1. Decide which approach you want to use `drake`/`targets` or `clustermq`
 
-- `drake::make(parallelism = "clustermq", n_jobs = 1, template = list(n_cpus = X, log_file = Y, memory = Z))` (recommended!)
-- `clustermq::Q(template = list(n_cpus = X, log_file = Y, memory = Z))`
-
-2. You need to have a Slurm template file in your project directory. This template needs to be linked in your `.Rprofile` with `options(clustermq.template = "/path/to/file")`.
-
-## Best practice {#best-practice}
-
-You can submit as many tasks as you want in separate R sessions, they will be processed as ranked in the queue of the scheduler.
-However, submitting single jobs that finish quickly is tedious.
-The same applies to the submission of multiple jobs in separate R sessions.
-
-These two points are the reason why it is *highly* recommended to use `drake`.
-By using `drake`, all of your intermediate R objects are "targets". 
-You can specify any number of targets that should be build when calling `drake::make()`.
-`drake` will take care that for each target as separate job is created which is then added to the SLURM queue.
-
-For example, if you want to build three R objects named `object1`, `object2` and `object3` in parallel, one on each node:
-
-```r
-drake::make(plan, targets = c("object1", "object2", "object3"), jobs = 3, 
-            template = list(n_cpus = 16, memory = "100G", 
-            log_file = "/path/to/log.txt"))
-```
-
-- Creates three jobs which are added to the SLURM queue
-- Each jobs requires 16 cores
-- Each job needs 32 GB of memory
-- The call is finished once all jobs have finished.
-
-After they are done, they will be marked as "built" and added to a cache directory by `drake`, so you cannot accidentally rebuild them (unless you change something substantial in the code).
-
-If you follow this practice, the only thing you need to execute on the cluster will be this call (after you initialized the config by sourcing your `drake.R` file).
+2. A Slurm template file is required.
+  This template needs to be linked in your `.Rprofile` with `options(clustermq.template = "/path/to/file")`.
