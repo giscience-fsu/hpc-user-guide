@@ -40,8 +40,8 @@ If you still get stuck, Google might help you.
 - Please add a SSH key pair to your account to be able to log in to the server without having to type your password.
 This is especially useful since your password will consist of many letters and numbers (> 10) which you do not want to memorize.
 See [this](https://help.github.com/articles/connecting-to-github-with-ssh/) guide if you have never worked with SSH keys before.
-If you already use a SSH key pair on your machine, you can use `ssh-copy-id <username>@141.35.158.107` to copy your key to the server.
-Afterwards you should be able to login via `ssh <username>@141.35.158.107` without being prompted for your password.
+If you already use a SSH key pair on your machine, you can use `ssh-copy-id <username>@10.232.16.28` to copy your key to the server.
+Afterwards you should be able to login via `ssh <username>@10.232.16.28` without being prompted for your password.
 
 ## Web Address
 
@@ -102,7 +102,7 @@ Otherwise, the route is as follows: `<local> (sshfs) -> edi (nfs) -> mars`
 For Unix system, the following command can be used
 
 ```sh
-sudo sshfs -o reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa,allow_other,cache=yes,kernel_cache,compression=no,default_permissions,uid=1000,gid=100,umask=0 <username>@141.35.158.107:/ <local-directory>
+sudo sshfs -o reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa,allow_other,cache=yes,kernel_cache,compression=no,default_permissions,uid=1000,gid=100,umask=0 <username>@10.232.16.28:/ <local-directory>
 ```
 
 The mount process is passwordless if you do it via SSH (i.e. via your `~/.ssh/id_rsa` key).
@@ -142,39 +142,3 @@ Start: `echo <PASSWORD> | sudo openconnect --user=<USER>@uni-jena.de --passwd-on
 Stop: `sudo killall -SIGINT openconnect`
 
 On Windows: Sorry, not using Windows - feel free to add this info here.
-
-## Sharing of Results
-
-### `workflowr`
-
-Take a look at the R package [workflowr](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html) which allows automatic deployment of R Notebooks.
-
-### Local web server
-
-The _Jupiter_ server (141.35.159.87) is set up as a web-server.
-This means it is able to render HTML contents and list files in a directory listing.
-
-_Jupiter_ is mounted to the cluster at `/mnt/nfs/jupiter`.
-To use the functionality, you simply need to copy your desired files to `/home/www/<folder>` on Jupiter.
-To do so, please follow these steps:
-
-1. Request an account on Jupiter from Andreas
-1. Login to _Jupiter_ and create the desired folders.
-    The public URL relates as follows to the local directory:
-
-    `https://jupiter.geogr.uni-jena.de/<folder>` -> `/home/www/<folder>`
-1. Copy your files from the cluster to the desired location on _Jupiter_ using the following code
-
-    ```{bash eval=FALSE}
-    rsync -rlptDvzog --chown=www-data:www-data --fake-super \
-      /mnt/nfs/jupiter/<path-to-your-file> \
-      -e ssh <username>@jupiter.geogr.uni-jena.de:/home/www/<path-to-directory>
-    ```
-
-    This code will only copy files that have changed when being compared to the last execution so you can safely automate the call into your workflow.
-
-Since all these contents will be available to everyone, you want to add a README.md file to your directory listing as well as an Impressum.
-Even though no one usually knows this URL by default, be careful about sharing sensible files.
-
-See https://jupiter.geogr.uni-jena.de/life-healthy-forest/ for an example.
-You can request this theme from Andreas.
