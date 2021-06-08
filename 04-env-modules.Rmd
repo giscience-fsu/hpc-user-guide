@@ -20,7 +20,11 @@ To be able to load modules, put the following at the top of your `~/.bashrc` fil
 ```sh
 export SPACK_ROOT=/opt/spack
 . $SPACK_ROOT/share/spack/setup-env.sh
+
+export MODULEPATH=/opt/spack/share/spack/modules/linux-centos7-x86_64
 ```
+
+(The export of the `MODULEPATH` env var should actually be done by the spack setup script but failed in the past for some users. Adding it manually should do no harm.)
 
 Here is a sample output of `module avail`:
 
