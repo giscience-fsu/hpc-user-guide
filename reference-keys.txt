@@ -28,6 +28,7 @@ miscellaneous-helpers
 byobu
 radian
 ccache
+using-rstudio-package-manager-binaries
 wrapper
 troubleshooting-and-cautionary-notes
 cautionary-notes

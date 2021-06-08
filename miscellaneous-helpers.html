@@ -69,8 +69,8 @@ Once you have multiple ones open, an interactive prompt will ask you which one y
 You will notice the benefits compared to the default <code>R</code> once you start using it.
 You need to install it via <code>pip</code> which is already installed if you installed <code>python</code>.</p>
 <p>Usually <code>setuptools</code> needs to be upgraded first.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="miscellaneous-helpers.html#cb13-1"></a><span class="ex">pip</span> install --user --upgrade setuptools</span>
-<span id="cb13-2"><a href="miscellaneous-helpers.html#cb13-2"></a><span class="ex">pip</span> install --user radian</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="miscellaneous-helpers.html#cb13-1"></a><span class="ex">pip3</span> install --user --upgrade setuptools</span>
+<span id="cb13-2"><a href="miscellaneous-helpers.html#cb13-2"></a><span class="ex">pip3</span> install --user radian</span></code></pre></div>
 <p>Now you can either always use <code>radian</code> or set an alias in your <code>.bashrc</code> , e.g. <code>alias r="radian"</code>.
 Note that <code>radian</code> only works if you have set the env variable <code>R_HOME</code> correctly.
 See <a href="#R">here</a> for more details.</p>
@@ -99,9 +99,22 @@ Besides loading <code>ccache</code>, you also need to create the following file 
 This means that this <code>gcc</code> call was already executed once and is now loaded from the cache rather than being run again.
 This saves a lot of time, especially for packages that take long to install (<code>dplyr</code>, <code>Rcpp</code>, <code>stringi</code>).</p>
 </div>
+<div id="using-rstudio-package-manager-binaries" class="section level2">
+<h2>
+<span class="header-section-number">6.4</span> Using RStudio Package Manager binaries<a class="anchor" aria-label="anchor" href="#using-rstudio-package-manager-binaries"><i class="fas fa-link"></i></a>
+</h2>
+<p>Instead of installing from source, you can speed up R package installations a lot by making use of RSPM binaries.
+This is already configured by default in RSW.
+To make use of them on the HPC, put the following into your <code>~/.Rprofile</code>:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># otherwise RSPM does not detect CentOS7 OS</span>
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>HTTPUserAgent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"R/%s R (%s)"</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric_version.html">getRversion</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric_version.html">getRversion</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">R.version</span><span class="op">$</span><span class="va">platform</span>, <span class="va">R.version</span><span class="op">$</span><span class="va">arch</span>, <span class="va">R.version</span><span class="op">$</span><span class="va">os</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co"># set RSPM repo</span>
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>CRAN <span class="op">=</span> <span class="st">"https://packagemanager.rstudio.com/cran/__linux__/centos7/latest"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
 <div id="wrapper" class="section level2">
 <h2>
-<span class="header-section-number">6.4</span> Create a bash alias for your project<a class="anchor" aria-label="anchor" href="#wrapper"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.5</span> Create a bash alias for your project<a class="anchor" aria-label="anchor" href="#wrapper"><i class="fas fa-link"></i></a>
 </h2>
 <p>Often you might want to use an {renv} library in a specific directory with a specific R version after having logged into the server.</p>
 <p>Rather than navigating there all the time by hand and loading the R version manually, you can create an alias that does this for you.
@@ -120,7 +133,8 @@ You can of course also use this approach without {renv} - just to load a specifi
 <li><a class="nav-link" href="#byobu"><span class="header-section-number">6.1</span> byobu</a></li>
 <li><a class="nav-link" href="#radian"><span class="header-section-number">6.2</span> radian</a></li>
 <li><a class="nav-link" href="#ccache"><span class="header-section-number">6.3</span> ccache</a></li>
-<li><a class="nav-link" href="#wrapper"><span class="header-section-number">6.4</span> Create a bash alias for your project</a></li>
+<li><a class="nav-link" href="#using-rstudio-package-manager-binaries"><span class="header-section-number">6.4</span> Using RStudio Package Manager binaries</a></li>
+<li><a class="nav-link" href="#wrapper"><span class="header-section-number">6.5</span> Create a bash alias for your project</a></li>
 </ul>
 
       <div class="book-extra">
