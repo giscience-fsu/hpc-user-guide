@@ -1,4 +1,4 @@
-# Getting Started
+# Miscellaneous Helpers
 
 If you worked through all these steps, you are almost good to go.
 Here are have some additional recommendations to make your server life easier.
