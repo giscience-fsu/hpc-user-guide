@@ -22,8 +22,8 @@ You need to install it via `pip` which is already installed if you installed `py
 Usually `setuptools` needs to be upgraded first.
 
 ```sh
-pip install --user --upgrade setuptools
-pip install --user radian
+pip3 install --user --upgrade setuptools
+pip3 install --user radian
 ```
 
 Now you can either always use `radian` or set an alias in your `.bashrc` , e.g. `alias r="radian"`.
@@ -60,6 +60,19 @@ F77=$(CCACHE) gfortran$(VER)
 When installing a package now, you will occasionally see that the `gcc` lines are prefixed with `ccache`.
 This means that this `gcc` call was already executed once and is now loaded from the cache rather than being run again.
 This saves a lot of time, especially for packages that take long to install (`dplyr`, `Rcpp`, `stringi`).
+
+## Using RStudio Package Manager binaries
+
+Instead of installing from source, you can speed up R package installations a lot by making use of RSPM binaries.
+This is already configured by default in RSW.
+To make use of them on the HPC, put the following into your `~/.Rprofile`:
+
+```r
+# otherwise RSPM does not detect CentOS7 OS
+options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version$platform, R.version$arch, R.version$os)))
+# set RSPM repo
+options(repos = structure(c(CRAN = "https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")))
+```
 
 ## Create a bash alias for your project {#wrapper}
 
