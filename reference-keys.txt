@@ -33,3 +33,11 @@ wrapper
 troubleshooting-and-cautionary-notes
 cautionary-notes
 faq
+admin-tasks
+slurm-1
+undrain-a-node
+reconfigure-slurm
+docker
+pulling-a-new-image
+update-a-container
+clean-up-old-images
