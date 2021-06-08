@@ -64,7 +64,10 @@ Please note that RStudio Workbench is decoupled from Slurm. Everything which sho
 <p>Available env modules can be queried in the terminal via <code>modules avail</code>.</p>
 <p>To be able to load modules, put the following at the top of your <code>~/.bashrc</code> file:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="libraries.html#cb10-1"></a><span class="bu">export</span> <span class="va">SPACK_ROOT=</span>/opt/spack</span>
-<span id="cb10-2"><a href="libraries.html#cb10-2"></a><span class="bu">.</span> <span class="va">$SPACK_ROOT</span><span class="ex">/share/spack/setup-env.sh</span></span></code></pre></div>
+<span id="cb10-2"><a href="libraries.html#cb10-2"></a><span class="bu">.</span> <span class="va">$SPACK_ROOT</span><span class="ex">/share/spack/setup-env.sh</span></span>
+<span id="cb10-3"><a href="libraries.html#cb10-3"></a></span>
+<span id="cb10-4"><a href="libraries.html#cb10-4"></a><span class="bu">export</span> <span class="va">MODULEPATH=</span>/opt/spack/share/spack/modules/linux-centos7-x86_64</span></code></pre></div>
+<p>(The export of the <code>MODULEPATH</code> env var should actually be done by the spack setup script but failed in the past for some users. Adding it manually should do no harm.)</p>
 <p>Here is a sample output of <code>module avail</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="libraries.html#cb11-1"></a><span class="ex">-------------------------</span> /opt/spack/share/spack/modules/linux-centos7-x86_64 --------------------------</span>
 <span id="cb11-2"><a href="libraries.html#cb11-2"></a>   <span class="ex">byobu-5.127-gcc-9.2.0-by2qc2g</span>          (L)    <span class="ex">python-3.7.4-gcc-9.2.0-nbjbfzi</span>     (L)</span>
