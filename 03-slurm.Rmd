@@ -8,10 +8,22 @@ This is the essential job of a scheduler.
 
 Sending jobs to SLURM in R is supported via the R package [clustermq](https://github.com/mschubert/clustermq).
 
+```{block, type='rmdcaution'}
+The R interpreters and packages are not shared with RSW.
+Therefore, all R packages your script needs must to be reinstalled on the HPC with the respective R version.
+```
+
 Rather than calling a R script directly, you need to wrap your code into a function and invoke it using `clustermq::Q()`.
 Instead of using `clustermq` directly, you can make use of R packages like [{targets}](https://cran.r-project.org/web/packages/targets/index.html) or [{drake}](https://cran.r-project.org/web/packages/drake/index.html) to automatically wrap your whole analysis in a way that it executes all layers of your analysis on the HPC.
 
 There is no other way to submit your R jobs to the compute nodes of the cluster than by using any of the tools mentioned above.
+
+Also, it is essential to load all required system libraries you need (e.g. GDAL, PROJ) via environment modules so that they are available on all nodes.
+
+```{block, type='rmdcaution'}
+Note that most likely the versions of these libraries will differ to the ones used in the RSW container.
+For reproducibility it might be worth not deviating too much or even using the same versions on the HPC and within RSW.
+``` 
 
 ## SLURM commands
 

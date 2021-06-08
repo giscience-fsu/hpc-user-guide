@@ -8,7 +8,7 @@ Environment variables are installed and maintained via [Spack](spack.io).
 
 ```{block, type='rmdcaution'}
 Please note that RStudio Workbench is decoupled from Slurm.
-Everything which should be run on the nodes via Slurm requires to have the respective environment modules loaded in the Slurm template file whereas if you run something in RStudio server, the libraries installed in the underlying Ubuntu 20.04 container will be used.
+Everything which should be run on the nodes via Slurm requires to have the respective environment modules loaded in the Slurm template file whereas if you run something in RStudio Workbench, the libraries installed in the underlying Ubuntu 20.04 container will be used.
 ```
 
 The following part only deals with the Spack configuration side as everything in the container should just work (with respect to R).
@@ -41,13 +41,13 @@ Here is a sample output of `module avail`:
 Modules can be loaded via `module load <module>`.
 
 First, a C compiler need to be loaded as most other libraries depend on it.
-Make sure to also put this one into your `~/.bashrc` file!
 
 ```sh
 module load gcc-9.2.0-gcc-4.8.5-wqdecm4
 ```
 
-Other than that, you should only need to load an R interpreter which is executing all scripts on the nodes.
-The R interpreter in RStudio only live in the container and are not on the HPC nodes.
+Next, load all libraries your analysis/R packages need, for example GDAL, PROJ, etc.
 
-You should load the modules within your SLURM template.
+```{block, type='rmdcaution'}
+You should load the modules both within `~/.bashrc` and within your SLURM template.
+```
