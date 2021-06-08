@@ -1,0 +1,44 @@
+# Admin Tasks
+
+## SLURM
+
+### Undrain a node
+
+If a node is in state "drain", one can undrain it via
+
+```
+scontrol update NodeName=<node> State=DOWN Reason="undraining"
+scontrol update NodeName=<node> State=RESUME
+```
+
+### Reconfigure Slurm
+
+E.g. after settings update
+
+```
+scontrol reconfigure
+```
+
+## Docker
+
+### Pulling a new image
+
+Via user `admingeogr` which has AWS pull credentials configured
+
+```
+cd /home/admingeogr/rsw
+docker-compose pull
+```
+
+### Update a container
+
+```
+cd /home/admingeogr/rsw
+docker-compose up -d
+```
+
+### Clean up old images
+
+```
+docker image prune -af
+```
