@@ -36,7 +36,7 @@
 <li><a class="" href="shiny-server.html"><span class="header-section-number">3</span> Shiny Server</a></li>
 <li><a class="active" href="slurm-hpc-scheduler.html"><span class="header-section-number">4</span> SLURM: HPC scheduler</a></li>
 <li><a class="" href="libraries.html"><span class="header-section-number">5</span> Libraries and Environment Modules</a></li>
-<li><a class="" href="getting-started.html"><span class="header-section-number">6</span> Getting Started</a></li>
+<li><a class="" href="miscellaneous-helpers.html"><span class="header-section-number">6</span> Miscellaneous Helpers</a></li>
 <li><a class="" href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">7</span> Troubleshooting and Cautionary Notes</a></li>
 </ul>
 
@@ -57,9 +57,20 @@ This is the essential job of a scheduler.</p>
 <span class="header-section-number">4.1</span> First steps<a class="anchor" aria-label="anchor" href="#first-steps"><i class="fas fa-link"></i></a>
 </h2>
 <p>Sending jobs to SLURM in R is supported via the R package <a href="https://github.com/mschubert/clustermq">clustermq</a>.</p>
+<div class="rmdcaution">
+<p>
+The R interpreters and packages are not shared with RSW. Therefore, all R packages your script needs must to be reinstalled on the HPC with the respective R version.
+</p>
+</div>
 <p>Rather than calling a R script directly, you need to wrap your code into a function and invoke it using <code>clustermq::Q()</code>.
 Instead of using <code>clustermq</code> directly, you can make use of R packages like <a href="https://cran.r-project.org/web/packages/targets/index.html">{targets}</a> or <a href="https://cran.r-project.org/web/packages/drake/index.html">{drake}</a> to automatically wrap your whole analysis in a way that it executes all layers of your analysis on the HPC.</p>
 <p>There is no other way to submit your R jobs to the compute nodes of the cluster than by using any of the tools mentioned above.</p>
+<p>Also, it is essential to load all required system libraries you need (e.g. GDAL, PROJ) via environment modules so that they are available on all nodes.</p>
+<div class="rmdcaution">
+<p>
+Note that most likely the versions of these libraries will differ to the ones used in the RSW container. For reproducibility it might be worth not deviating too much or even using the same versions on the HPC and within RSW.
+</p>
+</div>
 </div>
 <div id="slurm-commands" class="section level2">
 <h2>

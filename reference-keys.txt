@@ -24,7 +24,7 @@ summary
 libraries
 introduction
 loading-modules
-getting-started
+miscellaneous-helpers
 byobu
 radian
 ccache

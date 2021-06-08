@@ -36,7 +36,7 @@
 <li><a class="" href="shiny-server.html"><span class="header-section-number">3</span> Shiny Server</a></li>
 <li><a class="" href="slurm-hpc-scheduler.html"><span class="header-section-number">4</span> SLURM: HPC scheduler</a></li>
 <li><a class="active" href="libraries.html"><span class="header-section-number">5</span> Libraries and Environment Modules</a></li>
-<li><a class="" href="getting-started.html"><span class="header-section-number">6</span> Getting Started</a></li>
+<li><a class="" href="miscellaneous-helpers.html"><span class="header-section-number">6</span> Miscellaneous Helpers</a></li>
 <li><a class="" href="troubleshooting-and-cautionary-notes.html"><span class="header-section-number">7</span> Troubleshooting and Cautionary Notes</a></li>
 </ul>
 
@@ -57,7 +57,7 @@
 <p>Environment variables are installed and maintained via <a href="spack.io">Spack</a>.</p>
 <div class="rmdcaution">
 <p>
-Please note that RStudio Workbench is decoupled from Slurm. Everything which should be run on the nodes via Slurm requires to have the respective environment modules loaded in the Slurm template file whereas if you run something in RStudio server, the libraries installed in the underlying Ubuntu 20.04 container will be used.
+Please note that RStudio Workbench is decoupled from Slurm. Everything which should be run on the nodes via Slurm requires to have the respective environment modules loaded in the Slurm template file whereas if you run something in RStudio Workbench, the libraries installed in the underlying Ubuntu 20.04 container will be used.
 </p>
 </div>
 <p>The following part only deals with the Spack configuration side as everything in the container should just work (with respect to R).</p>
@@ -80,18 +80,20 @@ Please note that RStudio Workbench is decoupled from Slurm. Everything which sho
 <span class="header-section-number">5.2</span> Loading modules<a class="anchor" aria-label="anchor" href="#loading-modules"><i class="fas fa-link"></i></a>
 </h2>
 <p>Modules can be loaded via <code>module load &lt;module&gt;</code>.</p>
-<p>First, a C compiler need to be loaded as most other libraries depend on it.
-Make sure to also put this one into your <code>~/.bashrc</code> file!</p>
+<p>First, a C compiler need to be loaded as most other libraries depend on it.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="libraries.html#cb12-1"></a><span class="ex">module</span> load gcc-9.2.0-gcc-4.8.5-wqdecm4</span></code></pre></div>
-<p>Other than that, you should only need to load an R interpreter which is executing all scripts on the nodes.
-The R interpreter in RStudio only live in the container and are not on the HPC nodes.</p>
-<p>You should load the modules within your SLURM template.</p>
+<p>Next, load all libraries your analysis/R packages need, for example GDAL, PROJ, etc.</p>
+<div class="rmdcaution">
+<p>
+You should load the modules both within <code>~/.bashrc</code> and within your SLURM template.
+</p>
+</div>
 
 </div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="slurm-hpc-scheduler.html"><span class="header-section-number">4</span> SLURM: HPC scheduler</a></div>
-<div class="next"><a href="getting-started.html"><span class="header-section-number">6</span> Getting Started</a></div>
+<div class="next"><a href="miscellaneous-helpers.html"><span class="header-section-number">6</span> Miscellaneous Helpers</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
