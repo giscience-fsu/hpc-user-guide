@@ -1,5 +1,57 @@
 # Admin Tasks
 
+## Warewulf
+
+Cluster management.
+
+### Enable systemd services on nodes
+
+```
+pdsh -w c[0-5] systemctl <command>
+```
+
+### Enable systemd service in image
+
+```
+export CHROOT=<some path>
+chroot $CHROOT systemctl enable <service>
+```
+
+### Updating image nodes
+
+
+`/root/update-nodes.sh`
+
+```
+#!/bin/bash
+
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+IMAGE_NAME=${1?Error: no Image name given. Please pass something like <centos7.7>.}
+
+#backup
+
+export CHROOT=/opt/ohpc/admin/images/$IMAGE_NAME
+yum -y upgrade
+yum -y --installroot=$CHROOT upgrade
+wwvnfs --chroot $CHROOT
+wwsh provision set c[0-5] --vnfs=$IMAGE_NAME
+KERNEL=$(eval "uname -r")
+wwbootstrap $KERNEL
+wwsh provision set c[0-5] --bootstrap=$KERNEL
+
+pdsh -w c[0-5] reboot
+sleep 90
+
+# somehow munge does not create the log dir itslef
+pdsh -w c[0-5] mkdir /var/log/munge
+pdsh -w c[0-5] chown -R munge:munge /var/log/munge
+pdsh -w c[0-5] systemctl restart munge
+scontrol update NodeName=c[0-5] state=resume
+```
+
 ## SLURM
 
 ### Undrain a node
