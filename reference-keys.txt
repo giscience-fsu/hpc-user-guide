@@ -34,6 +34,10 @@ troubleshooting-and-cautionary-notes
 cautionary-notes
 faq
 admin-tasks
+warewulf
+enable-systemd-services-on-nodes
+enable-systemd-service-in-image
+updating-image-nodes
 slurm-1
 undrain-a-node
 reconfigure-slurm

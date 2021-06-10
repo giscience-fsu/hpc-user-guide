@@ -50,13 +50,65 @@
 <h1>
 <span class="header-section-number">8</span> Admin Tasks<a class="anchor" aria-label="anchor" href="#admin-tasks"><i class="fas fa-link"></i></a>
 </h1>
+<div id="warewulf" class="section level2">
+<h2>
+<span class="header-section-number">8.1</span> Warewulf<a class="anchor" aria-label="anchor" href="#warewulf"><i class="fas fa-link"></i></a>
+</h2>
+<p>Cluster management.</p>
+<div id="enable-systemd-services-on-nodes" class="section level3">
+<h3>
+<span class="header-section-number">8.1.1</span> Enable systemd services on nodes<a class="anchor" aria-label="anchor" href="#enable-systemd-services-on-nodes"><i class="fas fa-link"></i></a>
+</h3>
+<pre><code>pdsh -w c[0-5] systemctl &lt;command&gt;</code></pre>
+</div>
+<div id="enable-systemd-service-in-image" class="section level3">
+<h3>
+<span class="header-section-number">8.1.2</span> Enable systemd service in image<a class="anchor" aria-label="anchor" href="#enable-systemd-service-in-image"><i class="fas fa-link"></i></a>
+</h3>
+<pre><code>export CHROOT=&lt;some path&gt;
+chroot $CHROOT systemctl enable &lt;service&gt;</code></pre>
+</div>
+<div id="updating-image-nodes" class="section level3">
+<h3>
+<span class="header-section-number">8.1.3</span> Updating image nodes<a class="anchor" aria-label="anchor" href="#updating-image-nodes"><i class="fas fa-link"></i></a>
+</h3>
+<p><code>/root/update-nodes.sh</code></p>
+<pre><code>#!/bin/bash
+
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+IMAGE_NAME=${1?Error: no Image name given. Please pass something like &lt;centos7.7&gt;.}
+
+#backup
+
+export CHROOT=/opt/ohpc/admin/images/$IMAGE_NAME
+yum -y upgrade
+yum -y --installroot=$CHROOT upgrade
+wwvnfs --chroot $CHROOT
+wwsh provision set c[0-5] --vnfs=$IMAGE_NAME
+KERNEL=$(eval "uname -r")
+wwbootstrap $KERNEL
+wwsh provision set c[0-5] --bootstrap=$KERNEL
+
+pdsh -w c[0-5] reboot
+sleep 90
+
+# somehow munge does not create the log dir itslef
+pdsh -w c[0-5] mkdir /var/log/munge
+pdsh -w c[0-5] chown -R munge:munge /var/log/munge
+pdsh -w c[0-5] systemctl restart munge
+scontrol update NodeName=c[0-5] state=resume</code></pre>
+</div>
+</div>
 <div id="slurm-1" class="section level2">
 <h2>
-<span class="header-section-number">8.1</span> SLURM<a class="anchor" aria-label="anchor" href="#slurm-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2</span> SLURM<a class="anchor" aria-label="anchor" href="#slurm-1"><i class="fas fa-link"></i></a>
 </h2>
 <div id="undrain-a-node" class="section level3">
 <h3>
-<span class="header-section-number">8.1.1</span> Undrain a node<a class="anchor" aria-label="anchor" href="#undrain-a-node"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2.1</span> Undrain a node<a class="anchor" aria-label="anchor" href="#undrain-a-node"><i class="fas fa-link"></i></a>
 </h3>
 <p>If a node is in state “drain”, one can undrain it via</p>
 <pre><code>scontrol update NodeName=&lt;node&gt; State=DOWN Reason="undraining"
@@ -64,7 +116,7 @@ scontrol update NodeName=&lt;node&gt; State=RESUME</code></pre>
 </div>
 <div id="reconfigure-slurm" class="section level3">
 <h3>
-<span class="header-section-number">8.1.2</span> Reconfigure Slurm<a class="anchor" aria-label="anchor" href="#reconfigure-slurm"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2.2</span> Reconfigure Slurm<a class="anchor" aria-label="anchor" href="#reconfigure-slurm"><i class="fas fa-link"></i></a>
 </h3>
 <p>E.g. after settings update</p>
 <pre><code>scontrol reconfigure</code></pre>
@@ -72,11 +124,11 @@ scontrol update NodeName=&lt;node&gt; State=RESUME</code></pre>
 </div>
 <div id="docker" class="section level2">
 <h2>
-<span class="header-section-number">8.2</span> Docker<a class="anchor" aria-label="anchor" href="#docker"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3</span> Docker<a class="anchor" aria-label="anchor" href="#docker"><i class="fas fa-link"></i></a>
 </h2>
 <div id="pulling-a-new-image" class="section level3">
 <h3>
-<span class="header-section-number">8.2.1</span> Pulling a new image<a class="anchor" aria-label="anchor" href="#pulling-a-new-image"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.1</span> Pulling a new image<a class="anchor" aria-label="anchor" href="#pulling-a-new-image"><i class="fas fa-link"></i></a>
 </h3>
 <p>Via user <code>admingeogr</code> which has AWS pull credentials configured</p>
 <pre><code>cd /home/admingeogr/rsw
@@ -84,14 +136,14 @@ docker-compose pull</code></pre>
 </div>
 <div id="update-a-container" class="section level3">
 <h3>
-<span class="header-section-number">8.2.2</span> Update a container<a class="anchor" aria-label="anchor" href="#update-a-container"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.2</span> Update a container<a class="anchor" aria-label="anchor" href="#update-a-container"><i class="fas fa-link"></i></a>
 </h3>
 <pre><code>cd /home/admingeogr/rsw
 docker-compose up -d</code></pre>
 </div>
 <div id="clean-up-old-images" class="section level3">
 <h3>
-<span class="header-section-number">8.2.3</span> Clean up old images<a class="anchor" aria-label="anchor" href="#clean-up-old-images"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.3</span> Clean up old images<a class="anchor" aria-label="anchor" href="#clean-up-old-images"><i class="fas fa-link"></i></a>
 </h3>
 <pre><code>docker image prune -af</code></pre>
 
@@ -123,16 +175,23 @@ docker-compose up -d</code></pre>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#admin-tasks"><span class="header-section-number">8</span> Admin Tasks</a></li>
 <li>
-<a class="nav-link" href="#slurm-1"><span class="header-section-number">8.1</span> SLURM</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#undrain-a-node"><span class="header-section-number">8.1.1</span> Undrain a node</a></li>
-<li><a class="nav-link" href="#reconfigure-slurm"><span class="header-section-number">8.1.2</span> Reconfigure Slurm</a></li>
+<a class="nav-link" href="#warewulf"><span class="header-section-number">8.1</span> Warewulf</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#enable-systemd-services-on-nodes"><span class="header-section-number">8.1.1</span> Enable systemd services on nodes</a></li>
+<li><a class="nav-link" href="#enable-systemd-service-in-image"><span class="header-section-number">8.1.2</span> Enable systemd service in image</a></li>
+<li><a class="nav-link" href="#updating-image-nodes"><span class="header-section-number">8.1.3</span> Updating image nodes</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#docker"><span class="header-section-number">8.2</span> Docker</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#pulling-a-new-image"><span class="header-section-number">8.2.1</span> Pulling a new image</a></li>
-<li><a class="nav-link" href="#update-a-container"><span class="header-section-number">8.2.2</span> Update a container</a></li>
-<li><a class="nav-link" href="#clean-up-old-images"><span class="header-section-number">8.2.3</span> Clean up old images</a></li>
+<a class="nav-link" href="#slurm-1"><span class="header-section-number">8.2</span> SLURM</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#undrain-a-node"><span class="header-section-number">8.2.1</span> Undrain a node</a></li>
+<li><a class="nav-link" href="#reconfigure-slurm"><span class="header-section-number">8.2.2</span> Reconfigure Slurm</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#docker"><span class="header-section-number">8.3</span> Docker</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#pulling-a-new-image"><span class="header-section-number">8.3.1</span> Pulling a new image</a></li>
+<li><a class="nav-link" href="#update-a-container"><span class="header-section-number">8.3.2</span> Update a container</a></li>
+<li><a class="nav-link" href="#clean-up-old-images"><span class="header-section-number">8.3.3</span> Clean up old images</a></li>
 </ul>
 </li>
 </ul>
