@@ -99,6 +99,7 @@ sleep 90
 pdsh -w c[0-5] mkdir /var/log/munge
 pdsh -w c[0-5] chown -R munge:munge /var/log/munge
 pdsh -w c[0-5] systemctl restart munge
+scontrol update NodeName=c[0-5] State=DOWN Reason="undraining"
 scontrol update NodeName=c[0-5] state=resume</code></pre>
 </div>
 </div>
