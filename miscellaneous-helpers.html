@@ -70,13 +70,13 @@ Once you have multiple ones open, an interactive prompt will ask you which one y
 You will notice the benefits compared to the default <code>R</code> once you start using it.
 You need to install it via <code>pip</code> which is already installed if you installed <code>python</code>.</p>
 <p>Usually <code>setuptools</code> needs to be upgraded first.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="miscellaneous-helpers.html#cb13-1"></a><span class="ex">pip3</span> install --user --upgrade setuptools</span>
-<span id="cb13-2"><a href="miscellaneous-helpers.html#cb13-2"></a><span class="ex">pip3</span> install --user radian</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="miscellaneous-helpers.html#cb15-1"></a><span class="ex">pip3</span> install --user --upgrade setuptools</span>
+<span id="cb15-2"><a href="miscellaneous-helpers.html#cb15-2"></a><span class="ex">pip3</span> install --user radian</span></code></pre></div>
 <p>Now you can either always use <code>radian</code> or set an alias in your <code>.bashrc</code> , e.g. <code>alias r="radian"</code>.
 Note that <code>radian</code> only works if you have set the env variable <code>R_HOME</code> correctly.
 See <a href="#R">here</a> for more details.</p>
 <p>If is does not work at this moment, you might need to add the binary to your <code>$PATH</code> variable in your <code>~/.bashrc</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="miscellaneous-helpers.html#cb14-1"></a><span class="bu">export</span> <span class="va">PATH=</span>~/.local/bin:<span class="va">$PATH</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb16-1"><a href="miscellaneous-helpers.html#cb16-1"></a><span class="bu">export</span> <span class="va">PATH=</span>~/.local/bin:<span class="va">$PATH</span></span></code></pre></div>
 </div>
 <div id="ccache" class="section level2">
 <h2>
@@ -86,16 +86,16 @@ See <a href="#R">here</a> for more details.</p>
 (On Linux, all R packages are installed from source.)
 Besides loading <code>ccache</code>, you also need to create the following file in your home directory (<code>~/.R/Makevars</code>):</p>
 <p>(Note that you need to create the folder first, it does not exist by default (<code>mkdir ~/.R/</code>).)</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb15-1"><a href="miscellaneous-helpers.html#cb15-1"></a><span class="ex">CXX_STD</span> = CXX14</span>
-<span id="cb15-2"><a href="miscellaneous-helpers.html#cb15-2"></a></span>
-<span id="cb15-3"><a href="miscellaneous-helpers.html#cb15-3"></a><span class="va">VER=</span></span>
-<span id="cb15-4"><a href="miscellaneous-helpers.html#cb15-4"></a><span class="va">CCACHE=</span>ccache</span>
-<span id="cb15-5"><a href="miscellaneous-helpers.html#cb15-5"></a><span class="va">CC=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="fu">gcc</span> <span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
-<span id="cb15-6"><a href="miscellaneous-helpers.html#cb15-6"></a><span class="va">CXX=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">g++</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
-<span id="cb15-7"><a href="miscellaneous-helpers.html#cb15-7"></a><span class="va">C11=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">g++</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
-<span id="cb15-8"><a href="miscellaneous-helpers.html#cb15-8"></a><span class="va">C14=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">g++</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
-<span id="cb15-9"><a href="miscellaneous-helpers.html#cb15-9"></a><span class="va">FC=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">gfortran</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
-<span id="cb15-10"><a href="miscellaneous-helpers.html#cb15-10"></a><span class="va">F77=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">gfortran</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb17-1"><a href="miscellaneous-helpers.html#cb17-1"></a><span class="ex">CXX_STD</span> = CXX14</span>
+<span id="cb17-2"><a href="miscellaneous-helpers.html#cb17-2"></a></span>
+<span id="cb17-3"><a href="miscellaneous-helpers.html#cb17-3"></a><span class="va">VER=</span></span>
+<span id="cb17-4"><a href="miscellaneous-helpers.html#cb17-4"></a><span class="va">CCACHE=</span>ccache</span>
+<span id="cb17-5"><a href="miscellaneous-helpers.html#cb17-5"></a><span class="va">CC=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="fu">gcc</span> <span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
+<span id="cb17-6"><a href="miscellaneous-helpers.html#cb17-6"></a><span class="va">CXX=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">g++</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
+<span id="cb17-7"><a href="miscellaneous-helpers.html#cb17-7"></a><span class="va">C11=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">g++</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
+<span id="cb17-8"><a href="miscellaneous-helpers.html#cb17-8"></a><span class="va">C14=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">g++</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
+<span id="cb17-9"><a href="miscellaneous-helpers.html#cb17-9"></a><span class="va">FC=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">gfortran</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span>
+<span id="cb17-10"><a href="miscellaneous-helpers.html#cb17-10"></a><span class="va">F77=$(</span><span class="ex">CCACHE</span><span class="va">)</span> <span class="ex">gfortran</span><span class="va">$(</span><span class="ex">VER</span><span class="va">)</span></span></code></pre></div>
 <p>When installing a package now, you will occasionally see that the <code>gcc</code> lines are prefixed with <code>ccache</code>.
 This means that this <code>gcc</code> call was already executed once and is now loaded from the cache rather than being run again.
 This saves a lot of time, especially for packages that take long to install (<code>dplyr</code>, <code>Rcpp</code>, <code>stringi</code>).</p>
@@ -107,7 +107,7 @@ This saves a lot of time, especially for packages that take long to install (<co
 <p>Instead of installing from source, you can speed up R package installations a lot by making use of RSPM binaries.
 This is already configured by default in RSW.
 To make use of them on the HPC, put the following into your <code>~/.Rprofile</code>:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># otherwise RSPM does not detect CentOS7 OS</span>
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>HTTPUserAgent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"R/%s R (%s)"</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric_version.html">getRversion</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric_version.html">getRversion</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">R.version</span><span class="op">$</span><span class="va">platform</span>, <span class="va">R.version</span><span class="op">$</span><span class="va">arch</span>, <span class="va">R.version</span><span class="op">$</span><span class="va">os</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># set RSPM repo</span>

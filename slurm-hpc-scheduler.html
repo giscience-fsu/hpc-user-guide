@@ -173,12 +173,13 @@ Note that you can add any bash commands into the scripts between the <code>SBATC
 <span id="cb6-7"><a href="slurm-hpc-scheduler.html#cb6-7"></a><span class="co">#SBATCH --mem={{ memory }}</span></span>
 <span id="cb6-8"><a href="slurm-hpc-scheduler.html#cb6-8"></a><span class="co">#SBATCH --array=1-{{ n_jobs }}</span></span>
 <span id="cb6-9"><a href="slurm-hpc-scheduler.html#cb6-9"></a></span>
-<span id="cb6-10"><a href="slurm-hpc-scheduler.html#cb6-10"></a><span class="bu">cd</span> /full/path/to/project</span>
-<span id="cb6-11"><a href="slurm-hpc-scheduler.html#cb6-11"></a></span>
-<span id="cb6-12"><a href="slurm-hpc-scheduler.html#cb6-12"></a><span class="co"># load desired R version via an env module</span></span>
-<span id="cb6-13"><a href="slurm-hpc-scheduler.html#cb6-13"></a><span class="ex">module</span> load r-3.5.2-gcc-9.2.0-4syrmqv</span>
-<span id="cb6-14"><a href="slurm-hpc-scheduler.html#cb6-14"></a></span>
-<span id="cb6-15"><a href="slurm-hpc-scheduler.html#cb6-15"></a><span class="va">CMQ_AUTH=</span>{<span class="kw">{</span> <span class="ex">auth</span> <span class="kw">}</span>} <span class="ex">R</span> --no-save --no-restore -e <span class="st">'clustermq:::worker("{{ master }}")'</span></span></code></pre></div>
+<span id="cb6-10"><a href="slurm-hpc-scheduler.html#cb6-10"></a><span class="bu">source</span> ~/.bashrc</span>
+<span id="cb6-11"><a href="slurm-hpc-scheduler.html#cb6-11"></a><span class="bu">cd</span> /full/path/to/project</span>
+<span id="cb6-12"><a href="slurm-hpc-scheduler.html#cb6-12"></a></span>
+<span id="cb6-13"><a href="slurm-hpc-scheduler.html#cb6-13"></a><span class="co"># load desired R version via an env module</span></span>
+<span id="cb6-14"><a href="slurm-hpc-scheduler.html#cb6-14"></a><span class="ex">module</span> load r-3.5.2-gcc-9.2.0-4syrmqv</span>
+<span id="cb6-15"><a href="slurm-hpc-scheduler.html#cb6-15"></a></span>
+<span id="cb6-16"><a href="slurm-hpc-scheduler.html#cb6-16"></a><span class="va">CMQ_AUTH=</span>{<span class="kw">{</span> <span class="ex">auth</span> <span class="kw">}</span>} <span class="ex">R</span> --no-save --no-restore -e <span class="st">'clustermq:::worker("{{ master }}")'</span></span></code></pre></div>
 <p>Note: The <code>#</code> signs are no mistakes here, they are no “comment” signs in this context.
 The <code>SBATCH</code> commands will be executed here.</p>
 <p>You can simply copy it and adjust it to your needs.
@@ -253,6 +254,28 @@ If you scale down the number of CPUs, you will have more memory/cpu available.</
 There you can take a look at the current load by using <code>htop</code>.
 Note that you can only log in if you have a running progress on a specific node.</p>
 </div>
+<div id="renv-specifics" class="section level3">
+<h3>
+<span class="header-section-number">4.3.5</span> <code>renv</code> specifics<a class="anchor" aria-label="anchor" href="#renv-specifics"><i class="fas fa-link"></i></a>
+</h3>
+<p>If {renv} is used and jobs should be sent from within RSW, Slurm tries to load {clustermq} and {renv} from the following library</p>
+<pre><code>&lt;your/project/renv/library/linux-centos-7/R-4.0/x86_64-pc-linux-gnu/`</code></pre>
+<p>This library is not used by default and only in this very special occasion (Slurm + RSW).
+The reason for this is that Slurm thinks its on CentoOS when invoking the <code>CMQ_AUTH={{ auth }} R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'</code> call and tries to find {clustermq} in this specific library.</p>
+<p>When working directly on the HPC via a terminal, the {renv} library path is <code>renv/library/R-4.0/x86_64-pc-linux-gnu/</code>.</p>
+<p>Simply copying {clustermq} and {renv} to this location is enough:</p>
+<pre><code>mkdir renv/library/linux-centos-7/R-4.0/x86_64-pc-linux-gnu
+cp -R renv/library/R-4.0/x86_64-pc-linux-gnu/clustermq renv/library/linux-centos-7/R-4.0/x86_64-pc-linux-gnu/
+cp -R renv/library/R-4.0/x86_64-pc-linux-gnu/renv renv/library/linux-centos-7/R-4.0/x86_64-pc-linux-gnu/</code></pre>
+</div>
+<div id="rstudio-slurm-job-launcher-plugin" class="section level3">
+<h3>
+<span class="header-section-number">4.3.6</span> RStudio Slurm Job Launcher Plugin<a class="anchor" aria-label="anchor" href="#rstudio-slurm-job-launcher-plugin"><i class="fas fa-link"></i></a>
+</h3>
+<p>While it would simplify some things to use the Launcher GUI in RStudio, the problem is that one requirement is to have R versions shared across all nodes.
+Since the RSW container uses its one R versions and is decoupled from the R environment modules used on the HPC, adding these would duplicate the R versions in the container and create confusion.</p>
+<p>Also it seems the RStudio GUI does not allow to load additional env modules which is a requirement for loading certain R packages.</p>
+</div>
 </div>
 <div id="summary" class="section level2">
 <h2>
@@ -282,6 +305,8 @@ This template needs to be linked in your <code>.Rprofile</code> with <code><a hr
 <li><a class="nav-link" href="#the-scheduler-template"><span class="header-section-number">4.3.2</span> The scheduler template</a></li>
 <li><a class="nav-link" href="#allocating-resources"><span class="header-section-number">4.3.3</span> Allocating resources</a></li>
 <li><a class="nav-link" href="#monitoring-progress"><span class="header-section-number">4.3.4</span> Monitoring progress</a></li>
+<li><a class="nav-link" href="#renv-specifics"><span class="header-section-number">4.3.5</span> renv specifics</a></li>
+<li><a class="nav-link" href="#rstudio-slurm-job-launcher-plugin"><span class="header-section-number">4.3.6</span> RStudio Slurm Job Launcher Plugin</a></li>
 </ul>
 </li>
 <li><a class="nav-link" href="#summary"><span class="header-section-number">4.4</span> Summary</a></li>

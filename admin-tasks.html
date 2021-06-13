@@ -50,70 +50,101 @@
 <h1>
 <span class="header-section-number">8</span> Admin Tasks<a class="anchor" aria-label="anchor" href="#admin-tasks"><i class="fas fa-link"></i></a>
 </h1>
+<p>In the following, it is assumed that <code>$CHROOT</code> resolves to <code>/opt/ohpc/admin/images/&lt;version&gt;</code>.</p>
 <div id="warewulf" class="section level2">
 <h2>
 <span class="header-section-number">8.1</span> Warewulf<a class="anchor" aria-label="anchor" href="#warewulf"><i class="fas fa-link"></i></a>
 </h2>
 <p>Cluster management.</p>
+<div id="sharing-of-directories-between-edi-and-nodes" class="section level3">
+<h3>
+<span class="header-section-number">8.1.1</span> Sharing of directories between <code>edi</code> and nodes<a class="anchor" aria-label="anchor" href="#sharing-of-directories-between-edi-and-nodes"><i class="fas fa-link"></i></a>
+</h3>
+<p>On edi: Add directory into <code>/etc/exports</code></p>
+<pre><code># /home *(rw,no_subtree_check,fsid=10,no_root_squash)
+/opt/ohpc/pub *(ro,no_subtree_check,fsid=11)
+/opt/spack *(rw,no_subtree_check,no_root_squash)
+/opt/R *(rw,no_subtree_check,no_root_squash)</code></pre>
+<p>and call <code>exportfs -a</code></p>
+<p>For the nodes, the entry needs to go to $CHROOT/etc/fstab` like</p>
+<pre><code># edi
+192.168.1.1:/opt/spack /opt/spack nfs nfsvers=3,nodev 0 0
+
+192.168.1.1:/opt/R /opt/R nfs nfsvers=3,nodev 0 0
+
+# mars
+10.232.16.12:/mnt/vol2/hpc/edi        /home   nfs     rw,sync,user,hard,intr,_netdev,exec     0       0</code></pre>
+</div>
+<div id="renv-cache" class="section level3">
+<h3>
+<span class="header-section-number">8.1.2</span> <code>renv</code> cache<a class="anchor" aria-label="anchor" href="#renv-cache"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <code>renv</code> cache is mapped centrally to <code>/opt/R/renv</code> in RSW.
+To share the RSW cache and <code>edi</code> cache with the nodes, an NFS share has been added.
+See the previous section for more details.</p>
+</div>
 <div id="enable-systemd-services-on-nodes" class="section level3">
 <h3>
-<span class="header-section-number">8.1.1</span> Enable systemd services on nodes<a class="anchor" aria-label="anchor" href="#enable-systemd-services-on-nodes"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.3</span> Enable systemd services on nodes<a class="anchor" aria-label="anchor" href="#enable-systemd-services-on-nodes"><i class="fas fa-link"></i></a>
 </h3>
 <pre><code>pdsh -w c[0-5] systemctl &lt;command&gt;</code></pre>
 </div>
 <div id="enable-systemd-service-in-image" class="section level3">
 <h3>
-<span class="header-section-number">8.1.2</span> Enable systemd service in image<a class="anchor" aria-label="anchor" href="#enable-systemd-service-in-image"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.4</span> Enable systemd service in image<a class="anchor" aria-label="anchor" href="#enable-systemd-service-in-image"><i class="fas fa-link"></i></a>
 </h3>
 <pre><code>export CHROOT=&lt;some path&gt;
 chroot $CHROOT systemctl enable &lt;service&gt;</code></pre>
 </div>
 <div id="updating-image-nodes" class="section level3">
 <h3>
-<span class="header-section-number">8.1.3</span> Updating image nodes<a class="anchor" aria-label="anchor" href="#updating-image-nodes"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.5</span> Updating image nodes<a class="anchor" aria-label="anchor" href="#updating-image-nodes"><i class="fas fa-link"></i></a>
 </h3>
 <p><code>/root/update-nodes.sh</code></p>
-<pre><code>#!/bin/bash
-
-if [ "$EUID" -ne 0 ]
-  then echo "Please run as root"
-  exit
-fi
-IMAGE_NAME=${1?Error: no Image name given. Please pass something like &lt;centos7.7&gt;.}
-
-#backup
-
-export CHROOT=/opt/ohpc/admin/images/$IMAGE_NAME
-yum -y upgrade
-yum -y --installroot=$CHROOT upgrade
-wwvnfs --chroot $CHROOT
-wwsh provision set c[0-5] --vnfs=$IMAGE_NAME
-KERNEL=$(eval "uname -r")
-wwbootstrap $KERNEL
-wwsh provision set c[0-5] --bootstrap=$KERNEL
-
-pdsh -w c[0-5] reboot
-sleep 90
-
-# somehow munge does not create the log dir itslef
-pdsh -w c[0-5] mkdir /var/log/munge
+<div class="rmdcaution">
+<p>
+Sometimes <code>munge</code> does not start after updating the nodes, causing the nodes to be out of sync with the controller. Check <code>systemctl status munge</code> and eventually restart munge on all nodes:
+</p>
+</div>
+<pre><code>pdsh -w c[0-5] mkdir /var/log/munge
 pdsh -w c[0-5] chown -R munge:munge /var/log/munge
 pdsh -w c[0-5] systemctl restart munge
-scontrol update NodeName=c[0-5] State=DOWN Reason="undraining"
-scontrol update NodeName=c[0-5] state=resume</code></pre>
+
+scontrol update nodename=c[0-5] state=resume</code></pre>
+<p>In addition, permissions on <code>/opt/R/renv</code> should be public r+w which is sometimes also not true and causes problems in combination with <code>renv</code>.</p>
+<pre><code>pdsh -w c[0-5] chmod -R 777 /opt/R/renv</code></pre>
+</div>
+<div id="sharing-hostnames" class="section level3">
+<h3>
+<span class="header-section-number">8.1.6</span> Sharing hostnames<a class="anchor" aria-label="anchor" href="#sharing-hostnames"><i class="fas fa-link"></i></a>
+</h3>
+<p>The nodes must be aware of the RSW hostname and internal IP (docker0 gateway).
+To do so, add a hostname/IP mapping into <code>$CHROOT/etc/hosts</code> and reboot the nodes.</p>
+<pre><code>192.168.1.1 edi
+172.18.0.3 rsw
+172.18.0.4 rsw-docker</code></pre>
 </div>
 </div>
 <div id="slurm-1" class="section level2">
 <h2>
 <span class="header-section-number">8.2</span> SLURM<a class="anchor" aria-label="anchor" href="#slurm-1"><i class="fas fa-link"></i></a>
 </h2>
+<p>Some notes:</p>
+<ul>
+<li>
+<code>/etc/slurm/slurm.conf</code> must always be identical everywhere (RSW, edi, nodes)</li>
+<li>In <code>/etc/slurm/slurm.conf</code> two <code>SlurmctldHost</code> entries are needed (one for edi, one for RSW in the container)</li>
+<li>
+</ul>
 <div id="undrain-a-node" class="section level3">
 <h3>
 <span class="header-section-number">8.2.1</span> Undrain a node<a class="anchor" aria-label="anchor" href="#undrain-a-node"><i class="fas fa-link"></i></a>
 </h3>
 <p>If a node is in state “drain”, one can undrain it via</p>
 <pre><code>scontrol update NodeName=&lt;node&gt; State=DOWN Reason="undraining"
-scontrol update NodeName=&lt;node&gt; State=RESUME</code></pre>
+scontrol update NodeName=&lt;node&gt; State=RESUME
+
+scontrol update nodename=c[0-5] state=resume</code></pre>
 </div>
 <div id="reconfigure-slurm" class="section level3">
 <h3>
@@ -133,6 +164,8 @@ scontrol update NodeName=&lt;node&gt; State=RESUME</code></pre>
 </h3>
 <p>Via user <code>admingeogr</code> which has AWS pull credentials configured</p>
 <pre><code>cd /home/admingeogr/rsw
+# log into AWS ECR repo
+aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 222488041355.dkr.ecr.eu-central-1.amazonaws.com
 docker-compose pull</code></pre>
 </div>
 <div id="update-a-container" class="section level3">
@@ -177,9 +210,12 @@ docker-compose up -d</code></pre>
 <li><a class="nav-link" href="#admin-tasks"><span class="header-section-number">8</span> Admin Tasks</a></li>
 <li>
 <a class="nav-link" href="#warewulf"><span class="header-section-number">8.1</span> Warewulf</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#enable-systemd-services-on-nodes"><span class="header-section-number">8.1.1</span> Enable systemd services on nodes</a></li>
-<li><a class="nav-link" href="#enable-systemd-service-in-image"><span class="header-section-number">8.1.2</span> Enable systemd service in image</a></li>
-<li><a class="nav-link" href="#updating-image-nodes"><span class="header-section-number">8.1.3</span> Updating image nodes</a></li>
+<li><a class="nav-link" href="#sharing-of-directories-between-edi-and-nodes"><span class="header-section-number">8.1.1</span> Sharing of directories between edi and nodes</a></li>
+<li><a class="nav-link" href="#renv-cache"><span class="header-section-number">8.1.2</span> renv cache</a></li>
+<li><a class="nav-link" href="#enable-systemd-services-on-nodes"><span class="header-section-number">8.1.3</span> Enable systemd services on nodes</a></li>
+<li><a class="nav-link" href="#enable-systemd-service-in-image"><span class="header-section-number">8.1.4</span> Enable systemd service in image</a></li>
+<li><a class="nav-link" href="#updating-image-nodes"><span class="header-section-number">8.1.5</span> Updating image nodes</a></li>
+<li><a class="nav-link" href="#sharing-hostnames"><span class="header-section-number">8.1.6</span> Sharing hostnames</a></li>
 </ul>
 </li>
 <li>

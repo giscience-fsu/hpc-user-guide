@@ -64,17 +64,17 @@ Please note that RStudio Workbench is decoupled from Slurm. Everything which sho
 <p>The following part only deals with the Spack configuration side as everything in the container should just work (with respect to R).</p>
 <p>Available env modules can be queried in the terminal via <code>modules avail</code>.</p>
 <p>To be able to load modules, put the following at the top of your <code>~/.bashrc</code> file:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="libraries.html#cb10-1"></a><span class="bu">export</span> <span class="va">SPACK_ROOT=</span>/opt/spack</span>
-<span id="cb10-2"><a href="libraries.html#cb10-2"></a><span class="bu">.</span> <span class="va">$SPACK_ROOT</span><span class="ex">/share/spack/setup-env.sh</span></span>
-<span id="cb10-3"><a href="libraries.html#cb10-3"></a></span>
-<span id="cb10-4"><a href="libraries.html#cb10-4"></a><span class="bu">export</span> <span class="va">MODULEPATH=</span>/opt/spack/share/spack/modules/linux-centos7-x86_64</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="libraries.html#cb12-1"></a><span class="bu">export</span> <span class="va">SPACK_ROOT=</span>/opt/spack</span>
+<span id="cb12-2"><a href="libraries.html#cb12-2"></a><span class="bu">.</span> <span class="va">$SPACK_ROOT</span><span class="ex">/share/spack/setup-env.sh</span></span>
+<span id="cb12-3"><a href="libraries.html#cb12-3"></a></span>
+<span id="cb12-4"><a href="libraries.html#cb12-4"></a><span class="bu">export</span> <span class="va">MODULEPATH=</span>/opt/spack/share/spack/modules/linux-centos7-x86_64</span></code></pre></div>
 <p>(The export of the <code>MODULEPATH</code> env var should actually be done by the spack setup script but failed in the past for some users. Adding it manually should do no harm.)</p>
 <p>Here is a sample output of <code>module avail</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="libraries.html#cb11-1"></a><span class="ex">-------------------------</span> /opt/spack/share/spack/modules/linux-centos7-x86_64 --------------------------</span>
-<span id="cb11-2"><a href="libraries.html#cb11-2"></a>   <span class="ex">byobu-5.127-gcc-9.2.0-by2qc2g</span>          (L)    <span class="ex">python-3.7.4-gcc-9.2.0-nbjbfzi</span>     (L)</span>
-<span id="cb11-3"><a href="libraries.html#cb11-3"></a>   <span class="ex">ccache-3.3.4-gcc-9.2.0-v3xzqqh</span>         (L)    <span class="ex">r-3.5.2-gcc-9.2.0-oxo76vo</span></span>
-<span id="cb11-4"><a href="libraries.html#cb11-4"></a>   <span class="ex">curl-7.63.0-gcc-9.2.0-cq4w37y</span>          (L)    <span class="ex">r-3.6.1-gcc-9.2.0-j25wr6z</span></span>
-<span id="cb11-5"><a href="libraries.html#cb11-5"></a>   <span class="ex">fish-3.0.0-gcc-9.2.0-gdyab6r</span>      </span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="libraries.html#cb13-1"></a><span class="ex">-------------------------</span> /opt/spack/share/spack/modules/linux-centos7-x86_64 --------------------------</span>
+<span id="cb13-2"><a href="libraries.html#cb13-2"></a>   <span class="ex">byobu-5.127-gcc-9.2.0-by2qc2g</span>          (L)    <span class="ex">python-3.7.4-gcc-9.2.0-nbjbfzi</span>     (L)</span>
+<span id="cb13-3"><a href="libraries.html#cb13-3"></a>   <span class="ex">ccache-3.3.4-gcc-9.2.0-v3xzqqh</span>         (L)    <span class="ex">r-3.5.2-gcc-9.2.0-oxo76vo</span></span>
+<span id="cb13-4"><a href="libraries.html#cb13-4"></a>   <span class="ex">curl-7.63.0-gcc-9.2.0-cq4w37y</span>          (L)    <span class="ex">r-3.6.1-gcc-9.2.0-j25wr6z</span></span>
+<span id="cb13-5"><a href="libraries.html#cb13-5"></a>   <span class="ex">fish-3.0.0-gcc-9.2.0-gdyab6r</span>      </span></code></pre></div>
 </div>
 <div id="loading-modules" class="section level2">
 <h2>
@@ -82,7 +82,7 @@ Please note that RStudio Workbench is decoupled from Slurm. Everything which sho
 </h2>
 <p>Modules can be loaded via <code>module load &lt;module&gt;</code>.</p>
 <p>First, a C compiler need to be loaded as most other libraries depend on it.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="libraries.html#cb12-1"></a><span class="ex">module</span> load gcc-9.2.0-gcc-4.8.5-wqdecm4</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="libraries.html#cb14-1"></a><span class="ex">module</span> load gcc-9.2.0-gcc-4.8.5-wqdecm4</span></code></pre></div>
 <p>Next, load all libraries your analysis/R packages need, for example GDAL, PROJ, etc.</p>
 <div class="rmdcaution">
 <p>

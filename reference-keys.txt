@@ -20,6 +20,8 @@ clustermq-setup
 the-scheduler-template
 allocating-resources
 monitoring-progress
+renv-specifics
+rstudio-slurm-job-launcher-plugin
 summary
 libraries
 introduction
@@ -35,9 +37,12 @@ cautionary-notes
 faq
 admin-tasks
 warewulf
+sharing-of-directories-between-edi-and-nodes
+renv-cache
 enable-systemd-services-on-nodes
 enable-systemd-service-in-image
 updating-image-nodes
+sharing-hostnames
 slurm-1
 undrain-a-node
 reconfigure-slurm
