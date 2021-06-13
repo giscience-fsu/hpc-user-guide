@@ -1,8 +1,41 @@
 # Admin Tasks
 
+In the following, it is assumed that `$CHROOT` resolves to `/opt/ohpc/admin/images/<version>`.
+
 ## Warewulf
 
 Cluster management.
+
+### Sharing of directories between `edi` and nodes
+
+On edi: Add directory into `/etc/exports` 
+
+```
+# /home *(rw,no_subtree_check,fsid=10,no_root_squash)
+/opt/ohpc/pub *(ro,no_subtree_check,fsid=11)
+/opt/spack *(rw,no_subtree_check,no_root_squash)
+/opt/R *(rw,no_subtree_check,no_root_squash)
+```
+
+and call `exportfs -a`
+
+For the nodes, the entry needs to go to $CHROOT/etc/fstab` like
+
+```
+# edi
+192.168.1.1:/opt/spack /opt/spack nfs nfsvers=3,nodev 0 0
+
+192.168.1.1:/opt/R /opt/R nfs nfsvers=3,nodev 0 0
+
+# mars
+10.232.16.12:/mnt/vol2/hpc/edi        /home   nfs     rw,sync,user,hard,intr,_netdev,exec     0       0
+```
+
+### `renv` cache
+
+The `renv` cache is mapped centrally to `/opt/R/renv` in RSW.
+To share the RSW cache and `edi` cache with the nodes, an NFS share has been added.
+See the previous section for more details.
 
 ### Enable systemd services on nodes
 
@@ -22,38 +55,43 @@ chroot $CHROOT systemctl enable <service>
 
 `/root/update-nodes.sh`
 
+```{block, type='rmdcaution'}
+Sometimes `munge` does not start after updating the nodes, causing the nodes to be out of sync with the controller.
+Check `systemctl status munge` and eventually restart munge on all nodes: 
 ```
-#!/bin/bash
 
-if [ "$EUID" -ne 0 ]
-  then echo "Please run as root"
-  exit
-fi
-IMAGE_NAME=${1?Error: no Image name given. Please pass something like <centos7.7>.}
-
-#backup
-
-export CHROOT=/opt/ohpc/admin/images/$IMAGE_NAME
-yum -y upgrade
-yum -y --installroot=$CHROOT upgrade
-wwvnfs --chroot $CHROOT
-wwsh provision set c[0-5] --vnfs=$IMAGE_NAME
-KERNEL=$(eval "uname -r")
-wwbootstrap $KERNEL
-wwsh provision set c[0-5] --bootstrap=$KERNEL
-
-pdsh -w c[0-5] reboot
-sleep 90
-
-# somehow munge does not create the log dir itslef
+```
 pdsh -w c[0-5] mkdir /var/log/munge
 pdsh -w c[0-5] chown -R munge:munge /var/log/munge
 pdsh -w c[0-5] systemctl restart munge
-scontrol update NodeName=c[0-5] State=DOWN Reason="undraining"
-scontrol update NodeName=c[0-5] state=resume
+
+scontrol update nodename=c[0-5] state=resume
+```
+
+In addition, permissions on `/opt/R/renv` should be public r+w which is sometimes also not true and causes problems in combination with `renv`.
+
+```
+pdsh -w c[0-5] chmod -R 777 /opt/R/renv
+```
+
+### Sharing hostnames
+
+The nodes must be aware of the RSW hostname and internal IP (docker0 gateway).
+To do so, add a hostname/IP mapping into `$CHROOT/etc/hosts` and reboot the nodes.
+
+```
+192.168.1.1 edi
+172.18.0.3 rsw
+172.18.0.4 rsw-docker
 ```
 
 ## SLURM
+
+Some notes:
+
+- `/etc/slurm/slurm.conf` must always be identical everywhere (RSW, edi, nodes)
+- In `/etc/slurm/slurm.conf` two `SlurmctldHost` entries are needed (one for edi, one for RSW in the container)
+- 
 
 ### Undrain a node
 
@@ -62,6 +100,8 @@ If a node is in state "drain", one can undrain it via
 ```
 scontrol update NodeName=<node> State=DOWN Reason="undraining"
 scontrol update NodeName=<node> State=RESUME
+
+scontrol update nodename=c[0-5] state=resume
 ```
 
 ### Reconfigure Slurm
@@ -80,6 +120,8 @@ Via user `admingeogr` which has AWS pull credentials configured
 
 ```
 cd /home/admingeogr/rsw
+# log into AWS ECR repo
+aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 222488041355.dkr.ecr.eu-central-1.amazonaws.com
 docker-compose pull
 ```
 
