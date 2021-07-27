@@ -70,8 +70,10 @@ To make use of them on the HPC, put the following into your `~/.Rprofile`:
 ```r
 # otherwise RSPM does not detect CentOS7 OS
 options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version$platform, R.version$arch, R.version$os)))
-# set RSPM repo
-options(repos = structure(c(CRAN = "https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")))
+# set RSPM repo for HPC
+if (any(grepl("CentOS-7", system("cat /etc/os-release", intern = TRUE)))) {
+  options(repos = structure(c(CRAN = "https://packagemanager.rstudio.com/cran/__linux__/centos7/latest")))
+}
 ```
 
 ## Create a bash alias for your project {#wrapper}
